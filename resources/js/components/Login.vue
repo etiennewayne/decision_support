@@ -10,6 +10,9 @@
                     <hr>
 
                     <div class="panel-body">
+                        <div class="">
+                            <img class="logo-img" src="/img/login-logo.png" />
+                        </div>
                         <b-field label="Username" label-position="on-border"
                             :type="this.errors.username ? 'is-danger':''"
                             :message="this.errors.username ? this.errors.username[0] : ''">
@@ -21,7 +24,7 @@
                         </b-field>
 
                         <div class="buttons">
-                            <button class="button is-primary">LOGIN</button>
+                            <button class="button is-primary is-fullwidth">LOGIN</button>
                         </div>
                     </div>
                 </div>
@@ -81,6 +84,12 @@ export default {
 
     .box{
         border: 1px solid rgb(223, 223, 223);
+    }
+
+    .logo-img{
+        width: 200px;
+        margin: 15px auto;
+        display: block;
     }
 
 

@@ -1,11 +1,5 @@
-@extends('layouts.user')
+@extends('layouts.no-navbar')
 
 @section('content')
-    <welcome-page></welcome-page>
-
-
-    @auth
-        <services-component></services-component>
-    @endauth
-
+    <login></login>
 @endsection
