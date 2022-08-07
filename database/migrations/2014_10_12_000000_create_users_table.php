@@ -20,6 +20,13 @@ class CreateUsersTable extends Migration
             $table->string('fname');
             $table->string('mname')->nullable();
             $table->string('suffix', 20)->nullable();
+
+            $table->unsignedBigInteger('program_id');
+            $table->foreign('program_id')->references('program_id')->on('programs')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+
             $table->string('sex', 20)->nullable();
             $table->string('province')->nullable();
             $table->string('city')->nullable();

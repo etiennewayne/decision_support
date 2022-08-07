@@ -3,4 +3,4 @@
 <?php $__env->stopSection(); ?>
 
 
-<?php echo $__env->make('layouts.print-layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\eshen\Desktop\Github\schoolpass\resources\views/administrator/report/report-track.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.print-layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\eshen\Desktop\Github\schoolpass\resources\views/cpanel/report/report-track.blade.php ENDPATH**/ ?>

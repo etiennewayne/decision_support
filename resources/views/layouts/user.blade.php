@@ -16,10 +16,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Roboto+Slab:wght@300&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 
+    
     <style>
         html body{
             font-family: 'Ubuntu', sans-serif;

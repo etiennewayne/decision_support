@@ -21,6 +21,8 @@ class UserSeeder extends Seeder
                 'lname' => 'DOMINGUEZ',
                 'fname' => 'JUNARD',
                 'mname' => 'P',
+                'suffix' => '',
+                'program_id' => 1,
                 'sex' => 'MALE',
                 'province' => 'MISAMIS OCCIDENTAL',
                 'city' => 'TANGUB CITY',
@@ -37,6 +39,8 @@ class UserSeeder extends Seeder
                 'lname' => 'NERI',
                 'fname' => 'MAIRAMAE',
                 'mname' => 'P',
+                'suffix' => '',
+                'program_id' => 2,
                 'sex' => 'MALE',
                 'province' => 'MISAMIS OCCIDENTAL',
                 'city' => 'TANGUB CITY',
@@ -44,7 +48,7 @@ class UserSeeder extends Seeder
                 'street' => 'P-6',
                 'email' => 'neri@dev.com',
                 'contact_no' => '09167789585',
-                'role' => 'USER',
+                'role' => 'STUDENT',
                 'password' => Hash::make('a')
             ],
         ];

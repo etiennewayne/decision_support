@@ -25,6 +25,7 @@
 
                         <div class="buttons">
                             <button class="button is-primary is-fullwidth">LOGIN</button>
+                            <button class="button is-success is-outlined is-fullwidth">REGISTER HERE</button>
                         </div>
                     </div>
                 </div>
@@ -53,10 +54,10 @@ export default {
             axios.post('/login', this.fields).then(res=>{
                 console.log(res.data)
                 if(res.data.role === 'ADMINISTRATOR'){
-                    window.location = '/admin-home';
+                    window.location = '/cpanel/dashboard';
                 }
-                if(res.data.role === 'USER'){
-                    window.location = '/';
+                if(res.data.role === 'FACULTY'){
+                    window.location = '/faculty/dashboard';
                 }
                //window.location = '/dashboard';
             }).catch(err=>{

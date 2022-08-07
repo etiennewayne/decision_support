@@ -57,6 +57,7 @@ class LoginController extends Controller
             return Auth::user();
             // return redirect()->intended('dashboard');
         }
+
         return response()->json([
             'errors' => [
                 'username' => ['Username and password error. Access denied.']

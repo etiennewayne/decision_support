@@ -56,7 +56,14 @@ Route::get('/load-barangays', [App\Http\Controllers\AddressController::class, 'l
 
 
 /*     ADMINSITRATOR          */
-Route::resource('/admin-home', App\Http\Controllers\Administrator\AdminHomeController::class);
+Route::resource('/cpanel/dashboard', App\Http\Controllers\Cpanel\CpanelDashboardController::class);
+
+
+Route::resource('/cpanel/program', App\Http\Controllers\Cpanel\ProgramController::class);
+Route::get('/cpanel/get-programs', [App\Http\Controllers\Cpanel\ProgramController::class, 'getAllData']);
+
+
+
 
 Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);
 Route::get('/get-users', [App\Http\Controllers\Administrator\UserController::class, 'getUsers']);
