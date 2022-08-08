@@ -21,20 +21,23 @@ class CreateUsersTable extends Migration
             $table->string('mname')->nullable();
             $table->string('suffix', 20)->nullable();
 
+            $table->string('email')->unique();
+            $table->string('contact_no')->nullable();
+            $table->string('role')->nullable();
+
             $table->unsignedBigInteger('program_id');
             $table->foreign('program_id')->references('program_id')->on('programs')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-
             $table->string('sex', 20)->nullable();
+
+            $table->string('last_school_attended', 255)->nullable();
             $table->string('province')->nullable();
             $table->string('city')->nullable();
             $table->string('barangay')->nullable();
             $table->string('street')->nullable();
-            $table->string('email')->unique();
-            $table->string('contact_no')->nullable();
-            $table->string('role')->nullable();
+
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

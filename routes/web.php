@@ -59,15 +59,15 @@ Route::get('/load-barangays', [App\Http\Controllers\AddressController::class, 'l
 Route::resource('/cpanel/dashboard', App\Http\Controllers\Cpanel\CpanelDashboardController::class);
 
 
-Route::resource('/cpanel/program', App\Http\Controllers\Cpanel\ProgramController::class);
+Route::resource('/cpanel/programs', App\Http\Controllers\Cpanel\ProgramController::class);
 Route::get('/cpanel/get-programs', [App\Http\Controllers\Cpanel\ProgramController::class, 'getAllData']);
 
 
 
 
-Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);
-Route::get('/get-users', [App\Http\Controllers\Administrator\UserController::class, 'getUsers']);
-Route::get('/get-user-offices', [App\Http\Controllers\Administrator\UserController::class, 'getOffices']);
+Route::resource('/cpanel/users', App\Http\Controllers\Cpanel\UserController::class);
+Route::get('/cpanel/get-users', [App\Http\Controllers\Cpanel\UserController::class, 'getUsers']);
+
 
 
 //Offices Administrator (For office management)

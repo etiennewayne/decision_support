@@ -22,10 +22,10 @@
                     <b-navbar-item href="/cpanel/acad-year">
                         Academic Year
                     </b-navbar-item>
-                    <b-navbar-item href="/cpanel/program">
+                    <b-navbar-item href="/cpanel/programs">
                         Program
                     </b-navbar-item>
-                   
+
                 </b-navbar-dropdown>
 
                 <b-navbar-dropdown label="Q&A">
@@ -51,7 +51,7 @@
 
                 </b-navbar-dropdown>
 
-                <b-navbar-item href="/panel/user">
+                <b-navbar-item href="/cpanel/users">
                     User
                 </b-navbar-item>
 

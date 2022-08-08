@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cpanel;
 
 use App\Models\Office;
+use App\Models\Program;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -19,7 +20,7 @@ class UserController extends Controller
     }
 
     public function index(){
-        return view('cpanel.user'); //blade.php
+        return view('cpanel.user.user'); //blade.php
     }
 
     public function getUsers(Request $req){
@@ -35,7 +36,13 @@ class UserController extends Controller
     public function show($id){
         return User::find($id);
     }
+    public function create(){
+        $programs = Program::orderBy('program_code', 'asc')->get();
 
+        return view('cpanel.user.user-create-edit')
+            ->with('programs', $programs)
+            ->with('id', 0);
+    }
     public function store(Request $req){
         //this will create random unique QR code
         $qr_code = substr(md5(time() . $req->lname . $req->fname), -8);
@@ -60,9 +67,12 @@ class UserController extends Controller
             'lname' => strtoupper($req->lname),
             'fname' => strtoupper($req->fname),
             'mname' => strtoupper($req->mname),
+            'suffix' => strtoupper($req->suffix),
+            'program_id' => $req->program_id,
             'sex' => $req->sex,
             'email' => $req->email,
             'contact_no' => $req->contact_no,
+            'last_school_attended' => strtoupper($req->last_school_attended),
             'role' => $req->role,
             'province' => $req->province,
             'city' => $req->city,
@@ -74,6 +84,18 @@ class UserController extends Controller
             'status' => 'saved'
         ]);
     }
+
+
+    public function edit($id){
+        $programs = Program::orderBy('program_code', 'asc')->get();
+        $data = User::find($id);
+
+
+        return view('cpanel.user.user-create-edit')
+            ->with('programs', $programs)
+            ->with('data', $data);
+    }
+
 
     public function update(Request $req, $id){
         $validate = $req->validate([

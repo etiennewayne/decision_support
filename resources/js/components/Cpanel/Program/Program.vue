@@ -5,7 +5,7 @@
                 <div class="column is-8">
                     <div class="box">
 
-                        <div class="table-title" style="font-size: 20px; font-weight: bold;">
+                        <div class="table-title">
                             LIST OF PROGRAM
                         </div>
 
@@ -42,6 +42,7 @@
                         </div>
 
                         <b-table
+                            striped
                             :data="data"
                             :loading="loading"
                             paginated
@@ -82,7 +83,7 @@
                             </b-table-column>
                         </b-table>
 
-                        
+
 
                     </div>
                 </div><!--col -->
@@ -174,7 +175,7 @@ export default{
 
             fields: {},
             errors: {},
-   
+
             btnClass: {
                 'is-success': true,
                 'button': true,
@@ -244,7 +245,7 @@ export default{
             this.errors = {};
         },
 
-        
+
 
 
         submit: function(){
@@ -334,11 +335,11 @@ export default{
             axios.get('/cpanel/program/'+data_id).then(res=>{
                 this.fields = res.data;
                 //load city first
-                
+
             });
         },
 
-    
+
 
     },
 
@@ -350,9 +351,9 @@ export default{
 
 
 <style scoped>
-/* 
+/*
     .table > tbody > tr {
- 
+
         transition: background-color 0.5s ease;
     }
 
@@ -366,5 +367,6 @@ export default{
     .modal-card-title{
         color: white;
     }
+
 
 </style>
