@@ -59,14 +59,25 @@ Route::get('/load-barangays', [App\Http\Controllers\AddressController::class, 'l
 Route::resource('/cpanel/dashboard', App\Http\Controllers\Cpanel\CpanelDashboardController::class);
 
 
+Route::resource('/cpanel/acad-years', App\Http\Controllers\Cpanel\AcademicYearController::class);
+Route::get('/cpanel/get-acad-years', [App\Http\Controllers\Cpanel\AcademicYearController::class, 'getAcadYears']);
+
+
 Route::resource('/cpanel/programs', App\Http\Controllers\Cpanel\ProgramController::class);
 Route::get('/cpanel/get-programs', [App\Http\Controllers\Cpanel\ProgramController::class, 'getAllData']);
 
+Route::resource('/cpanel/courses', App\Http\Controllers\Cpanel\CourseController::class);
+Route::get('/cpanel/get-courses', [App\Http\Controllers\Cpanel\CourseController::class, 'getCourses']);
 
 
 
 Route::resource('/cpanel/users', App\Http\Controllers\Cpanel\UserController::class);
 Route::get('/cpanel/get-users', [App\Http\Controllers\Cpanel\UserController::class, 'getUsers']);
+
+
+Route::get('/get-open-semesters', function(){
+    return \App\Models\Semester::all();
+});
 
 
 

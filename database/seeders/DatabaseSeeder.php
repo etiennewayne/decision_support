@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\AppointmentType;
+use App\Models\CourseType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,9 +17,13 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         $this->call([
+            CourseTypeSeeder::class,
+            SemesterSeeder::class,
             RoleSeeder::class,
             ProgramSeeder::class,
             UserSeeder::class,
+            AcademicYearSeeder::class,
+
 
         ]);
     }

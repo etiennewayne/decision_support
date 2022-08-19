@@ -19,11 +19,15 @@
 
                 <b-navbar-dropdown label="Setting">
 
-                    <b-navbar-item href="/cpanel/acad-year">
+                    <b-navbar-item href="/cpanel/acad-years">
                         Academic Year
                     </b-navbar-item>
                     <b-navbar-item href="/cpanel/programs">
                         Program
+                    </b-navbar-item>
+
+                    <b-navbar-item href="/cpanel/courses">
+                        Courses
                     </b-navbar-item>
 
                 </b-navbar-dropdown>

@@ -25,7 +25,7 @@
 
                         <div class="buttons">
                             <button class="button is-primary is-fullwidth">LOGIN</button>
-                            <button class="button is-success is-outlined is-fullwidth">REGISTER HERE</button>
+                            <b-button tag="a" class="button is-success is-outlined is-fullwidth">REGISTER HERE</b-button>
                         </div>
                     </div>
                 </div>
