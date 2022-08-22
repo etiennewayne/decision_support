@@ -78,6 +78,11 @@ Route::get('/cpanel/get-users', [App\Http\Controllers\Cpanel\UserController::cla
 Route::get('/get-open-semesters', function(){
     return \App\Models\Semester::all();
 });
+Route::get('/get-open-course-types', function(){
+    return \App\Models\CourseType::all();
+});
+
+
 
 
 

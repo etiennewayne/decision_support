@@ -7576,9 +7576,362 @@ module.exports = {
 /*!***************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Cpanel/AcademicYear/AcademicYear.vue?vue&type=script&lang=js& ***!
   \***************************************************************************************************************************************************************************************************************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\eshen\\Desktop\\Github\\decision_support\\resources\\js\\components\\Cpanel\\AcademicYear\\AcademicYear.vue: Legacy octal literals are not allowed in strict mode. (256:29)\n\n  254 |         openModal(){\n  255 |             this.isModalCreate=true;\n> 256 |             this.fields = {};0000000000000\n      |                              ^\n  257 |             this.errors = {};\n  258 |             this.global_id = 0;\n  259 |         },\n    at Parser._raise (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:541:17)\n    at Parser.raiseWithData (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:534:17)\n    at Parser.raise (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:495:17)\n    at Parser.recordStrictModeErrors (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:2991:12)\n    at Parser.readNumber (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:2788:12)\n    at Parser.getTokenFromCode (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:2541:14)\n    at Parser.nextToken (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:2019:12)\n    at Parser.next (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:1925:10)\n    at Parser.eat (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:1930:12)\n    at Parser.isLineTerminator (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:3525:17)\n    at Parser.semicolon (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:3529:25)\n    at Parser.parseExpressionStatement (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:13832:10)\n    at Parser.parseStatementContent (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:13423:19)\n    at Parser.parseStatement (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:13285:17)\n    at Parser.parseBlockOrModuleBlockBody (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:13874:25)\n    at Parser.parseBlockBody (C:\\Users\\eshen\\Desktop\\Github\\decision_support\\node_modules\\@babel\\parser\\lib\\index.js:13865:10)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      data: [],
+      total: 0,
+      loading: false,
+      sortField: 'acadyear_id',
+      sortOrder: 'desc',
+      page: 1,
+      perPage: 5,
+      defaultSortDirection: 'asc',
+      global_id: 0,
+      search: {
+        acadYearCode: ''
+      },
+      isModalCreate: false,
+      fields: {},
+      errors: {},
+      semesters: [],
+      btnClass: {
+        'is-success': true,
+        'button': true,
+        'is-loading': false
+      }
+    };
+  },
+  methods: {
+    /*
+    * Load async data
+    */
+    loadAsyncData: function loadAsyncData() {
+      var _this = this;
+
+      var params = ["sort_by=".concat(this.sortField, ".").concat(this.sortOrder), "acadyearcode=".concat(this.search.acadYearCode), "perpage=".concat(this.perPage), "page=".concat(this.page)].join('&');
+      this.loading = true;
+      axios.get("/cpanel/get-acad-years?".concat(params)).then(function (_ref) {
+        var data = _ref.data;
+        _this.data = [];
+        var currentTotal = data.total;
+
+        if (data.total / _this.perPage > 1000) {
+          currentTotal = _this.perPage * 1000;
+        }
+
+        _this.total = currentTotal;
+        data.data.forEach(function (item) {
+          //item.release_date = item.release_date ? item.release_date.replace(/-/g, '/') : null
+          _this.data.push(item);
+        });
+        _this.loading = false;
+      })["catch"](function (error) {
+        _this.data = [];
+        _this.total = 0;
+        _this.loading = false;
+        throw error;
+      });
+    },
+
+    /*
+    * Handle page-change event
+    */
+    onPageChange: function onPageChange(page) {
+      this.page = page;
+      this.loadAsyncData();
+    },
+    onSort: function onSort(field, order) {
+      this.sortField = field;
+      this.sortOrder = order;
+      this.loadAsyncData();
+    },
+    setPerPage: function setPerPage() {
+      this.loadAsyncData();
+    },
+    openModal: function openModal() {
+      this.isModalCreate = true;
+      this.fields = {};
+      this.errors = {};
+      this.global_id = 0;
+    },
+    submit: function submit() {
+      var _this2 = this;
+
+      if (this.global_id > 0) {
+        //update
+        axios.put('/cpanel/acad-years/' + this.global_id, this.fields).then(function (res) {
+          if (res.data.status === 'updated') {
+            _this2.$buefy.dialog.alert({
+              title: 'UPDATED!',
+              message: 'Successfully updated.',
+              type: 'is-success',
+              onConfirm: function onConfirm() {
+                _this2.loadAsyncData();
+
+                _this2.clearFields();
+
+                _this2.global_id = 0;
+                _this2.isModalCreate = false;
+              }
+            });
+          }
+        })["catch"](function (err) {
+          if (err.response.status === 422) {
+            _this2.errors = err.response.data.errors;
+          }
+        });
+      } else {
+        //INSERT HERE
+        axios.post('/cpanel/acad-years', this.fields).then(function (res) {
+          if (res.data.status === 'saved') {
+            _this2.$buefy.dialog.alert({
+              title: 'SAVED!',
+              message: 'Successfully saved.',
+              type: 'is-success',
+              confirmText: 'OK',
+              onConfirm: function onConfirm() {
+                _this2.isModalCreate = false;
+
+                _this2.loadAsyncData();
+
+                _this2.clearFields();
+
+                _this2.global_id = 0;
+              }
+            });
+          }
+        })["catch"](function (err) {
+          if (err.response.status === 422) {
+            _this2.errors = err.response.data.errors;
+          }
+        });
+      }
+    },
+    //alert box ask for deletion
+    confirmDelete: function confirmDelete(delete_id) {
+      var _this3 = this;
+
+      this.$buefy.dialog.confirm({
+        title: 'DELETE!',
+        type: 'is-danger',
+        message: 'Are you sure you want to delete this data?',
+        cancelText: 'Cancel',
+        confirmText: 'Delete program?',
+        onConfirm: function onConfirm() {
+          return _this3.deleteSubmit(delete_id);
+        }
+      });
+    },
+    //execute delete after confirming
+    deleteSubmit: function deleteSubmit(delete_id) {
+      var _this4 = this;
+
+      axios["delete"]('/cpanel/acad-years/' + delete_id).then(function (res) {
+        _this4.loadAsyncData();
+      })["catch"](function (err) {
+        if (err.response.status === 422) {
+          _this4.errors = err.response.data.errors;
+        }
+      });
+    },
+    clearFields: function clearFields() {
+      this.fields = {};
+    },
+    //update code here
+    getData: function getData(data_id) {
+      var _this5 = this;
+
+      this.clearFields();
+      this.global_id = data_id;
+      this.isModalCreate = true; //nested axios for getting the address 1 by 1 or request by request
+
+      axios.get('/cpanel/acad-years/' + data_id).then(function (res) {
+        _this5.fields = res.data; //load city first
+      });
+    },
+    loadSemesters: function loadSemesters() {
+      var _this6 = this;
+
+      axios.get('/get-open-semesters').then(function (res) {
+        _this6.semesters = res.data;
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.loadAsyncData();
+    this.loadSemesters();
+  }
+});
 
 /***/ }),
 
@@ -7593,6 +7946,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7761,6 +8140,7 @@ __webpack_require__.r(__webpack_exports__);
       isModalCreate: false,
       fields: {},
       errors: {},
+      courseTypes: [],
       btnClass: {
         'is-success': true,
         'button': true,
@@ -7825,7 +8205,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.global_id > 0) {
         //update
-        axios.put('/cpanel/program/' + this.global_id, this.fields).then(function (res) {
+        axios.put('/cpanel/courses/' + this.global_id, this.fields).then(function (res) {
           if (res.data.status === 'updated') {
             _this2.$buefy.dialog.alert({
               title: 'UPDATED!',
@@ -7848,7 +8228,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       } else {
         //INSERT HERE
-        axios.post('/cpanel/program', this.fields).then(function (res) {
+        axios.post('/cpanel/courses', this.fields).then(function (res) {
           if (res.data.status === 'saved') {
             _this2.$buefy.dialog.alert({
               title: 'SAVED!',
@@ -7882,7 +8262,7 @@ __webpack_require__.r(__webpack_exports__);
         type: 'is-danger',
         message: 'Are you sure you want to delete this data?',
         cancelText: 'Cancel',
-        confirmText: 'Delete program?',
+        confirmText: 'Delete',
         onConfirm: function onConfirm() {
           return _this3.deleteSubmit(delete_id);
         }
@@ -7892,7 +8272,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteSubmit: function deleteSubmit(delete_id) {
       var _this4 = this;
 
-      axios["delete"]('/cpanel/program/' + delete_id).then(function (res) {
+      axios["delete"]('/cpanel/courses/' + delete_id).then(function (res) {
         _this4.loadAsyncData();
       })["catch"](function (err) {
         if (err.response.status === 422) {
@@ -7911,13 +8291,21 @@ __webpack_require__.r(__webpack_exports__);
       this.global_id = data_id;
       this.isModalCreate = true; //nested axios for getting the address 1 by 1 or request by request
 
-      axios.get('/cpanel/program/' + data_id).then(function (res) {
+      axios.get('/cpanel/courses/' + data_id).then(function (res) {
         _this5.fields = res.data; //load city first
+      });
+    },
+    loadCourseTypes: function loadCourseTypes() {
+      var _this6 = this;
+
+      axios.get('/get-open-course-types').then(function (res) {
+        _this6.courseTypes = res.data;
       });
     }
   },
   mounted: function mounted() {
     this.loadAsyncData();
+    this.loadCourseTypes();
   }
 });
 
@@ -29301,7 +29689,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\n    .table > tbody > tr {\n\n        transition: background-color 0.5s ease;\n    }\n\n    .table > tbody > tr:hover {\n        background-color: rgb(233, 233, 233);\n    } */\n.modal-card-head[data-v-5775a784]{\n    background-color: green;\n}\n.modal-card-title[data-v-5775a784]{\n    color: white;\n}\n\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\n    .table > tbody > tr {\n\n        transition: background-color 0.5s ease;\n    }\n\n    .table > tbody > tr:hover {\n        background-color: rgb(233, 233, 233);\n    } */\n.modal-card-head[data-v-5775a784]{\n    background-color: green;\n}\n.modal-card-title[data-v-5775a784]{\n    color: white;\n}\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -33072,6 +33460,42 @@ var render = function () {
                     }),
                     _vm._v(" "),
                     _c("b-table-column", {
+                      attrs: { field: "course_type", label: "Type" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function (props) {
+                            return [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(props.row.course_type) +
+                                  "\n                        "
+                              ),
+                            ]
+                          },
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("b-table-column", {
+                      attrs: { field: "course_unit", label: "Unit" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function (props) {
+                            return [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(props.row.course_unit) +
+                                  "\n                        "
+                              ),
+                            ]
+                          },
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("b-table-column", {
                       attrs: { label: "Action" },
                       scopedSlots: _vm._u([
                         {
@@ -33186,7 +33610,7 @@ var render = function () {
               _c("div", { staticClass: "modal-card" }, [
                 _c("header", { staticClass: "modal-card-head" }, [
                   _c("p", { staticClass: "modal-card-title" }, [
-                    _vm._v("PROGRAM"),
+                    _vm._v("COURSE INFORMATION (SUBJECT)"),
                   ]),
                   _vm._v(" "),
                   _c("button", {
@@ -33211,28 +33635,28 @@ var render = function () {
                             "b-field",
                             {
                               attrs: {
-                                label: "Program Code",
+                                label: "Course Code",
                                 "label-position": "on-border",
-                                type: this.errors.program_code
+                                type: this.errors.course_code
                                   ? "is-danger"
                                   : "",
-                                message: this.errors.program_code
-                                  ? this.errors.program_code[0]
+                                message: this.errors.course_code
+                                  ? this.errors.course_code[0]
                                   : "",
                               },
                             },
                             [
                               _c("b-input", {
                                 attrs: {
-                                  placeholder: "Program Code",
+                                  placeholder: "Course Code",
                                   required: "",
                                 },
                                 model: {
-                                  value: _vm.fields.program_code,
+                                  value: _vm.fields.course_code,
                                   callback: function ($$v) {
-                                    _vm.$set(_vm.fields, "program_code", $$v)
+                                    _vm.$set(_vm.fields, "course_code", $$v)
                                   },
-                                  expression: "fields.program_code",
+                                  expression: "fields.course_code",
                                 },
                               }),
                             ],
@@ -33243,28 +33667,107 @@ var render = function () {
                             "b-field",
                             {
                               attrs: {
-                                label: "Program Description",
+                                label: "Course Description",
                                 "label-position": "on-border",
-                                type: this.errors.program_desc
+                                type: this.errors.course_desc
                                   ? "is-danger"
                                   : "",
-                                message: this.errors.program_desc
-                                  ? this.errors.program_desc[0]
+                                message: this.errors.course_desc
+                                  ? this.errors.course_desc[0]
                                   : "",
                               },
                             },
                             [
                               _c("b-input", {
                                 attrs: {
-                                  placeholder: "Program Description",
+                                  placeholder: "Course Description",
                                   required: "",
                                 },
                                 model: {
-                                  value: _vm.fields.program_desc,
+                                  value: _vm.fields.course_desc,
                                   callback: function ($$v) {
-                                    _vm.$set(_vm.fields, "program_desc", $$v)
+                                    _vm.$set(_vm.fields, "course_desc", $$v)
                                   },
-                                  expression: "fields.program_desc",
+                                  expression: "fields.course_desc",
+                                },
+                              }),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-field",
+                            {
+                              attrs: {
+                                label: "Course Type",
+                                "label-position": "on-border",
+                                type: this.errors.course_type
+                                  ? "is-danger"
+                                  : "",
+                                message: this.errors.course_type
+                                  ? this.errors.course_type[0]
+                                  : "",
+                              },
+                            },
+                            [
+                              _c(
+                                "b-select",
+                                {
+                                  attrs: {
+                                    placeholder: "Course Type",
+                                    required: "",
+                                  },
+                                  model: {
+                                    value: _vm.fields.course_type,
+                                    callback: function ($$v) {
+                                      _vm.$set(_vm.fields, "course_type", $$v)
+                                    },
+                                    expression: "fields.course_type",
+                                  },
+                                },
+                                _vm._l(_vm.courseTypes, function (item, index) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: index,
+                                      domProps: { value: item.course_type },
+                                    },
+                                    [_vm._v(_vm._s(item.course_type))]
+                                  )
+                                }),
+                                0
+                              ),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-field",
+                            {
+                              attrs: {
+                                label: "Course Unit",
+                                "label-position": "on-border",
+                                type: this.errors.course_unit
+                                  ? "is-danger"
+                                  : "",
+                                message: this.errors.course_unit
+                                  ? this.errors.course_unit[0]
+                                  : "",
+                              },
+                            },
+                            [
+                              _c("b-input", {
+                                attrs: {
+                                  type: "number",
+                                  placeholder: "Course Type",
+                                  required: "",
+                                },
+                                model: {
+                                  value: _vm.fields.course_unit,
+                                  callback: function ($$v) {
+                                    _vm.$set(_vm.fields, "course_unit", $$v)
+                                  },
+                                  expression: "fields.course_unit",
                                 },
                               }),
                             ],

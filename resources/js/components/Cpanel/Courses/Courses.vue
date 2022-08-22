@@ -71,6 +71,14 @@
                                 {{ props.row.course_desc }}
                             </b-table-column>
 
+                            <b-table-column field="course_type" label="Type" v-slot="props">
+                                {{ props.row.course_type }}
+                            </b-table-column>
+
+                            <b-table-column field="course_unit" label="Unit" v-slot="props">
+                                {{ props.row.course_unit }}
+                            </b-table-column>
+
                             <b-table-column label="Action" v-slot="props">
                                 <div class="is-flex">
                                     <b-tooltip label="Edit" type="is-primary">
@@ -101,7 +109,7 @@
             <form @submit.prevent="submit">
                 <div class="modal-card">
                     <header class="modal-card-head">
-                        <p class="modal-card-title">PROGRAM</p>
+                        <p class="modal-card-title">COURSE INFORMATION (SUBJECT)</p>
                         <button
                             type="button"
                             class="delete"
@@ -112,20 +120,38 @@
                         <div class="">
                             <div class="columns">
                                 <div class="column">
-                                    <b-field label="Program Code" label-position="on-border"
-                                             :type="this.errors.program_code ? 'is-danger':''"
-                                             :message="this.errors.program_code ? this.errors.program_code[0] : ''">
-                                        <b-input v-model="fields.program_code"
-                                                 placeholder="Program Code" required>
+                                    <b-field label="Course Code" label-position="on-border"
+                                             :type="this.errors.course_code ? 'is-danger':''"
+                                             :message="this.errors.course_code ? this.errors.course_code[0] : ''">
+                                        <b-input v-model="fields.course_code"
+                                                 placeholder="Course Code" required>
                                         </b-input>
                                     </b-field>
-                                    <b-field label="Program Description" label-position="on-border"
-                                             :type="this.errors.program_desc ? 'is-danger':''"
-                                             :message="this.errors.program_desc ? this.errors.program_desc[0] : ''">
-                                        <b-input v-model="fields.program_desc"
-                                                 placeholder="Program Description" required>
+                                    <b-field label="Course Description" label-position="on-border"
+                                             :type="this.errors.course_desc ? 'is-danger':''"
+                                             :message="this.errors.course_desc ? this.errors.course_desc[0] : ''">
+                                        <b-input v-model="fields.course_desc"
+                                                 placeholder="Course Description" required>
                                         </b-input>
                                     </b-field>
+
+                                    <b-field label="Course Type" label-position="on-border"
+                                             :type="this.errors.course_type ? 'is-danger':''"
+                                             :message="this.errors.course_type ? this.errors.course_type[0] : ''">
+                                        <b-select v-model="fields.course_type"
+                                            placeholder="Course Type" required>
+                                            <option v-for="(item, index) in courseTypes" :key="index" :value="item.course_type">{{ item.course_type }}</option>
+                                        </b-select>
+                                    </b-field>
+
+                                    <b-field label="Course Unit" label-position="on-border"
+                                             :type="this.errors.course_unit ? 'is-danger':''"
+                                             :message="this.errors.course_unit ? this.errors.course_unit[0] : ''">
+                                        <b-input type="number" v-model="fields.course_unit"
+                                            placeholder="Course Type" required>
+                                        </b-input>
+                                    </b-field>
+
                                 </div>
                             </div>
                         </div>
@@ -173,6 +199,8 @@ export default{
 
             fields: {},
             errors: {},
+
+            courseTypes: [],
 
             btnClass: {
                 'is-success': true,
@@ -249,7 +277,7 @@ export default{
         submit: function(){
             if(this.global_id > 0){
                 //update
-                axios.put('/cpanel/program/'+this.global_id, this.fields).then(res=>{
+                axios.put('/cpanel/courses/'+this.global_id, this.fields).then(res=>{
                     if(res.data.status === 'updated'){
                         this.$buefy.dialog.alert({
                             title: 'UPDATED!',
@@ -270,7 +298,7 @@ export default{
                 })
             }else{
                 //INSERT HERE
-                axios.post('/cpanel/program', this.fields).then(res=>{
+                axios.post('/cpanel/courses', this.fields).then(res=>{
                     if(res.data.status === 'saved'){
                         this.$buefy.dialog.alert({
                             title: 'SAVED!',
@@ -303,13 +331,13 @@ export default{
                 type: 'is-danger',
                 message: 'Are you sure you want to delete this data?',
                 cancelText: 'Cancel',
-                confirmText: 'Delete program?',
+                confirmText: 'Delete',
                 onConfirm: () => this.deleteSubmit(delete_id)
             });
         },
         //execute delete after confirming
         deleteSubmit(delete_id) {
-            axios.delete('/cpanel/program/' + delete_id).then(res => {
+            axios.delete('/cpanel/courses/' + delete_id).then(res => {
                 this.loadAsyncData();
             }).catch(err => {
                 if (err.response.status === 422) {
@@ -330,11 +358,16 @@ export default{
             this.isModalCreate = true;
 
             //nested axios for getting the address 1 by 1 or request by request
-            axios.get('/cpanel/program/'+data_id).then(res=>{
+            axios.get('/cpanel/courses/'+data_id).then(res=>{
                 this.fields = res.data;
                 //load city first
-
             });
+        },
+
+        loadCourseTypes(){
+            axios.get('/get-open-course-types').then(res=>{
+                this.courseTypes = res.data;
+            })
         },
 
 
@@ -343,6 +376,7 @@ export default{
 
     mounted() {
         this.loadAsyncData();
+        this.loadCourseTypes();
     }
 }
 </script>

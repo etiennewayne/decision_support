@@ -253,7 +253,7 @@ export default{
 
         openModal(){
             this.isModalCreate=true;
-            this.fields = {};0000000000000
+            this.fields = {};
             this.errors = {};
             this.global_id = 0;
         },
