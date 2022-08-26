@@ -63,16 +63,31 @@ Route::resource('/cpanel/acad-years', App\Http\Controllers\Cpanel\AcademicYearCo
 Route::get('/cpanel/get-acad-years', [App\Http\Controllers\Cpanel\AcademicYearController::class, 'getAcadYears']);
 
 
+Route::resource('/cpanel/rooms', App\Http\Controllers\Cpanel\RoomController::class);
+Route::get('/cpanel/get-rooms', [App\Http\Controllers\Cpanel\RoomController::class, 'getRooms']);
+
+
+
 Route::resource('/cpanel/programs', App\Http\Controllers\Cpanel\ProgramController::class);
 Route::get('/cpanel/get-programs', [App\Http\Controllers\Cpanel\ProgramController::class, 'getAllData']);
 
 Route::resource('/cpanel/courses', App\Http\Controllers\Cpanel\CourseController::class);
 Route::get('/cpanel/get-courses', [App\Http\Controllers\Cpanel\CourseController::class, 'getCourses']);
 
+//get courses filter by course code and course desc
+//use in ModalCourse
+Route::get('/cpanel/get-browse-courses', [App\Http\Controllers\Cpanel\CourseController::class, 'getBrowseCoursesForModal']); 
+//for modal
+
 
 
 Route::resource('/cpanel/users', App\Http\Controllers\Cpanel\UserController::class);
 Route::get('/cpanel/get-users', [App\Http\Controllers\Cpanel\UserController::class, 'getUsers']);
+
+
+Route::resource('/cpanel/schedules', App\Http\Controllers\Cpanel\ScheduleController::class);
+Route::get('/cpanel/get-schedule', [App\Http\Controllers\Cpanel\ScheduleController::class, 'getSchedule']);
+
 
 
 Route::get('/get-open-semesters', function(){
@@ -87,7 +102,6 @@ Route::get('/get-open-course-types', function(){
 
 
 //Offices Administrator (For office management)
-
 /*     ADMINSITRATOR          */
 
 

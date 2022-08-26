@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Semester extends Model
+class Room extends Model
 {
     use HasFactory;
 
-    protected $table = 'semesters';
-    protected $primaryKey = 'semester_id';
+    protected $table = 'rooms';
+    protected $primaryKey = 'room_id';
 
 
-    protected $fillable = ['semester'];
-
-
-
-
+    protected $fillable = ['room', 'room_desc', 'max'];
 }

@@ -30,6 +30,15 @@ class CourseController extends Controller
             ->paginate($req->perpage);
     }
 
+    public function getBrowseCoursesForModal(Request $req){
+        $sort = explode('.', $req->sort_by);
+
+        return Course::where('course_code', 'like', $req->coursecode . '%')
+            ->where('course_desc', 'like', $req->coursedesc . '%')
+            ->orderBy($sort[0], $sort[1])
+            ->paginate($req->perpage);
+    }
+
 
     public function store(Request $req){
         $req->validate([

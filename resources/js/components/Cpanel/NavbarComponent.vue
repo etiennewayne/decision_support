@@ -22,6 +22,9 @@
                     <b-navbar-item href="/cpanel/acad-years">
                         Academic Year
                     </b-navbar-item>
+                     <b-navbar-item href="/cpanel/rooms">
+                        Rooms
+                    </b-navbar-item>
                     <b-navbar-item href="/cpanel/programs">
                         Program
                     </b-navbar-item>
@@ -32,17 +35,9 @@
 
                 </b-navbar-dropdown>
 
-                <b-navbar-dropdown label="Q&A">
-                    <b-navbar-item href="/panel/question">
-                        Question
-                    </b-navbar-item>
-                    <b-navbar-item href="/panel/student-answer">
-                        Student Answer
-                    </b-navbar-item>
-                    <b-navbar-item href="/panel/student-result">
-                        Student Result
-                    </b-navbar-item>
-                </b-navbar-dropdown>
+                <b-navbar-item href="/cpanel/schedules">
+                    Schedules
+                </b-navbar-item>
 
                 <b-navbar-dropdown label="Admission">
                     <b-navbar-item href="/panel/students-result">
