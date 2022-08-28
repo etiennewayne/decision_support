@@ -9315,6 +9315,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['propAcadYears'],
   data: function data() {
@@ -9329,7 +9361,8 @@ __webpack_require__.r(__webpack_exports__);
       defaultSortDirection: 'asc',
       global_id: 0,
       search: {
-        aycode: ''
+        aycode: '',
+        course: ''
       },
       acadYears: [],
       isModalCreate: false,
@@ -9349,7 +9382,7 @@ __webpack_require__.r(__webpack_exports__);
     loadAsyncData: function loadAsyncData() {
       var _this = this;
 
-      var params = ["sort_by=".concat(this.sortField, ".").concat(this.sortOrder), "aycode=".concat(this.search.aycode), "perpage=".concat(this.perPage), "page=".concat(this.page)].join('&');
+      var params = ["sort_by=".concat(this.sortField, ".").concat(this.sortOrder), "aycode=".concat(this.search.aycode), "course=".concat(this.search.course), "perpage=".concat(this.perPage), "page=".concat(this.page)].join('&');
       this.loading = true;
       axios.get("/cpanel/get-schedules?".concat(params)).then(function (_ref) {
         var data = _ref.data;
@@ -9454,9 +9487,9 @@ __webpack_require__.r(__webpack_exports__);
       this.$buefy.dialog.confirm({
         title: 'DELETE!',
         type: 'is-danger',
-        message: 'Are you sure you want to delete this data?',
+        message: 'Are you sure you want to delete this schedule?',
         cancelText: 'Cancel',
-        confirmText: 'Delete program?',
+        confirmText: 'Delete?',
         onConfirm: function onConfirm() {
           return _this3.deleteSubmit(delete_id);
         }
@@ -9466,7 +9499,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteSubmit: function deleteSubmit(delete_id) {
       var _this4 = this;
 
-      axios["delete"]('/cpanel/program/' + delete_id).then(function (res) {
+      axios["delete"]('/cpanel/schedules/' + delete_id).then(function (res) {
         _this4.loadAsyncData();
       })["catch"](function (err) {
         if (err.response.status === 422) {
@@ -9512,6 +9545,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -9577,14 +9612,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['propAcadYears', 'propPrograms'],
   data: function data() {
     return {
       fields: {
-        course_id: 0,
-        course_code: '',
-        course_desc: ''
+        course_id: null,
+        start_time: null,
+        end_time: null,
+        mon: false,
+        tue: false,
+        wed: false,
+        thu: false,
+        fri: false,
+        sat: false,
+        sun: false
       },
       errors: {},
       acadYears: [],
@@ -9600,6 +9652,36 @@ __webpack_require__.r(__webpack_exports__);
       console.log(rowData);
       this.fields.course_desc = rowData.course_desc;
       this.fields.course_id = rowData.course_id;
+    },
+    submit: function submit() {
+      var _this = this;
+
+      // this.fields.mon = field.mon === 1 ? true : false;
+      // this.fields.tue = res.data.tue === 1 ? true : false;
+      // this.fields.wed = res.data.wed === 1 ? true : false;
+      // this.fields.thur = res.data.thur === 1 ? true : false;
+      // this.fields.fri = res.data.fri === 1 ? true : false;
+      // this.fields.sat = res.data.sat === 1 ? true : false;
+      // this.fields.sun = res.data.sun === 1 ? true : false;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/cpanel/schedules', this.fields).then(function (res) {
+        //console.log(res.data);
+        if (res.data.status === 'saved') {
+          _this.$buefy.dialog.alert({
+            title: 'SAVED!',
+            message: 'Successfully saved.',
+            type: 'is-success',
+            onConfirm: function onConfirm() {
+              window.location = '/cpanel/schedules';
+            }
+          });
+        }
+      })["catch"](function (err) {
+        //console.log(err.response.status)
+        if (err.response.status === 422) {
+          _this.errors = err.response.data.errors;
+          console.log(_this.errors);
+        }
+      });
     }
   },
   mounted: function mounted() {
@@ -10503,7 +10585,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
 //
 //
 //
@@ -30711,7 +30792,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n    .table > tbody > tr {\r\n\r\n        transition: background-color 0.5s ease;\r\n    }\r\n\r\n    .table > tbody > tr:hover {\r\n        background-color: rgb(233, 233, 233);\r\n    } */\n.modal-card-head[data-v-1b3a56f4]{\r\n        background-color: green;\n}\n.modal-card-title[data-v-1b3a56f4]{\r\n        color: white;\n}\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n    .table > tbody > tr {\r\n\r\n        transition: background-color 0.5s ease;\r\n    }\r\n\r\n    .table > tbody > tr:hover {\r\n        background-color: rgb(233, 233, 233);\r\n    } */\n.modal-card-head[data-v-1b3a56f4]{\r\n        background-color: green;\n}\n.modal-card-title[data-v-1b3a56f4]{\r\n        color: white;\n}\r\n\r\n\r\n\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -30735,7 +30816,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.schedule-body[data-v-74b59d68]{\n    margin: 15px 0 0 0;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.schedule-body[data-v-74b59d68]{\n    margin: 15px 0 0 0;\n}\n.day-container[data-v-74b59d68]{\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: space-around;\n}\n@media screen and (max-width: 620px) {\n    /* .day-container {\n        flex-direction: column;\n    } */\n}\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -36419,7 +36500,7 @@ var render = function () {
     [
       _c("div", { staticClass: "section" }, [
         _c("div", { staticClass: "columns is-centered" }, [
-          _c("div", { staticClass: "column is-8" }, [
+          _c("div", { staticClass: "column is-10" }, [
             _c(
               "div",
               { staticClass: "box" },
@@ -36488,7 +36569,7 @@ var render = function () {
                             _c("b-input", {
                               attrs: {
                                 type: "text",
-                                placeholder: "Search Lastname",
+                                placeholder: "Search Course",
                               },
                               nativeOn: {
                                 keyup: function ($event) {
@@ -36511,11 +36592,11 @@ var render = function () {
                                 },
                               },
                               model: {
-                                value: _vm.search.lname,
+                                value: _vm.search.course,
                                 callback: function ($$v) {
-                                  _vm.$set(_vm.search, "lname", $$v)
+                                  _vm.$set(_vm.search, "course", $$v)
                                 },
-                                expression: "search.lname",
+                                expression: "search.course",
                               },
                             }),
                             _vm._v(" "),
@@ -36655,13 +36736,32 @@ var render = function () {
                       "aria-page-label": "Page",
                       "aria-current-label": "Current page",
                       "backend-sorting": "",
+                      detailed: "",
                       "default-sort-direction": _vm.defaultSortDirection,
                     },
                     on: { "page-change": _vm.onPageChange, sort: _vm.onSort },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "detail",
+                        fn: function (props) {
+                          return [
+                            _c("tr", [
+                              _c("td", [_vm._v("Program Description")]),
+                            ]),
+                            _vm._v(" "),
+                            _c("tr", [
+                              _c("td", [
+                                _vm._v(_vm._s(props.row.program.program_desc)),
+                              ]),
+                            ]),
+                          ]
+                        },
+                      },
+                    ]),
                   },
                   [
                     _c("b-table-column", {
-                      attrs: { field: "program_id", label: "ID" },
+                      attrs: { field: "schedule_id", label: "Schedule ID" },
                       scopedSlots: _vm._u([
                         {
                           key: "default",
@@ -36669,7 +36769,7 @@ var render = function () {
                             return [
                               _vm._v(
                                 "\n                            " +
-                                  _vm._s(props.row.program_id) +
+                                  _vm._s(props.row.schedule_id) +
                                   "\n                        "
                               ),
                             ]
@@ -36687,7 +36787,25 @@ var render = function () {
                             return [
                               _vm._v(
                                 "\n                            " +
-                                  _vm._s(props.row.program_code) +
+                                  _vm._s(props.row.program.program_code) +
+                                  "\n                        "
+                              ),
+                            ]
+                          },
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("b-table-column", {
+                      attrs: { field: "course_code", label: "Course Code" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function (props) {
+                            return [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(props.row.course.course_code) +
                                   "\n                        "
                               ),
                             ]
@@ -36698,8 +36816,8 @@ var render = function () {
                     _vm._v(" "),
                     _c("b-table-column", {
                       attrs: {
-                        field: "program_desc",
-                        label: "Program Description",
+                        field: "course_desc",
+                        label: "Course Description",
                       },
                       scopedSlots: _vm._u([
                         {
@@ -36708,9 +36826,87 @@ var render = function () {
                             return [
                               _vm._v(
                                 "\n                            " +
-                                  _vm._s(props.row.program_desc) +
+                                  _vm._s(props.row.course.course_desc) +
                                   "\n                        "
                               ),
+                            ]
+                          },
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("b-table-column", {
+                      attrs: { field: "schedule_time", label: "Schedule Time" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function (props) {
+                            return [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(
+                                    _vm._f("formatTime")(props.row.start_time)
+                                  ) +
+                                  " - " +
+                                  _vm._s(
+                                    _vm._f("formatTime")(props.row.end_time)
+                                  ) +
+                                  "\n                        "
+                              ),
+                            ]
+                          },
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("b-table-column", {
+                      attrs: { field: "days", label: "Days" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function (props) {
+                            return [
+                              props.row.mon
+                                ? _c("span", { staticClass: "days" }, [
+                                    _vm._v("M"),
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              props.row.tue
+                                ? _c("span", { staticClass: "days" }, [
+                                    _vm._v("T"),
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              props.row.wed
+                                ? _c("span", { staticClass: "days" }, [
+                                    _vm._v("W"),
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              props.row.thu
+                                ? _c("span", { staticClass: "days" }, [
+                                    _vm._v("TH"),
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              props.row.fri
+                                ? _c("span", { staticClass: "days" }, [
+                                    _vm._v("F"),
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              props.row.sat
+                                ? _c("span", { staticClass: "days" }, [
+                                    _vm._v("SAT"),
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              props.row.sun
+                                ? _c("span", { staticClass: "days" }, [
+                                    _vm._v("SUN"),
+                                  ])
+                                : _vm._e(),
                             ]
                           },
                         },
@@ -36743,13 +36939,10 @@ var render = function () {
                                         attrs: {
                                           tag: "a",
                                           "icon-right": "pencil",
-                                        },
-                                        on: {
-                                          click: function ($event) {
-                                            return _vm.getData(
-                                              props.row.program_id
-                                            )
-                                          },
+                                          href:
+                                            "/cpanel/schedules/" +
+                                            props.row.schedule_id +
+                                            "/edit",
                                         },
                                       }),
                                     ],
@@ -36772,7 +36965,7 @@ var render = function () {
                                         on: {
                                           click: function ($event) {
                                             return _vm.confirmDelete(
-                                              props.row.program_id
+                                              props.row.schedule_id
                                             )
                                           },
                                         },
@@ -36982,158 +37175,321 @@ var render = function () {
   return _c("div", [
     _c("div", { staticClass: "section" }, [
       _c("div", { staticClass: "columns is-centered" }, [
-        _c("div", { staticClass: "column is-8" }, [
-          _c("div", { staticClass: "box" }, [
-            _c("div", [
-              _vm._v(
-                "\n                        SCHEDULE INFORMATION ENTRY\n                    "
-              ),
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "schedule-body" },
-              [
+        _c("div", { staticClass: "column is-6" }, [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.submit.apply(null, arguments)
+                },
+              },
+            },
+            [
+              _c("div", { staticClass: "box" }, [
+                _c("div", { staticClass: "subtitle" }, [
+                  _vm._v(
+                    "\n                            SCHEDULE INFORMATION ENTRY\n                        "
+                  ),
+                ]),
+                _vm._v(" "),
                 _c(
-                  "b-field",
-                  { attrs: { label: "Academic Year" } },
+                  "div",
+                  { staticClass: "schedule-body" },
                   [
                     _c(
-                      "b-select",
+                      "b-field",
                       {
-                        model: {
-                          value: _vm.fields.code,
-                          callback: function ($$v) {
-                            _vm.$set(_vm.fields, "code", $$v)
-                          },
-                          expression: "fields.code",
+                        attrs: {
+                          label: "Academic Year",
+                          type: this.errors.acadyear_id ? "is-danger" : "",
+                          message: this.errors.acadyear_id
+                            ? this.errors.acadyear_id[0]
+                            : "",
                         },
                       },
-                      _vm._l(_vm.acadYears, function (item, index) {
-                        return _c(
-                          "option",
-                          { key: index, domProps: { value: item.acadyear_id } },
-                          [_vm._v(_vm._s(item.code))]
-                        )
-                      }),
-                      0
+                      [
+                        _c(
+                          "b-select",
+                          {
+                            model: {
+                              value: _vm.fields.acadyear_id,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "acadyear_id", $$v)
+                              },
+                              expression: "fields.acadyear_id",
+                            },
+                          },
+                          _vm._l(_vm.acadYears, function (item, index) {
+                            return _c(
+                              "option",
+                              {
+                                key: index,
+                                domProps: { value: item.acadyear_id },
+                              },
+                              [_vm._v(_vm._s(item.code))]
+                            )
+                          }),
+                          0
+                        ),
+                      ],
+                      1
                     ),
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "b-field",
-                  { attrs: { label: "Programs" } },
-                  [
+                    _vm._v(" "),
                     _c(
-                      "b-select",
+                      "b-field",
                       {
-                        model: {
-                          value: _vm.fields.program,
-                          callback: function ($$v) {
-                            _vm.$set(_vm.fields, "program", $$v)
+                        attrs: {
+                          label: "Programs",
+                          type: this.errors.program_id ? "is-danger" : "",
+                          message: this.errors.program_id
+                            ? this.errors.program_id[0]
+                            : "",
+                        },
+                      },
+                      [
+                        _c(
+                          "b-select",
+                          {
+                            model: {
+                              value: _vm.fields.program_id,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "program_id", $$v)
+                              },
+                              expression: "fields.program_id",
+                            },
                           },
-                          expression: "fields.program",
-                        },
-                      },
-                      _vm._l(_vm.programs, function (item, index) {
-                        return _c(
-                          "option",
-                          { key: index, domProps: { value: item.program_id } },
-                          [_vm._v(_vm._s(item.program_code))]
-                        )
-                      }),
-                      0
+                          _vm._l(_vm.programs, function (item, index) {
+                            return _c(
+                              "option",
+                              {
+                                key: index,
+                                domProps: { value: item.program_id },
+                              },
+                              [_vm._v(_vm._s(item.program_code))]
+                            )
+                          }),
+                          0
+                        ),
+                      ],
+                      1
                     ),
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "b-field",
-                  [
-                    _c("modal-courses", {
-                      attrs: { propCourse: _vm.fields.course_desc },
-                      on: {
-                        browseCourses: function ($event) {
-                          return _vm.emitBrowseCourse($event)
+                    _vm._v(" "),
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          type: this.errors.course_id ? "is-danger" : "",
+                          message: this.errors.course_id
+                            ? this.errors.course_id[0]
+                            : "",
                         },
                       },
-                    }),
+                      [
+                        _c("modal-courses", {
+                          attrs: { propCourse: _vm.fields.course_desc },
+                          on: {
+                            browseCourses: function ($event) {
+                              return _vm.emitBrowseCourse($event)
+                            },
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "b-field",
+                      { attrs: { label: "Time" } },
+                      [
+                        _c(
+                          "b-field",
+                          {
+                            attrs: {
+                              "label-position": "on-border",
+                              label: "Start time",
+                              type: this.errors.start_time ? "is-danger" : "",
+                              message: this.errors.start_time
+                                ? this.errors.start_time[0]
+                                : "",
+                            },
+                          },
+                          [
+                            _c("b-timepicker", {
+                              attrs: { placeholder: "From", inline: "" },
+                              model: {
+                                value: _vm.fields.start_time,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.fields, "start_time", $$v)
+                                },
+                                expression: "fields.start_time",
+                              },
+                            }),
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b-field",
+                          {
+                            attrs: {
+                              "label-position": "on-border",
+                              label: "End time",
+                              type: this.errors.end_time ? "is-danger" : "",
+                              message: this.errors.end_time
+                                ? this.errors.end_time[0]
+                                : "",
+                            },
+                          },
+                          [
+                            _c("b-timepicker", {
+                              attrs: { placeholder: "To", inline: "" },
+                              model: {
+                                value: _vm.fields.end_time,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.fields, "end_time", $$v)
+                                },
+                                expression: "fields.end_time",
+                              },
+                            }),
+                          ],
+                          1
+                        ),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("b-field", { attrs: { label: "Day" } }, [
+                      _c(
+                        "div",
+                        { staticClass: "day-container" },
+                        [
+                          _c(
+                            "b-checkbox",
+                            {
+                              staticClass: "checkbox",
+                              model: {
+                                value: _vm.fields.mon,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.fields, "mon", $$v)
+                                },
+                                expression: "fields.mon",
+                              },
+                            },
+                            [_vm._v("Mon")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-checkbox",
+                            {
+                              model: {
+                                value: _vm.fields.tue,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.fields, "tue", $$v)
+                                },
+                                expression: "fields.tue",
+                              },
+                            },
+                            [_vm._v("Tue")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-checkbox",
+                            {
+                              model: {
+                                value: _vm.fields.wed,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.fields, "wed", $$v)
+                                },
+                                expression: "fields.wed",
+                              },
+                            },
+                            [_vm._v("Wed")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-checkbox",
+                            {
+                              model: {
+                                value: _vm.fields.thu,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.fields, "thu", $$v)
+                                },
+                                expression: "fields.thu",
+                              },
+                            },
+                            [_vm._v("Thur")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-checkbox",
+                            {
+                              model: {
+                                value: _vm.fields.fri,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.fields, "fri", $$v)
+                                },
+                                expression: "fields.fri",
+                              },
+                            },
+                            [_vm._v("Fri")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-checkbox",
+                            {
+                              model: {
+                                value: _vm.fields.sat,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.fields, "sat", $$v)
+                                },
+                                expression: "fields.sat",
+                              },
+                            },
+                            [_vm._v("Sat")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-checkbox",
+                            {
+                              model: {
+                                value: _vm.fields.sun,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.fields, "sun", $$v)
+                                },
+                                expression: "fields.sun",
+                              },
+                            },
+                            [_vm._v("Sun")]
+                          ),
+                        ],
+                        1
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(0),
                   ],
                   1
                 ),
-                _vm._v(" "),
-                _c(
-                  "b-field",
-                  { attrs: { label: "Time" } },
-                  [
-                    _c("b-timepicker", { attrs: { placeholder: "From" } }),
-                    _vm._v(" "),
-                    _c("b-timepicker", { attrs: { placeholder: "To" } }),
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "b-field",
-                  { attrs: { label: "Day" } },
-                  [
-                    _c("b-checkbox", [
-                      _vm._v(
-                        "\n                                Mon\n                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("b-checkbox", [
-                      _vm._v(
-                        "\n                                Tue\n                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("b-checkbox", [
-                      _vm._v(
-                        "\n                                Wed\n                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("b-checkbox", [
-                      _vm._v(
-                        "\n                                Thu\n                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("b-checkbox", [
-                      _vm._v(
-                        "\n                                Fri\n                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("b-checkbox", [
-                      _vm._v(
-                        "\n                                Sat\n                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("b-checkbox", [
-                      _vm._v(
-                        "\n                                Sun\n                            "
-                      ),
-                    ]),
-                  ],
-                  1
-                ),
-              ],
-              1
-            ),
-          ]),
+              ]),
+            ]
+          ),
         ]),
       ]),
     ]),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "buttons mt-4 is-right" }, [
+      _c("button", { staticClass: "button is-primary" }, [_vm._v("SAVE")]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -38891,8 +39247,7 @@ var render = function () {
             attrs: {
               value: _vm.valueCourse,
               expanded: "",
-              "icon-pack": "fa",
-              icon: "user",
+              icon: "calendar-arrow-right",
               placeholder: "SELECT COURSE",
               required: "",
               readonly: "",

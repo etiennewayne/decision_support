@@ -14,7 +14,32 @@ class CreateSchedulesTable extends Migration
     public function up()
     {
         Schema::create('schedules', function (Blueprint $table) {
-            $table->id();
+            $table->id('schedule_id');
+
+            $table->unsignedBigInteger('acadyear_id');
+            $table->foreign('acadyear_id')->references('acadyear_id')->on('academic_years')
+                ->onDelete('cascade')->onUpdate('cascade');
+
+            $table->unsignedBigInteger('program_id');
+            $table->foreign('program_id')->references('program_id')->on('programs')
+                    ->onDelete('cascade')->onUpdate('cascade');
+            
+            $table->unsignedBigInteger('course_id');
+            $table->foreign('course_id')->references('course_id')->on('courses')
+                    ->onDelete('cascade')->onUpdate('cascade');
+
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
+
+            $table->tinyInteger('mon')->default(0);
+            $table->tinyInteger('tue')->default(0);
+            $table->tinyInteger('wed')->default(0);
+            $table->tinyInteger('thu')->default(0);
+            $table->tinyInteger('fri')->default(0);
+            $table->tinyInteger('sat')->default(0);
+            $table->tinyInteger('sun')->default(0);
+
+            
             $table->timestamps();
         });
     }

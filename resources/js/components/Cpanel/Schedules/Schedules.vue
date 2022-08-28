@@ -2,7 +2,7 @@
     <div>
         <div class="section">
             <div class="columns is-centered">
-                <div class="column is-8">
+                <div class="column is-10">
                     <div class="box">
 
                         <div class="table-title">
@@ -25,7 +25,7 @@
                                 <div class="level-item">
                                     <b-field label="Search">
                                         <b-input type="text"
-                                                 v-model="search.lname" placeholder="Search Lastname"
+                                                 v-model="search.course" placeholder="Search Course"
                                                  @keyup.native.enter="loadAsyncData"/>
                                         <p class="control">
                                              <b-tooltip label="Search" type="is-success">
@@ -71,31 +71,63 @@
                             aria-page-label="Page"
                             aria-current-label="Current page"
                             backend-sorting
+                            detailed
                             :default-sort-direction="defaultSortDirection"
                             @sort="onSort">
 
-                            <b-table-column field="program_id" label="ID" v-slot="props">
-                                {{ props.row.program_id }}
+                            <b-table-column field="schedule_id" label="Schedule ID" v-slot="props">
+                                {{ props.row.schedule_id }}
                             </b-table-column>
 
                             <b-table-column field="program_code" label="Program Code" v-slot="props">
-                                {{ props.row.program_code }}
+                                {{ props.row.program.program_code }}
                             </b-table-column>
 
-                            <b-table-column field="program_desc" label="Program Description" v-slot="props">
-                                {{ props.row.program_desc }}
+                            <b-table-column field="course_code" label="Course Code" v-slot="props">
+                                {{ props.row.course.course_code }}
+                            </b-table-column>
+
+                            <b-table-column field="course_desc" label="Course Description" v-slot="props">
+                                {{ props.row.course.course_desc }}
+                            </b-table-column>
+
+                            <b-table-column field="schedule_time" label="Schedule Time" v-slot="props">
+                                {{ props.row.start_time | formatTime }} - {{ props.row.end_time | formatTime }}
+                            </b-table-column>
+
+
+                            <b-table-column field="days" label="Days" v-slot="props">
+                                <span class="days" v-if="props.row.mon">M</span>
+                                <span class="days" v-if="props.row.tue">T</span>
+                                <span class="days" v-if="props.row.wed">W</span>
+                                <span class="days" v-if="props.row.thu">TH</span>
+                                <span class="days" v-if="props.row.fri">F</span>
+                                <span class="days" v-if="props.row.sat">SAT</span>
+                                <span class="days" v-if="props.row.sun">SUN</span>
+
                             </b-table-column>
 
                             <b-table-column label="Action" v-slot="props">
                                 <div class="is-flex">
                                     <b-tooltip label="Edit" type="is-primary">
-                                        <b-button class="button is-small mr-1 is-primary" tag="a" icon-right="pencil" @click="getData(props.row.program_id)"></b-button>
+                                        <b-button class="button is-small mr-1 is-primary" tag="a" icon-right="pencil" :href="`/cpanel/schedules/${props.row.schedule_id}/edit`"></b-button>
                                     </b-tooltip>
                                     <b-tooltip label="Delete" type="is-primary">
-                                        <b-button class="button is-small mr-1 is-danger" icon-right="delete" @click="confirmDelete(props.row.program_id)"></b-button>
+                                        <b-button class="button is-small mr-1 is-danger" icon-right="delete" @click="confirmDelete(props.row.schedule_id)"></b-button>
                                     </b-tooltip>
                                 </div>
                             </b-table-column>
+
+
+                            <template #detail="props">
+                                <tr>
+                                    <td>Program Description</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>{{ props.row.program.program_desc }}</td>
+                                </tr>
+                            </template>
                         </b-table>
 
 
@@ -185,6 +217,7 @@ export default{
 
             search: {
                 aycode: '',
+                course: '',
             },
 
             acadYears: [],
@@ -212,6 +245,7 @@ export default{
             const params = [
                 `sort_by=${this.sortField}.${this.sortOrder}`,
                 `aycode=${this.search.aycode}`,
+                `course=${this.search.course}`,
                 `perpage=${this.perPage}`,
                 `page=${this.page}`
             ].join('&')
@@ -321,15 +355,15 @@ export default{
             this.$buefy.dialog.confirm({
                 title: 'DELETE!',
                 type: 'is-danger',
-                message: 'Are you sure you want to delete this data?',
+                message: 'Are you sure you want to delete this schedule?',
                 cancelText: 'Cancel',
-                confirmText: 'Delete program?',
+                confirmText: 'Delete?',
                 onConfirm: () => this.deleteSubmit(delete_id)
             });
         },
         //execute delete after confirming
         deleteSubmit(delete_id) {
-            axios.delete('/cpanel/program/' + delete_id).then(res => {
+            axios.delete('/cpanel/schedules/' + delete_id).then(res => {
                 this.loadAsyncData();
             }).catch(err => {
                 if (err.response.status === 422) {
@@ -390,6 +424,8 @@ export default{
     .modal-card-title{
         color: white;
     }
+
+
 
 
 </style>
