@@ -8417,26 +8417,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {};
+    return {
+      user: {
+        role: ''
+      }
+    };
   },
   methods: {
     logout: function logout() {
       axios.post('/logout').then(function () {
         window.location = '/';
       });
+    },
+    initUser: function initUser() {
+      var _this = this;
+
+      axios.get('/get-user').then(function (res) {
+        _this.user = res.data;
+        console.log(_this.user);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.initUser();
+  },
+  computed: {
+    userRole: function userRole() {
+      if (this.user) {
+        return this.user.role.toUpperCase();
+      } else {
+        return '';
+      }
     }
   }
 });
@@ -9347,6 +9360,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['propAcadYears'],
   data: function data() {
@@ -9621,13 +9638,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['propAcadYears', 'propPrograms'],
+  props: ['propAcadYears', 'propPrograms', 'propData', 'propRooms'],
   data: function data() {
     return {
+      global_id: 0,
+      //for edit or create reference
       fields: {
         course_id: null,
+        course_desc: null,
         start_time: null,
         end_time: null,
         mon: false,
@@ -9640,13 +9667,35 @@ __webpack_require__.r(__webpack_exports__);
       },
       errors: {},
       acadYears: [],
-      programs: []
+      programs: [],
+      rooms: []
     };
   },
   methods: {
     initData: function initData() {
       this.acadYears = JSON.parse(this.propAcadYears);
       this.programs = JSON.parse(this.propPrograms);
+      this.rooms = JSON.parse(this.propRooms);
+
+      if (this.propData) {
+        var rawData = JSON.parse(this.propData);
+        this.global_id = rawData.schedule_id;
+        this.fields.acadyear_id = rawData.acadyear_id;
+        this.fields.program_id = rawData.program_id;
+        this.fields.course_id = rawData.course_id;
+        this.fields.start_time = new Date('2022-08-08 ' + rawData.start_time);
+        this.fields.end_time = new Date('2022-08-08 ' + rawData.end_time);
+        this.fields.room_id = rawData.room_id;
+        this.fields.mon = rawData.mon === 1 ? true : false;
+        this.fields.tue = rawData.tue === 1 ? true : false;
+        this.fields.wed = rawData.wed === 1 ? true : false;
+        this.fields.thu = rawData.thu === 1 ? true : false;
+        this.fields.fri = rawData.fri === 1 ? true : false;
+        this.fields.sat = rawData.sat === 1 ? true : false;
+        this.fields.sun = rawData.sun === 1 ? true : false; //display only
+
+        this.fields.course_desc = rawData.course.course_desc;
+      }
     },
     emitBrowseCourse: function emitBrowseCourse(rowData) {
       console.log(rowData);
@@ -9656,32 +9705,49 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this = this;
 
-      // this.fields.mon = field.mon === 1 ? true : false;
-      // this.fields.tue = res.data.tue === 1 ? true : false;
-      // this.fields.wed = res.data.wed === 1 ? true : false;
-      // this.fields.thur = res.data.thur === 1 ? true : false;
-      // this.fields.fri = res.data.fri === 1 ? true : false;
-      // this.fields.sat = res.data.sat === 1 ? true : false;
-      // this.fields.sun = res.data.sun === 1 ? true : false;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/cpanel/schedules', this.fields).then(function (res) {
-        //console.log(res.data);
-        if (res.data.status === 'saved') {
-          _this.$buefy.dialog.alert({
-            title: 'SAVED!',
-            message: 'Successfully saved.',
-            type: 'is-success',
-            onConfirm: function onConfirm() {
-              window.location = '/cpanel/schedules';
-            }
-          });
-        }
-      })["catch"](function (err) {
-        //console.log(err.response.status)
-        if (err.response.status === 422) {
-          _this.errors = err.response.data.errors;
-          console.log(_this.errors);
-        }
-      });
+      if (this.global_id > 0) {
+        //update
+        axios__WEBPACK_IMPORTED_MODULE_0___default().put('/cpanel/schedules/' + this.global_id, this.fields).then(function (res) {
+          //console.log(res.data);
+          if (res.data.status === 'updated') {
+            _this.$buefy.dialog.alert({
+              title: 'UPDATED!',
+              message: 'Successfully updated.',
+              type: 'is-success',
+              onConfirm: function onConfirm() {
+                window.location = '/cpanel/schedules';
+              }
+            });
+          }
+        })["catch"](function (err) {
+          //console.log(err.response.status)
+          if (err.response.status === 422) {
+            _this.errors = err.response.data.errors;
+            console.log(_this.errors);
+          }
+        });
+      } else {
+        //insert
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/cpanel/schedules', this.fields).then(function (res) {
+          //console.log(res.data);
+          if (res.data.status === 'saved') {
+            _this.$buefy.dialog.alert({
+              title: 'SAVED!',
+              message: 'Successfully saved.',
+              type: 'is-success',
+              onConfirm: function onConfirm() {
+                window.location = '/cpanel/schedules';
+              }
+            });
+          }
+        })["catch"](function (err) {
+          //console.log(err.response.status)
+          if (err.response.status === 422) {
+            _this.errors = err.response.data.errors;
+            console.log(_this.errors);
+          }
+        });
+      }
     }
   },
   mounted: function mounted() {
@@ -10585,9 +10651,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
 //
 //
 //
@@ -30792,7 +30855,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n    .table > tbody > tr {\r\n\r\n        transition: background-color 0.5s ease;\r\n    }\r\n\r\n    .table > tbody > tr:hover {\r\n        background-color: rgb(233, 233, 233);\r\n    } */\n.modal-card-head[data-v-1b3a56f4]{\r\n        background-color: green;\n}\n.modal-card-title[data-v-1b3a56f4]{\r\n        color: white;\n}\r\n\r\n\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n    .table > tbody > tr {\r\n\r\n        transition: background-color 0.5s ease;\r\n    }\r\n\r\n    .table > tbody > tr:hover {\r\n        background-color: rgb(233, 233, 233);\r\n    } */\n.modal-card-head[data-v-1b3a56f4]{\r\n        background-color: green;\n}\n.modal-card-title[data-v-1b3a56f4]{\r\n        color: white;\n}\r\n\r\n\r\n\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -35337,7 +35400,11 @@ var render = function () {
             fn: function () {
               return [
                 _c("b-navbar-item", [
-                  _vm._v("\n                CONTROL PANEL\n            "),
+                  _vm._v(
+                    "\n                CONTROL PANEL (" +
+                      _vm._s(_vm.userRole) +
+                      ")\n            "
+                  ),
                 ]),
               ]
             },
@@ -35402,23 +35469,6 @@ var render = function () {
                 _c("b-navbar-item", { attrs: { href: "/cpanel/schedules" } }, [
                   _vm._v("\n                Schedules\n            "),
                 ]),
-                _vm._v(" "),
-                _c(
-                  "b-navbar-dropdown",
-                  { attrs: { label: "Admission" } },
-                  [
-                    _c(
-                      "b-navbar-item",
-                      { attrs: { href: "/panel/students-result" } },
-                      [
-                        _vm._v(
-                          "\n                    Students Result\n                "
-                        ),
-                      ]
-                    ),
-                  ],
-                  1
-                ),
                 _vm._v(" "),
                 _c("b-navbar-item", { attrs: { href: "/cpanel/users" } }, [
                   _vm._v("\n                User\n            "),
@@ -36836,6 +36886,24 @@ var render = function () {
                     }),
                     _vm._v(" "),
                     _c("b-table-column", {
+                      attrs: { field: "room", label: "Room" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function (props) {
+                            return [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(props.row.room.room) +
+                                  "\n                        "
+                              ),
+                            ]
+                          },
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("b-table-column", {
                       attrs: { field: "schedule_time", label: "Schedule Time" },
                       scopedSlots: _vm._u([
                         {
@@ -37360,6 +37428,42 @@ var render = function () {
                       1
                     ),
                     _vm._v(" "),
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "Room",
+                          type: this.errors.room_id ? "is-danger" : "",
+                          message: this.errors.room_id
+                            ? this.errors.room_id[0]
+                            : "",
+                        },
+                      },
+                      [
+                        _c(
+                          "b-select",
+                          {
+                            model: {
+                              value: _vm.fields.room_id,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "room_id", $$v)
+                              },
+                              expression: "fields.room_id",
+                            },
+                          },
+                          _vm._l(_vm.rooms, function (item, index) {
+                            return _c(
+                              "option",
+                              { key: index, domProps: { value: item.room_id } },
+                              [_vm._v(_vm._s(item.room))]
+                            )
+                          }),
+                          0
+                        ),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
                     _c("b-field", { attrs: { label: "Day" } }, [
                       _c(
                         "div",
@@ -37419,7 +37523,7 @@ var render = function () {
                                 expression: "fields.thu",
                               },
                             },
-                            [_vm._v("Thur")]
+                            [_vm._v("Thu")]
                           ),
                           _vm._v(" "),
                           _c(
@@ -39235,13 +39339,7 @@ var render = function () {
     [
       _c(
         "b-field",
-        {
-          attrs: {
-            label: "Course",
-            type: this.errors.course_id ? "is-danger" : "",
-            message: this.errors.course_id ? this.errors.course_id[0] : "",
-          },
-        },
+        { attrs: { label: "Course" } },
         [
           _c("b-input", {
             attrs: {

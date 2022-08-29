@@ -91,6 +91,10 @@
                                 {{ props.row.course.course_desc }}
                             </b-table-column>
 
+                            <b-table-column field="room" label="Room" v-slot="props">
+                                {{ props.row.room.room }}
+                            </b-table-column>
+
                             <b-table-column field="schedule_time" label="Schedule Time" v-slot="props">
                                 {{ props.row.start_time | formatTime }} - {{ props.row.end_time | formatTime }}
                             </b-table-column>

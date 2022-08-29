@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\AcademicYear;
 use App\Models\Program;
 use App\Models\Schedule;
+use App\Models\Room;
+
 
 class ScheduleController extends Controller
 {
@@ -32,7 +34,7 @@ class ScheduleController extends Controller
         $aycode = $req->aycode;
         $course = $req->course;
     
-        $data = Schedule::with('acadyear', 'program', 'course')
+        $data = Schedule::with('acadyear', 'program', 'course', 'room')
             ->whereHas('acadyear', function($q) use ($aycode){
                 $q->where('code', 'like', $aycode . '%');
             })
@@ -49,14 +51,26 @@ class ScheduleController extends Controller
         $programs = Program::orderBy('program_code', 'asc')
             ->where('is_admin', 0)
             ->get();
+        $rooms = Room::orderBy('room', 'asc')->get();
 
         return view('cpanel.schedules.schedules-create-edit')
             ->with('acadYears', $acadYears)
-            ->with('programs', $programs);
+            ->with('programs', $programs)
+            ->with('rooms', $rooms);
     }
 
     public function store(Request $req){
+        
         $ayid = $req->acadyear_id;
+
+        $mon = $req->mon == true ? 1 : 0;
+        $tue = $req->tue == true ? 1 : 0;
+        $wed = $req->wed == true ? 1 : 0;
+        $thu = $req->thu == true ? 1 : 0;
+        $fri = $req->fri == true ? 1 : 0;
+        $sat = $req->sat == true ? 1 : 0;
+        $sun = $req->sun == true ? 1 : 0;
+
 
         $startTime = date("H:i:s", strtotime($req->start_time)); //convert to date format UNIX
         $endTime = date("H:i:s", strtotime($req->end_time)); //convert to date format UNIX
@@ -65,12 +79,14 @@ class ScheduleController extends Controller
             'acadyear_id' => ['required'],
             'program_id' => ['required'],
             'course_id' => ['required'],
+            'room_id' => ['required'],
             'start_time' => ['required'],
             'end_time' => ['required'],
         ], $message = [
             'acadyear_id.required' => 'Academic year is required.',
             'program_id.required' => 'Program is required.',
             'course_id.required' => 'Course is required.',
+            'room_id.required' => 'Room is required.',
         ]);
 
 
@@ -81,8 +97,10 @@ class ScheduleController extends Controller
             })
             ->where(function($query) use ($startTime, $endTime){
             $query->whereBetween('start_time', [$startTime, $endTime])
-                ->orWhereBetween('end_time', [$startTime,$endTime]);
-        })->count();
+                ->orWhereBetween('end_time', [$startTime, $endTime]);
+        })
+        ->where('')
+        ->count();
 
         
         if($countExist > 0){
@@ -100,16 +118,16 @@ class ScheduleController extends Controller
             'acadyear_id' => $ayid,
             'program_id' => $req->program_id,
             'course_id' => $req->course_id,
-
+            'room_id' => $req->room_id,
             'start_time' => $startTime,
             'end_time' => $endTime,
-            'mon' => $req->mon,
-            'tue' => $req->tue,
-            'wed' => $req->wed,
-            'thu' => $req->thu,
-            'fri' => $req->fri,
-            'sat' => $req->sat,
-            'sun' => $req->sun,
+            'mon' => $mon,
+            'tue' => $tue,
+            'wed' => $wed,
+            'thu' => $thu,
+            'fri' => $fri,
+            'sat' => $sat,
+            'sun' => $sun,
 
         ]);
 
@@ -123,21 +141,66 @@ class ScheduleController extends Controller
         $programs = Program::orderBy('program_code', 'asc')
             ->where('is_admin', 0)
             ->get();
+        $rooms = Room::orderBy('room', 'asc')->get();
+
 
         $data = Schedule::with('acadyear', 'program', 'course')
             ->where('schedule_id', $id)
             ->first();
 
 
-        return $data;
+        //return $data;
 
         return view('cpanel.schedules.schedules-create-edit')
             ->with('acadYears', $acadYears)
-            ->with('programs', $programs);
+            ->with('programs', $programs)
+            ->with('rooms', $rooms)
+            ->with('data', $data);
     }
 
 
-    public function update(Request $req, $id){}
+    public function update(Request $req, $id){
+
+        $ayid = $req->acadyear_id;
+
+        $startTime = date("H:i:s", strtotime($req->start_time)); //convert to date format UNIX
+        $endTime = date("H:i:s", strtotime($req->end_time)); //convert to date format UNIX
+
+        $req->validate([
+            'acadyear_id' => ['required'],
+            'program_id' => ['required'],
+            'course_id' => ['required'],
+            'start_time' => ['required'],
+            'end_time' => ['required'],
+            'room_id' => ['required'],
+        ], $message = [
+            'acadyear_id.required' => 'Academic year is required.',
+            'program_id.required' => 'Program is required.',
+            'course_id.required' => 'Course is required.',
+            'room_id.required' => 'Room is required.',
+
+        ]);
+
+        $data = Schedule::find($id);
+        $data->acadyear_id = $ayid;
+        $data->program_id = $req->program_id;
+        $data->course_id = $req->course_id;
+        $data->room_id = $req->room_id;
+        $data->start_time = $startTime;
+        $data->end_time = $endTime;
+        $data->mon = $req->mon;
+        $data->tue = $req->tue;
+        $data->wed = $req->wed;
+        $data->thu = $req->thu;
+        $data->fri = $req->fri;
+        $data->sat = $req->sat;
+        $data->sun = $req->sun;
+        $data->save();
+
+        return response()->json([
+            'status' => 'updated'
+        ], 200);
+    }
 
 
     public function destroy($id){

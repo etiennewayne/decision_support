@@ -24,6 +24,17 @@ Route::get('/', function () {
     // }
     return view('welcome');
 });
+
+
+Route::get('/get-user', function () {
+    //get user if authenticated
+    if(Auth::check()){
+        $user = Auth::user();
+        return $user;
+    }
+});
+
+
 Route::get('/get-dental-services', [App\Http\Controllers\Administrator\ServicesController::class, 'getDentalServices']);
 
 

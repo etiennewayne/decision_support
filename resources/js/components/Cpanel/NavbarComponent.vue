@@ -4,7 +4,7 @@
         <b-navbar class="is-light">
             <template #brand>
                 <b-navbar-item>
-                    CONTROL PANEL
+                    CONTROL PANEL ({{ userRole }})
                 </b-navbar-item>
             </template>
 
@@ -39,17 +39,6 @@
                     Schedules
                 </b-navbar-item>
 
-                <b-navbar-dropdown label="Admission">
-                    <b-navbar-item href="/panel/students-result">
-                        Students Result
-                    </b-navbar-item>
-
-                    <!-- <b-navbar-item href="/panel/report-result">
-                        General Report
-                    </b-navbar-item> -->
-
-                </b-navbar-dropdown>
-
                 <b-navbar-item href="/cpanel/users">
                     User
                 </b-navbar-item>
@@ -77,14 +66,38 @@
 export default {
     data(){
         return{
-
+            user: {
+                role: '',
+            },
         }
     },
+
     methods: {
         logout(){
             axios.post('/logout').then(()=>{
                 window.location = '/';
             })
+        },
+
+        initUser(){
+            axios.get('/get-user').then(res =>{
+                this.user = res.data;
+                console.log(this.user);
+            })
+        }
+    },
+
+    mounted(){
+        this.initUser();
+    },
+
+    computed: {
+        userRole(){
+            if(this.user){
+                return this.user.role.toUpperCase();
+            }else{
+                return '';
+            }
         }
     }
 }

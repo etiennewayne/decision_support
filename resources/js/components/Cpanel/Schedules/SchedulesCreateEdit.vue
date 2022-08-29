@@ -44,7 +44,14 @@
                                     >
                                         <b-timepicker v-model="fields.end_time" placeholder="To" inline></b-timepicker>
                                     </b-field>
-                                   
+                                </b-field>
+
+                                <b-field label="Room"
+                                    :type="this.errors.room_id ? 'is-danger':''"
+                                    :message="this.errors.room_id ? this.errors.room_id[0] : ''">
+                                    <b-select v-model="fields.room_id">
+                                        <option v-for="(item, index) in rooms" :key="index" :value="item.room_id">{{ item.room }}</option>
+                                    </b-select>
                                 </b-field>
 
                                 <b-field label="Day">
@@ -52,7 +59,7 @@
                                         <b-checkbox class="checkbox" v-model="fields.mon">Mon</b-checkbox>
                                         <b-checkbox v-model="fields.tue">Tue</b-checkbox>
                                         <b-checkbox v-model="fields.wed">Wed</b-checkbox>
-                                        <b-checkbox v-model="fields.thu">Thur</b-checkbox>
+                                        <b-checkbox v-model="fields.thu">Thu</b-checkbox>
                                         <b-checkbox v-model="fields.fri">Fri</b-checkbox>
                                         <b-checkbox v-model="fields.sat">Sat</b-checkbox>
                                         <b-checkbox v-model="fields.sun">Sun</b-checkbox>
@@ -77,12 +84,15 @@ import axios from 'axios';
 
 
 export default {
-    props: ['propAcadYears', 'propPrograms'],
+    props: ['propAcadYears', 'propPrograms', 'propData', 'propRooms'],
 
     data(){
         return{
+            global_id: 0, //for edit or create reference
+
             fields: {
                 course_id: null,
+                course_desc: null,
                 start_time: null,
                 end_time: null,
                 mon: false,
@@ -97,6 +107,7 @@ export default {
 
             acadYears: [],
             programs: [],
+            rooms: [],
 
         }
     },
@@ -106,6 +117,29 @@ export default {
         initData: function(){
             this.acadYears = JSON.parse(this.propAcadYears);
             this.programs = JSON.parse(this.propPrograms);
+            this.rooms = JSON.parse(this.propRooms);
+
+            if(this.propData){
+                let rawData = JSON.parse(this.propData);
+                this.global_id = rawData.schedule_id;
+                this.fields.acadyear_id = rawData.acadyear_id;
+                
+                this.fields.program_id = rawData.program_id;
+                this.fields.course_id = rawData.course_id;
+                this.fields.start_time = new Date('2022-08-08 ' + rawData.start_time);
+                this.fields.end_time = new Date('2022-08-08 ' + rawData.end_time);
+                this.fields.room_id = rawData.room_id;
+                this.fields.mon = rawData.mon === 1 ? true : false;
+                this.fields.tue = rawData.tue === 1 ? true : false;
+                this.fields.wed = rawData.wed === 1 ? true : false;
+                this.fields.thu = rawData.thu === 1 ? true : false;
+                this.fields.fri = rawData.fri === 1 ? true : false;
+                this.fields.sat = rawData.sat === 1 ? true : false;
+                this.fields.sun = rawData.sun === 1 ? true : false;
+
+                //display only
+                this.fields.course_desc = rawData.course.course_desc;
+            }
         },
 
         emitBrowseCourse: function(rowData){
@@ -118,37 +152,49 @@ export default {
 
         submit: function(){
 
-
-            // this.fields.mon = field.mon === 1 ? true : false;
-            // this.fields.tue = res.data.tue === 1 ? true : false;
-            // this.fields.wed = res.data.wed === 1 ? true : false;
-            // this.fields.thur = res.data.thur === 1 ? true : false;
-            // this.fields.fri = res.data.fri === 1 ? true : false;
-            // this.fields.sat = res.data.sat === 1 ? true : false;
-            // this.fields.sun = res.data.sun === 1 ? true : false;
-
-            axios.post('/cpanel/schedules', this.fields).then(res=>{
+            if(this.global_id > 0){
+                //update
+                axios.put('/cpanel/schedules/' + this.global_id, this.fields).then(res=>{
                 //console.log(res.data);
-                if(res.data.status === 'saved'){
-                    this.$buefy.dialog.alert({
-                        title: 'SAVED!',
-                        message: 'Successfully saved.',
-                        type: 'is-success',
-                        onConfirm: () => {
-                            window.location = '/cpanel/schedules';
-                        }
-                    })
-                }
-            }).catch(err=>{
-                //console.log(err.response.status)
-                if(err.response.status === 422){
-                    this.errors = err.response.data.errors;
-                    console.log(this.errors);
-                }
-            })
-
-
-
+                    if(res.data.status === 'updated'){
+                        this.$buefy.dialog.alert({
+                            title: 'UPDATED!',
+                            message: 'Successfully updated.',
+                            type: 'is-success',
+                            onConfirm: () => {
+                                window.location = '/cpanel/schedules';
+                            }
+                        })
+                    }
+                }).catch(err=>{
+                    //console.log(err.response.status)
+                    if(err.response.status === 422){
+                        this.errors = err.response.data.errors;
+                        console.log(this.errors);
+                    }
+                })
+            }else{
+                //insert
+                axios.post('/cpanel/schedules', this.fields).then(res=>{
+                //console.log(res.data);
+                    if(res.data.status === 'saved'){
+                        this.$buefy.dialog.alert({
+                            title: 'SAVED!',
+                            message: 'Successfully saved.',
+                            type: 'is-success',
+                            onConfirm: () => {
+                                window.location = '/cpanel/schedules';
+                            }
+                        })
+                    }
+                }).catch(err=>{
+                    //console.log(err.response.status)
+                    if(err.response.status === 422){
+                        this.errors = err.response.data.errors;
+                        console.log(this.errors);
+                    }
+                })
+            }
         }
 
     },

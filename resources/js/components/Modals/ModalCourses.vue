@@ -1,9 +1,6 @@
 <template>
     <div>
-        <b-field label="Course"
-            :type="this.errors.course_id ? 'is-danger':''"
-            :message="this.errors.course_id ? this.errors.course_id[0] : ''">
-
+        <b-field label="Course">
             <b-input :value="valueCourse" expanded icon="calendar-arrow-right" placeholder="SELECT COURSE" required readonly>
             </b-input>
 

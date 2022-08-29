@@ -35,6 +35,25 @@ class UserSeeder extends Seeder
             ],
 
             [
+                'username' => 'faculty',
+                'lname' => 'DOMINGUEZ',
+                'fname' => 'JUNARD',
+                'mname' => 'P',
+                'suffix' => '',
+                'program_id' => 1,
+                'sex' => 'MALE',
+                'province' => 'MISAMIS OCCIDENTAL',
+                'city' => 'TANGUB CITY',
+                'barangay' => 'CANIANGAN',
+                'street' => 'P-6',
+                'email' => 'faculty@dev.com',
+                'contact_no' => '091166554878',
+                'role' => 'FACULTY',
+                'password' => Hash::make('a')
+            ],
+
+
+            [
                 'username' => 'a',
                 'lname' => 'NERI',
                 'fname' => 'MAIRAMAE',

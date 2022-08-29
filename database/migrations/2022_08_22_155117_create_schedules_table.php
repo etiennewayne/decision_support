@@ -28,6 +28,10 @@ class CreateSchedulesTable extends Migration
             $table->foreign('course_id')->references('course_id')->on('courses')
                     ->onDelete('cascade')->onUpdate('cascade');
 
+            $table->unsignedBigInteger('room_id');
+            $table->foreign('room_id')->references('room_id')->on('rooms')
+                    ->onDelete('cascade')->onUpdate('cascade');
+
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
 

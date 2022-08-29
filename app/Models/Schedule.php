@@ -14,7 +14,7 @@ class Schedule extends Model
 
 
     protected $fillable = ['acadyear_id', 'program_id',
-        'course_id', 'start_time', 'end_time',
+        'course_id', 'room_id','start_time', 'end_time',
         'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'
     ];
 
@@ -31,6 +31,11 @@ class Schedule extends Model
     public function course(){
         return $this->hasOne(Course::class, 'course_id', 'course_id');
     }
+
+    public function room(){
+        return $this->hasOne(Room::class, 'room_id', 'room_id');
+    }
+
 
 
 }
