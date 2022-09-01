@@ -259,8 +259,6 @@ export default{
         },
 
 
-
-
         submit: function(){
             if(this.global_id > 0){
                 //update
