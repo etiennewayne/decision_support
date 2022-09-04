@@ -14,5 +14,23 @@ class FacultySeeder extends Seeder
     public function run()
     {
         //
+
+        $data = [
+            [
+                'faculty_lname' => 'SANTARITA',
+                'faculty_fname' => 'JUNREY',
+                'faculty_mname' => 'MAPA'
+            ],
+
+            [
+                'faculty_lname' => 'FLORIZA',
+                'faculty_fname' => 'JADE ANN',
+                'faculty_mname' => 'ESPELLOGO'
+            ],
+
+
+        ];
+
+        \App\Models\Faculty::insertOrIgnore($data);
     }
 }

@@ -39,6 +39,18 @@
                     Schedules
                 </b-navbar-item>
 
+                <b-navbar-dropdown label="Faculty">
+                    <b-navbar-item href="/cpanel/faculty">
+                        Faculty
+                    </b-navbar-item>
+
+                    <b-navbar-item href="/cpanel/faculty-load">
+                        Faculty Load
+                    </b-navbar-item>
+
+
+                </b-navbar-dropdown>
+
                 <b-navbar-item href="/cpanel/users">
                     User
                 </b-navbar-item>

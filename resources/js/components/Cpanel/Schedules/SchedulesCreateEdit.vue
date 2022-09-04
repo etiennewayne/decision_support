@@ -4,7 +4,7 @@
             <div class="columns is-centered">
                 <div class="column is-6">
                     <form @submit.prevent="submit">
-                    
+
                         <div class="box">
                             <div class="subtitle">
                                 SCHEDULE INFORMATION ENTRY
@@ -30,7 +30,7 @@
                                     :message="this.errors.course_id ? this.errors.course_id[0] : ''">
                                     <modal-courses :propCourse="fields.course_desc" @browseCourses="emitBrowseCourse($event)"></modal-courses>
                                 </b-field>
-                                
+
                                 <b-field label="Time">
                                     <b-field label-position="on-border" label="Start time"
                                         :type="this.errors.start_time ? 'is-danger':''"
@@ -66,6 +66,19 @@
                                     </div>
                                 </b-field>
 
+                                <br>
+                                <b-field label="Force to save">
+                                    <b-checkbox v-model="fields.forcesave" true-value="Yes"
+                                                false-value="No">{{ fields.forcesave }}</b-checkbox>
+                                </b-field>
+
+                                <b-field
+                                         :type="this.errors.schedule ? 'is-danger':''"
+                                         :message="this.errors.schedule ? this.errors.schedule[0] : ''">
+                                    <input type="hidden" v-model="fields.schedule"></input>
+                                </b-field>
+
+
                                 <div class="buttons mt-4 is-right">
                                     <button class="button is-primary">SAVE</button>
                                 </div>
@@ -74,8 +87,64 @@
                     </form> <!-- form-->
                 </div> <!--column -->
             </div><!-- cols -->
-            
-        </div>
+
+        </div><!--section-->
+
+        <!--modal create-->
+        <b-modal v-model="modalConflict" has-modal-card
+             trap-focus
+             :width="640"
+             aria-role="dialog"
+             aria-label="Modal"
+             aria-modal>
+
+
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">CONFLICT(S)</p>
+                    <button
+                        type="button"
+                        class="delete"
+                        @click="modalConflict = false" />
+                </header>
+
+                <section class="modal-card-body">
+                    <div class="">
+                        <div class="columns">
+                            <div class="column">
+
+                               <table class="table">
+                                   <tr>
+                                       <th>ID</th>
+                                       <th>Course Code</th>
+                                       <th>Description</th>
+                                       <th>Time</th>
+                                       <th>Room</th>
+                                   </tr>
+                                   <tr v-for="(item, index) in conflictData" :key="index">
+                                       <td>{{ item.schedule_id }}</td>
+                                       <td>{{ item.course.course_code }}</td>
+                                       <td>{{ item.course.course_desc }}</td>
+                                       <td>{{ item.start_time | formatTime }} - {{ item.end_time | formatTime }}
+                                       <td>{{ item.room.room }}</td>
+                                   </tr>
+                               </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <footer class="modal-card-foot">
+                    <b-button
+                        label="Close"
+                        @click="modalConflict=false"/>
+                </footer>
+            </div>
+
+        </b-modal>
+        <!--close modal-->
+
     </div><!--root div-->
 </template>
 
@@ -101,7 +170,9 @@ export default {
                 thu: false,
                 fri: false,
                 sat: false,
-                sun: false
+                sun: false,
+                forcesave: 'No',
+                schedule: null
             },
             errors: {},
 
@@ -109,10 +180,15 @@ export default {
             programs: [],
             rooms: [],
 
+            conflictData: {},
+            modalConflict: false,
+
         }
     },
 
     methods: {
+
+
 
         initData: function(){
             this.acadYears = JSON.parse(this.propAcadYears);
@@ -123,7 +199,7 @@ export default {
                 let rawData = JSON.parse(this.propData);
                 this.global_id = rawData.schedule_id;
                 this.fields.acadyear_id = rawData.acadyear_id;
-                
+
                 this.fields.program_id = rawData.program_id;
                 this.fields.course_id = rawData.course_id;
                 this.fields.start_time = new Date('2022-08-08 ' + rawData.start_time);
@@ -192,6 +268,12 @@ export default {
                     if(err.response.status === 422){
                         this.errors = err.response.data.errors;
                         console.log(this.errors);
+
+                        if(this.errors.schedule[1]){
+                            this.conflictData = JSON.parse(this.errors.schedule[1]);
+                            console.log(this.conflictData);
+                            this.modalConflict = true;
+                        }
                     }
                 })
             }
@@ -220,8 +302,8 @@ export default {
         /* .day-container {
             flex-direction: column;
         } */
-        
-    
+
+
     }
 
 

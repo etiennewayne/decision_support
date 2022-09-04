@@ -12,9 +12,9 @@ class DetectConflictRule implements Rule
      *
      * @return void
      */
-    private $ayid, $startTime, $endTime, $mon, $tue, $wed,$thu, $fri, $sat, $sun;
+    private $ayid, $startTime, $endTime, $mon, $tue, $wed,$thu, $fri, $sat, $sun, $room_id,$id, $data;
 
-    public function __construct($ayid, $startTime, $endTime,  $mon, $tue, $wed, $thu, $fri, $sat, $sun)
+    public function __construct($ayid, $startTime, $endTime,  $mon, $tue, $wed, $thu, $fri, $sat, $sun, $room_id, $id)
     {
         //
         $this->ayid = $ayid;
@@ -29,6 +29,9 @@ class DetectConflictRule implements Rule
         $this->fri = $fri;
         $this->sat = $sat;
         $this->sun = $sun;
+        $this->room_id = $room_id;
+
+        $this->id = $id;
     }
 
     /**
@@ -43,7 +46,7 @@ class DetectConflictRule implements Rule
         //
         $sTime = $this->startTime;
         $eTime = $this->endTime;
-        
+
         $ayid = $this->ayid;
         $mon = $this->mon;
         $tue = $this->tue;
@@ -52,9 +55,10 @@ class DetectConflictRule implements Rule
         $fri = $this->fri;
         $sat = $this->sat;
         $sun = $this->sun;
+        $room_id = $this->room_id;
 
 
-        $countExist = Schedule::with('acadyear')
+        $countExist = Schedule::with('acadyear', 'program', 'course', 'room')
             ->whereHas('acadyear', function($q) use ($ayid){
                 $q->where('acadyear_id', $ayid);
             })
@@ -62,7 +66,7 @@ class DetectConflictRule implements Rule
                 $query->whereBetween('start_time', [$sTime, $eTime])
                     ->orWhereBetween('end_time', [$sTime, $eTime]);
             });
-        
+
         if($mon == 1 || $tue == 1 || $wed == 1 || $thu == 1 || $fri == 1 || $sat == 1 || $sun == 1){
             $countExist->where(function($q) use ($mon, $tue,$wed, $thu, $fri, $sat, $sun){
                 $mon == 1 ? $q->orWhere('mon', 1) : '';
@@ -74,15 +78,22 @@ class DetectConflictRule implements Rule
                 $sun == 1 ? $q->orWhere('sun', 1): '';
             });
         }
-    
+        $countExist->where('room_id', $room_id);
+
+        if($this->id > 0){
+            //update but not this data
+            $countExist->where('schedule_id', '!=', $this->id);
+        }
+
         $count = $countExist->count();
+        $this->data = $countExist->get();
 
         if($count > 0){
-            return true;
-        }else{
             return false;
+        }else{
+            return true;
         }
-        
+
     }
 
     /**
@@ -93,6 +104,10 @@ class DetectConflictRule implements Rule
     public function message()
     {
         //return 'The validation error message.';
-        return 'Schedule already exist.';
+        return [
+            'msg' => 'Schedule already exist.',
+            'data' => $this->data
+        ];
+
     }
 }

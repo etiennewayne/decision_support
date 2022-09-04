@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             AcademicYearSeeder::class,
             CourseSeeder::class,
-
+            FacultySeeder::class,
         ]);
     }
 }

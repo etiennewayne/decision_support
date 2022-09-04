@@ -63,6 +63,8 @@ class ScheduleController extends Controller
 
     public function store(Request $req){
 
+        $forceSave = $req->forcesave;
+
         $ayid = $req->acadyear_id;
 
         $mon = $req->mon == true ? 1 : 0;
@@ -77,55 +79,36 @@ class ScheduleController extends Controller
         $startTime = date("H:i:s", strtotime($req->start_time)); //convert to date format UNIX
         $endTime = date("H:i:s", strtotime($req->end_time)); //convert to date format UNIX
 
-        $req->validate([
-            'acadyear_id' => ['required'],
-            'program_id' => ['required'],
-            'course_id' => ['required'],
-            'room_id' => ['required'],
-            'start_time' => ['required'],
-            'end_time' => ['required'],
-            'start_time' => [new DetectConflictRule($ayid, $startTime, $endTime, $mon, $tue, $wed, $thu, $fri, $sat, $sun)]
-        ], $message = [
-            'acadyear_id.required' => 'Academic year is required.',
-            'program_id.required' => 'Program is required.',
-            'course_id.required' => 'Course is required.',
-            'room_id.required' => 'Room is required.',
-        ]);
-
-
-        //check if input time have no conflict to other
-        // $countExist = Schedule::with('acadyear')
-        //     ->whereHas('acadyear', function($q) use ($ayid){
-        //         $q->where('acadyear_id', $ayid);
-        //     })
-        //     ->where(function($query) use ($startTime, $endTime){
-        //         $query->whereBetween('start_time', [$startTime, $endTime])
-        //             ->orWhereBetween('end_time', [$startTime, $endTime]);
-        //     });
-        
-        // if($mon == 1 || $tue == 1 || $wed == 1 || $thu == 1 || $fri == 1 || $sat == 1 || $sun == 1){
-        //     $countExist->where(function($q) use ($mon, $tue,$wed, $thu, $fri, $sat, $sun){
-        //         $mon == 1 ? $q->orWhere('mon', 1) : '';
-        //         $tue == 1 ? $q->orWhere('tue', 1) : '';
-        //         $wed == 1 ? $q->orWhere('wed', 1) : '';
-        //         $thu == 1 ? $q->orWhere('thu', 1) : '';
-        //         $fri == 1 ? $q->orWhere('fri', 1) : '';
-        //         $sat == 1 ? $q->orWhere('sat', 1) : '';
-        //         $sun == 1 ? $q->orWhere('sun', 1): '';
-    
-        //     });
-        // }
-        // $count = $countExist->count();
-
-        if($count > 0){
-            return response()->json([
-                'errors' => [
-                    'exist' =>  ['Schedule already exist.']
-                ]
-            ], 422);
+        if($forceSave == 'Yes'){
+            $req->validate([
+                'acadyear_id' => ['required'],
+                'program_id' => ['required'],
+                'course_id' => ['required'],
+                'room_id' => ['required'],
+                'start_time' => ['required'],
+                'end_time' => ['required'],
+            ], $message = [
+                'acadyear_id.required' => 'Academic year is required.',
+                'program_id.required' => 'Program is required.',
+                'course_id.required' => 'Course is required.',
+                'room_id.required' => 'Room is required.',
+            ]);
+        }else{
+            $req->validate([
+                'acadyear_id' => ['required'],
+                'program_id' => ['required'],
+                'course_id' => ['required'],
+                'room_id' => ['required'],
+                'start_time' => ['required'],
+                'end_time' => ['required'],
+                'schedule' => [new DetectConflictRule($ayid, $startTime, $endTime, $mon, $tue, $wed, $thu, $fri, $sat, $sun, $req->room_id,0)]
+            ], $message = [
+                'acadyear_id.required' => 'Academic year is required.',
+                'program_id.required' => 'Program is required.',
+                'course_id.required' => 'Course is required.',
+                'room_id.required' => 'Room is required.',
+            ]);
         }
-
-        return $count;
 
 
         Schedule::create([
@@ -180,6 +163,16 @@ class ScheduleController extends Controller
         $startTime = date("H:i:s", strtotime($req->start_time)); //convert to date format UNIX
         $endTime = date("H:i:s", strtotime($req->end_time)); //convert to date format UNIX
 
+
+        $mon = $req->mon == true ? 1 : 0;
+        $tue = $req->tue == true ? 1 : 0;
+        $wed = $req->wed == true ? 1 : 0;
+        $thu = $req->thu == true ? 1 : 0;
+        $fri = $req->fri == true ? 1 : 0;
+        $sat = $req->sat == true ? 1 : 0;
+        $sun = $req->sun == true ? 1 : 0;
+
+
         $req->validate([
             'acadyear_id' => ['required'],
             'program_id' => ['required'],
@@ -187,6 +180,7 @@ class ScheduleController extends Controller
             'start_time' => ['required'],
             'end_time' => ['required'],
             'room_id' => ['required'],
+            'schedule' => [new DetectConflictRule($ayid, $startTime, $endTime, $mon, $tue, $wed, $thu, $fri, $sat, $sun, $req->room_id, $id)]
         ], $message = [
             'acadyear_id.required' => 'Academic year is required.',
             'program_id.required' => 'Program is required.',
@@ -214,6 +208,49 @@ class ScheduleController extends Controller
         return response()->json([
             'status' => 'updated'
         ], 200);
+    }
+
+    public function getConflictData(Request $req){
+        return $req;
+
+        $ayid = $req->acadyear_id;
+
+        $mon = $req->mon ? 1 : 0;
+        $tue = $req->tue ? 1 : 0;
+        $wed = $req->wed ? 1 : 0;
+        $thu = $req->thu ? 1 : 0;
+        $fri = $req->fri ? 1 : 0;
+        $sat = $req->sat ? 1 : 0;
+        $sun = $req->sun ? 1 : 0;
+
+
+        $startTime = date("H:i:s", strtotime($req->start_time)); //convert to date format UNIX
+        $endTime = date("H:i:s", strtotime($req->end_time)); //convert to date format UNIX
+
+        $countExist = Schedule::with('acadyear', 'course', 'program', 'room')
+            ->whereHas('acadyear', function($q) use ($ayid){
+                $q->where('acadyear_id', $ayid);
+            })
+            ->where(function($query) use ($startTime, $endTime){
+                $query->whereBetween('start_time', [$startTime, $endTime])
+                    ->orWhereBetween('end_time', [$startTime, $endTime]);
+            });
+
+        if($mon == 1 || $tue == 1 || $wed == 1 || $thu == 1 || $fri == 1 || $sat == 1 || $sun == 1){
+            $countExist->where(function($q) use ($mon, $tue,$wed, $thu, $fri, $sat, $sun){
+                $mon == 1 ? $q->orWhere('mon', 1) : '';
+                $tue == 1 ? $q->orWhere('tue', 1) : '';
+                $wed == 1 ? $q->orWhere('wed', 1) : '';
+                $thu == 1 ? $q->orWhere('thu', 1) : '';
+                $fri == 1 ? $q->orWhere('fri', 1) : '';
+                $sat == 1 ? $q->orWhere('sat', 1) : '';
+                $sun == 1 ? $q->orWhere('sun', 1): '';
+            });
+        }
+
+        $data = $countExist->get();
+
+        return $data;
     }
 
 
