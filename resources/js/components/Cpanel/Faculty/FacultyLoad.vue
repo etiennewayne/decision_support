@@ -6,7 +6,7 @@
                     <div class="box">
 
                         <div class="table-title">
-                            LIST OF FACULTY
+                            LIST OF FACULTY AND COURSE LOAD
                         </div>
 
                         <div class="level">

@@ -40,6 +40,7 @@
                 </b-navbar-item>
 
                 <b-navbar-dropdown label="Faculty">
+                    
                     <b-navbar-item href="/cpanel/faculty">
                         Faculty
                     </b-navbar-item>

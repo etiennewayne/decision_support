@@ -13,5 +13,12 @@ class Faculty extends Model
     protected $primaryKey = 'faculty_id';
 
 
-    protected $fillable = ['faculty_id', 'faculty_lname', 'faculty_fname', 'faculty_mname', 'active'];
+    protected $fillable = ['faculty_id', 'lname', 'fname', 'mname', 'sex', 'active'];
+
+
+    public function facultyLoad(){
+        $this->hasMany(FacultyLoad::class, 'faculty_id', 'faculty_id');
+    }
+
+    
 }

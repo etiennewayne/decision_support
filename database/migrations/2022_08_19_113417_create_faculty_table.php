@@ -15,9 +15,10 @@ class CreateFacultyTable extends Migration
     {
         Schema::create('faculty', function (Blueprint $table) {
             $table->id('faculty_id');
-            $table->string('faculty_lname')->nullable();
-            $table->string('faculty_fname')->nullable();
-            $table->string('faculty_mname')->nullable();
+            $table->string('lname')->nullable();
+            $table->string('fname')->nullable();
+            $table->string('mname')->nullable();
+            $table->string('sex')->nullable();
             $table->tinyInteger('active')->default(1);
             $table->timestamps();
         });

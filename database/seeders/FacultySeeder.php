@@ -17,15 +17,17 @@ class FacultySeeder extends Seeder
 
         $data = [
             [
-                'faculty_lname' => 'SANTARITA',
-                'faculty_fname' => 'JUNREY',
-                'faculty_mname' => 'MAPA'
+                'lname' => 'SANTARITA',
+                'fname' => 'JUNREY',
+                'mname' => 'MAPA',
+                'sex' => 'MALE'
             ],
 
             [
-                'faculty_lname' => 'FLORIZA',
-                'faculty_fname' => 'JADE ANN',
-                'faculty_mname' => 'ESPELLOGO'
+                'lname' => 'FLORIZA',
+                'fname' => 'JADE ANN',
+                'mname' => 'ESPELLOGO',
+                'sex' => 'FEMALE'
             ],
 
 

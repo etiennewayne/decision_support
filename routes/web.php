@@ -101,7 +101,7 @@ Route::get('/cpanel/get-schedules', [App\Http\Controllers\Cpanel\ScheduleControl
 Route::get('/cpanel/get-conflict-data', [App\Http\Controllers\Cpanel\ScheduleController::class, 'getConflictData']);
 
 Route::resource('/cpanel/faculty', App\Http\Controllers\Cpanel\FacultyController::class);
-Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getSchedule']);
+Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getFaculty']);
 
 
 
