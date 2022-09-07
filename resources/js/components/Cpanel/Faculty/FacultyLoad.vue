@@ -283,6 +283,15 @@ export default{
             perPage: 10,
             defaultSortDirection: 'asc',
 
+            dataFacultyLoad: [],
+            totalFacultyLoad: 0,
+            loadingFacultyLoad: false,
+            sortFieldFacultyLoad: 'faculty_id',
+            sortOrderFacultyLoad: 'desc',
+            pageFacultyLoad: 1,
+            perPageFacultyLoad: 10,
+            defaultSortDirectionFacultyLoad: 'asc',
+
 
             global_id : 0,
 
@@ -364,6 +373,58 @@ export default{
 
         setPerPage(){
             this.loadAsyncData()
+        },
+
+
+
+        loadAsyncDataFacultyLoad() {
+            const params = [
+                `sort_by=${this.sortFieldFacultyLoad}.${this.sortOrderFacultyLoad}`,
+                `lname=${this.search.lname}`,
+                `perpage=${this.perPageFacultyLoad}`,
+                `page=${this.pageFacultyLoad}`
+            ].join('&')
+
+            this.loadingFacultyLoad = true;
+            axios.get(`/cpanel/get-faculty-load/${this.global_id}`)
+                .then(({ data }) => {
+                    this.dataFacultyLoad = [];
+                    let currentTotal = data.total;
+
+                    if (data.total / this.perPageFacultyLoad > 1000) {
+                        currentTotal = this.perPageFacultyLoad * 1000
+                    }
+
+                    this.totalFacultyLoad = currentTotal
+                    data.data.forEach((item) => {
+                        //item.release_date = item.release_date ? item.release_date.replace(/-/g, '/') : null
+                        this.dataFacultyLoad.push(item)
+                    })
+                    this.loadingFacultyLoad = false
+                })
+                .catch((error) => {
+                    this.dataFacultyLoad = []
+                    this.totalFacultyLoad = 0
+                    this.loadingFacultyLoad = false
+                    throw error
+                })
+        },
+        /*
+        * Handle page-change event
+        */
+        onPageChangeFacultyLoad(page) {
+            this.pageFacultyLoad = page
+            this.setPerPageFacultyLoad()
+        },
+
+        onSortFacultyLoad(field, order) {
+            this.sortFieldFacultyLoad = field
+            this.sortOrderFacultyLoad = order
+            this.setPerPageFacultyLoad()
+        },
+
+        setPerPageFacultyLoad(){
+            this.loadAsyncDataFacultyLoad()
         },
 
 

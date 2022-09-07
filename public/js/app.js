@@ -9021,6 +9021,14 @@ __webpack_require__.r(__webpack_exports__);
       page: 1,
       perPage: 10,
       defaultSortDirection: 'asc',
+      dataFacultyLoad: [],
+      totalFacultyLoad: 0,
+      loadingFacultyLoad: false,
+      sortFieldFacultyLoad: 'faculty_id',
+      sortOrderFacultyLoad: 'desc',
+      pageFacultyLoad: 1,
+      perPageFacultyLoad: 10,
+      defaultSortDirectionFacultyLoad: 'asc',
       global_id: 0,
       search: {
         lname: ''
@@ -9089,67 +9097,110 @@ __webpack_require__.r(__webpack_exports__);
     setPerPage: function setPerPage() {
       this.loadAsyncData();
     },
+    loadAsyncDataFacultyLoad: function loadAsyncDataFacultyLoad() {
+      var _this2 = this;
+
+      var params = ["sort_by=".concat(this.sortFieldFacultyLoad, ".").concat(this.sortOrderFacultyLoad), "lname=".concat(this.search.lname), "perpage=".concat(this.perPageFacultyLoad), "page=".concat(this.pageFacultyLoad)].join('&');
+      this.loadingFacultyLoad = true;
+      axios.get("/cpanel/get-faculty-load/".concat(this.global_id)).then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.dataFacultyLoad = [];
+        var currentTotal = data.total;
+
+        if (data.total / _this2.perPageFacultyLoad > 1000) {
+          currentTotal = _this2.perPageFacultyLoad * 1000;
+        }
+
+        _this2.totalFacultyLoad = currentTotal;
+        data.data.forEach(function (item) {
+          //item.release_date = item.release_date ? item.release_date.replace(/-/g, '/') : null
+          _this2.dataFacultyLoad.push(item);
+        });
+        _this2.loadingFacultyLoad = false;
+      })["catch"](function (error) {
+        _this2.dataFacultyLoad = [];
+        _this2.totalFacultyLoad = 0;
+        _this2.loadingFacultyLoad = false;
+        throw error;
+      });
+    },
+
+    /*
+    * Handle page-change event
+    */
+    onPageChangeFacultyLoad: function onPageChangeFacultyLoad(page) {
+      this.pageFacultyLoad = page;
+      this.setPerPageFacultyLoad();
+    },
+    onSortFacultyLoad: function onSortFacultyLoad(field, order) {
+      this.sortFieldFacultyLoad = field;
+      this.sortOrderFacultyLoad = order;
+      this.setPerPageFacultyLoad();
+    },
+    setPerPageFacultyLoad: function setPerPageFacultyLoad() {
+      this.loadAsyncDataFacultyLoad();
+    },
     openModal: function openModal() {
       this.isModalCreate = true;
       this.clearFields();
       this.errors = {};
     },
     submit: function submit() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.global_id > 0) {
         //update
         axios.put('/cpanel/faculty/' + this.global_id, this.fields).then(function (res) {
           if (res.data.status === 'updated') {
-            _this2.$buefy.dialog.alert({
+            _this3.$buefy.dialog.alert({
               title: 'UPDATED!',
               message: 'Successfully updated.',
               type: 'is-success',
               onConfirm: function onConfirm() {
-                _this2.loadAsyncData();
+                _this3.loadAsyncData();
 
-                _this2.clearFields();
+                _this3.clearFields();
 
-                _this2.global_id = 0;
-                _this2.isModalCreate = false;
+                _this3.global_id = 0;
+                _this3.isModalCreate = false;
               }
             });
           }
         })["catch"](function (err) {
           if (err.response.status === 422) {
-            _this2.errors = err.response.data.errors;
+            _this3.errors = err.response.data.errors;
           }
         });
       } else {
         //INSERT HERE
         axios.post('/cpanel/faculty', this.fields).then(function (res) {
           if (res.data.status === 'saved') {
-            _this2.$buefy.dialog.alert({
+            _this3.$buefy.dialog.alert({
               title: 'SAVED!',
               message: 'Successfully saved.',
               type: 'is-success',
               confirmText: 'OK',
               onConfirm: function onConfirm() {
-                _this2.isModalCreate = false;
+                _this3.isModalCreate = false;
 
-                _this2.loadAsyncData();
+                _this3.loadAsyncData();
 
-                _this2.clearFields();
+                _this3.clearFields();
 
-                _this2.global_id = 0;
+                _this3.global_id = 0;
               }
             });
           }
         })["catch"](function (err) {
           if (err.response.status === 422) {
-            _this2.errors = err.response.data.errors;
+            _this3.errors = err.response.data.errors;
           }
         });
       }
     },
     //alert box ask for deletion
     confirmDelete: function confirmDelete(delete_id) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$buefy.dialog.confirm({
         title: 'DELETE!',
@@ -9158,19 +9209,19 @@ __webpack_require__.r(__webpack_exports__);
         cancelText: 'Cancel',
         confirmText: 'Delete',
         onConfirm: function onConfirm() {
-          return _this3.deleteSubmit(delete_id);
+          return _this4.deleteSubmit(delete_id);
         }
       });
     },
     //execute delete after confirming
     deleteSubmit: function deleteSubmit(delete_id) {
-      var _this4 = this;
+      var _this5 = this;
 
       axios["delete"]('/cpanel/faculty/' + delete_id).then(function (res) {
-        _this4.loadAsyncData();
+        _this5.loadAsyncData();
       })["catch"](function (err) {
         if (err.response.status === 422) {
-          _this4.errors = err.response.data.errors;
+          _this5.errors = err.response.data.errors;
         }
       });
     },
@@ -9185,15 +9236,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     //update code here
     getData: function getData(data_id) {
-      var _this5 = this;
+      var _this6 = this;
 
       this.clearFields();
       this.global_id = data_id;
       this.isModalCreate = true; //nested axios for getting the address 1 by 1 or request by request
 
       axios.get('/cpanel/faculty/' + data_id).then(function (res) {
-        _this5.fields = res.data;
-        _this5.fields.active = res.data.active == 1 ? true : false; //load city first
+        _this6.fields = res.data;
+        _this6.fields.active = res.data.active == 1 ? true : false; //load city first
       });
     }
   },
@@ -31785,7 +31836,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n    .table > tbody > tr {\r\n\r\n        transition: background-color 0.5s ease;\r\n    }\r\n\r\n    .table > tbody > tr:hover {\r\n        background-color: rgb(233, 233, 233);\r\n    } */\n.modal-card-head[data-v-0e76d89c]{\r\n    background-color: green;\n}\n.modal-card-title[data-v-0e76d89c]{\r\n    color: white;\n}\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n    .table > tbody > tr {\r\n\r\n        transition: background-color 0.5s ease;\r\n    }\r\n\r\n    .table > tbody > tr:hover {\r\n        background-color: rgb(233, 233, 233);\r\n    } */\n.modal-card-head[data-v-0e76d89c]{\r\n    background-color: green;\n}\n.modal-card-title[data-v-0e76d89c]{\r\n    color: white;\n}\r\n\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
