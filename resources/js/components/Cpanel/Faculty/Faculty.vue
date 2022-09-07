@@ -72,7 +72,8 @@
                             </b-table-column>
 
                             <b-table-column field="active" label="Active" v-slot="props">
-                                {{ props.row.active }}
+                                <span v-if="props.row.active">YES</span>
+                                <span v-else>NO</span>
                             </b-table-column>
 
                             <b-table-column label="Action" v-slot="props">

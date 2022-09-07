@@ -14,6 +14,9 @@ class FacultyLoadController extends Controller
     }
 
 
+    public function index(){
+        return view('cpanel.faculty.faculty-load');
+    }
 
     public function show($id){
         return FacultyLoad::find($id);

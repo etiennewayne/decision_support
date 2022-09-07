@@ -103,6 +103,13 @@ Route::get('/cpanel/get-conflict-data', [App\Http\Controllers\Cpanel\ScheduleCon
 Route::resource('/cpanel/faculty', App\Http\Controllers\Cpanel\FacultyController::class);
 Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getFaculty']);
 
+Route::resource('/cpanel/faculty-load', App\Http\Controllers\Cpanel\FacultyLoadController::class);
+Route::get('/cpanel/get-faculty-load', [App\Http\Controllers\Cpanel\FacultyLoadController::class, 'getFacultyLoad']);
+
+
+
+
+
 
 
 Route::get('/get-open-semesters', function(){
@@ -111,9 +118,6 @@ Route::get('/get-open-semesters', function(){
 Route::get('/get-open-course-types', function(){
     return \App\Models\CourseType::all();
 });
-
-
-
 
 
 //Offices Administrator (For office management)

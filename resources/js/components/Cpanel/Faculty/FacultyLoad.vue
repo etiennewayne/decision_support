@@ -1,12 +1,13 @@
 <template>
     <div>
         <div class="section">
+            
             <div class="columns is-centered">
-                <div class="column is-8">
+                <div class="column is-6">
                     <div class="box">
 
                         <div class="table-title">
-                            LIST OF FACULTY AND COURSE LOAD
+                            LIST OF FACULTY
                         </div>
 
                         <div class="level">
@@ -89,6 +90,96 @@
 
                     </div>
                 </div><!--col -->
+
+
+                <div class="column is-6">
+                    <div class="box">
+
+                        <div class="table-title">
+                            LIST OF FACULTY
+                        </div>
+
+                        <div class="level">
+                            <div class="level-left">
+                                <b-field label="Page">
+                                    <b-select v-model="perPage" @input="setPerPage">
+                                        <option value="5">5 per page</option>
+                                        <option value="10">10 per page</option>
+                                        <option value="15">15 per page</option>
+                                        <option value="20">20 per page</option>
+                                    </b-select>
+                                </b-field>
+                            </div>
+
+                            <div class="level-right">
+                                <div class="level-item">
+                                    <b-field label="Search">
+                                        <b-input type="text"
+                                                 v-model="search.lname" placeholder="Search Lastname"
+                                                 @keyup.native.enter="loadAsyncData"/>
+                                        <p class="control">
+                                            <b-tooltip label="Search" type="is-success">
+                                                <b-button type="is-primary" icon-right="account-filter" @click="loadAsyncData"/>
+                                            </b-tooltip>
+                                        </p>
+                                    </b-field>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="buttons mt-3 is-right">
+                            <b-button @click="openModal" icon-left="plus" class=" is-small is-success">NEW</b-button>
+                        </div>
+
+                        <b-table
+                            striped
+                            :data="data"
+                            :loading="loading"
+                            paginated
+                            backend-pagination
+                            :total="total"
+                            :pagination-rounded="true"
+                            :per-page="perPage"
+                            @page-change="onPageChange"
+                            aria-next-label="Next page"
+                            aria-previous-label="Previous page"
+                            aria-page-label="Page"
+                            aria-current-label="Current page"
+                            backend-sorting
+                            :default-sort-direction="defaultSortDirection"
+                            @sort="onSort">
+
+                            <b-table-column field="faculty_id" label="ID" v-slot="props">
+                                {{ props.row.faculty_id }}
+                            </b-table-column>
+
+                            <b-table-column field="lname" label="Name" v-slot="props">
+                                {{ props.row.lname }}, {{ props.row.fname }} {{ props.row.mname }}
+                            </b-table-column>
+
+                            <b-table-column field="sex" label="Sex" v-slot="props">
+                                {{ props.row.sex }}
+                            </b-table-column>
+
+                            <b-table-column field="active" label="Active" v-slot="props">
+                                {{ props.row.active }}
+                            </b-table-column>
+
+                            <b-table-column label="Action" v-slot="props">
+                                <div class="is-flex">
+                                    <b-tooltip label="Edit" type="is-primary">
+                                        <b-button class="button is-small mr-1 is-primary" tag="a" icon-right="pencil" @click="getData(props.row.faculty_id)"></b-button>
+                                    </b-tooltip>
+                                    <b-tooltip label="Delete" type="is-primary">
+                                        <b-button class="button is-small mr-1 is-danger" icon-right="delete" @click="confirmDelete(props.row.faculty_id)"></b-button>
+                                    </b-tooltip>
+                                </div>
+                            </b-table-column>
+                        </b-table>
+                    </div>
+                </div><!--col -->
+
+
             </div><!-- cols -->
         </div><!--section div-->
 
@@ -274,6 +365,16 @@ export default{
         setPerPage(){
             this.loadAsyncData()
         },
+
+
+
+
+
+
+
+
+
+
 
         openModal(){
             this.isModalCreate=true;
