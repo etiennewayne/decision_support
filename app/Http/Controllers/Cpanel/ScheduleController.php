@@ -32,9 +32,18 @@ class ScheduleController extends Controller
 
 
     public function getSchedule(Request $req){
+
         $sort = explode('.', $req->sort_by);
         $aycode = $req->aycode;
         $course = $req->course;
+
+        $scheduleid = '';
+
+        if ($req->has('scheduleid')) {
+            //if request has schedule id
+            $scheduleid = $req->scheduleid;
+        }
+
 
         $data = Schedule::with('acadyear', 'program', 'course', 'room')
             ->whereHas('acadyear', function($q) use ($aycode){
@@ -45,6 +54,7 @@ class ScheduleController extends Controller
                     ->orWhere('course_desc', 'like', $course . '%');
             })
             ->paginate($req->perpage);
+
         return $data;
     }
 

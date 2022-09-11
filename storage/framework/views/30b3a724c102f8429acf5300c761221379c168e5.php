@@ -1,7 +1,7 @@
 
 
 <?php $__env->startSection('content'); ?>
-    <faculty-load>
+    <faculty-load prop-acad-years='<?php echo json_encode($acadYears, 15, 512) ?>'>
     </faculty-load>
 <?php $__env->stopSection(); ?>
 

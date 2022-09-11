@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Cpanel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\AcademicYear;
+
 class FacultyLoadController extends Controller
 {
     //
@@ -15,7 +17,10 @@ class FacultyLoadController extends Controller
 
 
     public function index(){
-        return view('cpanel.faculty.faculty-load');
+        $acadYears = AcademicYear::orderBy('code', 'asc')->get();
+
+        return view('cpanel.faculty.faculty-load')
+            ->with('acadYears', $acadYears);
     }
 
     public function show($id){

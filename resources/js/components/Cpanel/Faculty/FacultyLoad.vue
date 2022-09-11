@@ -39,7 +39,10 @@
                         </div>
 
                         <div class="buttons mt-3 is-right">
+                            <b-button @click="selected = null" icon-left="close" class=" is-small is-danger">CLEAR</b-button>
                             <b-button @click="openModal" icon-left="plus" class=" is-small is-success">NEW</b-button>
+
+                            <modal-browse-schedule :prop-course="fields.course_code" :prop-acad-years="acadYears" @browseCourse = "emitBrowseCourse($event)"></modal-browse-schedule>
                         </div>
 
                         <b-table
@@ -47,6 +50,8 @@
                             :data="data"
                             :loading="loading"
                             paginated
+                            focusable
+                            :selected.sync="selected"
                             backend-pagination
                             :total="total"
                             :pagination-rounded="true"
@@ -96,7 +101,7 @@
                     <div class="box">
 
                         <div class="table-title">
-                            LIST OF FACULTY
+                            LIST OF FACULTY LOAD
                         </div>
 
                         <div class="level">
@@ -115,11 +120,11 @@
                                 <div class="level-item">
                                     <b-field label="Search">
                                         <b-input type="text"
-                                                 v-model="search.lname" placeholder="Search Lastname"
+                                                 v-model="search.lname" placeholder="Search Course"
                                                  @keyup.native.enter="loadAsyncData"/>
                                         <p class="control">
                                             <b-tooltip label="Search" type="is-success">
-                                                <b-button type="is-primary" icon-right="account-filter" @click="loadAsyncData"/>
+                                                <b-button type="is-primary" icon-right="account-filter" @click="loadSchedules"/>
                                             </b-tooltip>
                                         </p>
                                     </b-field>
@@ -127,42 +132,56 @@
                             </div>
                         </div>
 
+                        <div class="columns">
+                            <div class="column">
+                                <b-field label="Academic Year">
+                                    <b-select v-model="search.aycode">
+                                        <option v-for="(item, index) in acadYears" :key="index" :value="item.code">{{ item.code }}</option>
+                                    </b-select>
+                                     <p class="control">
+                                        <b-tooltip label="Search" type="is-success">
+                                            <b-button type="is-primary" icon-right="account-filter" @click="loadSchedules"/>
+                                        </b-tooltip>
+                                    </p>
+                                </b-field>
+                            </div>
+                        </div>
+
                         <div class="buttons mt-3 is-right">
+                            <b-button @click="selectedSchedule = null" icon-left="close" class=" is-small is-danger">CLEAR</b-button>
                             <b-button @click="openModal" icon-left="plus" class=" is-small is-success">NEW</b-button>
                         </div>
 
                         <b-table
                             striped
-                            :data="data"
-                            :loading="loading"
+                            :data="schedules"
+                            :loading="loadingSchedules"
                             paginated
                             backend-pagination
-                            :total="total"
+                            :total="totalSchedules"
                             :pagination-rounded="true"
-                            :per-page="perPage"
-                            @page-change="onPageChange"
+                            :per-page="perPageSchedules"
+                            @page-change="onPageChangeSchedules"
                             aria-next-label="Next page"
                             aria-previous-label="Previous page"
                             aria-page-label="Page"
                             aria-current-label="Current page"
                             backend-sorting
-                            :default-sort-direction="defaultSortDirection"
+                            focusable
+                            :selected.sync="selectedSchedule"
+                            :default-sort-direction="defaultSortDirectionSchedules"
                             @sort="onSort">
 
-                            <b-table-column field="faculty_id" label="ID" v-slot="props">
+                            <b-table-column field="schedule_id" label="ID" v-slot="props">
                                 {{ props.row.faculty_id }}
                             </b-table-column>
 
-                            <b-table-column field="lname" label="Name" v-slot="props">
-                                {{ props.row.lname }}, {{ props.row.fname }} {{ props.row.mname }}
+                            <b-table-column field="course" label="Course Code" v-slot="props">
+                                {{ props.row.course.course }}
                             </b-table-column>
 
-                            <b-table-column field="sex" label="Sex" v-slot="props">
-                                {{ props.row.sex }}
-                            </b-table-column>
-
-                            <b-table-column field="active" label="Active" v-slot="props">
-                                {{ props.row.active }}
+                            <b-table-column field="course_desc" label="Course Description" v-slot="props">
+                                {{ props.row.course.course_desc }}
                             </b-table-column>
 
                             <b-table-column label="Action" v-slot="props">
@@ -266,12 +285,19 @@
         <!--close modal-->
 
 
+
+
+
+
     </div>
 </template>
 
 <script>
 
 export default{
+
+    props: ['propAcadYears'],
+
     data() {
         return{
             data: [],
@@ -282,21 +308,25 @@ export default{
             page: 1,
             perPage: 10,
             defaultSortDirection: 'asc',
+            selected: {},
 
-            dataFacultyLoad: [],
-            totalFacultyLoad: 0,
-            loadingFacultyLoad: false,
-            sortFieldFacultyLoad: 'faculty_id',
-            sortOrderFacultyLoad: 'desc',
-            pageFacultyLoad: 1,
-            perPageFacultyLoad: 10,
-            defaultSortDirectionFacultyLoad: 'asc',
+            schedules: [],
+            totalSchedules: 0,
+            loadingSchedules: false,
+            sortFieldSchedules: 'faculty_id',
+            sortOrderSchedules: 'desc',
+            pageSchedules: 1,
+            perPageSchedules: 10,
+            defaultSortDirectionSchedules: 'asc',
+            selectedSchedule: {},
 
+            acadYears: [],
 
             global_id : 0,
 
             search: {
                 lname: '',
+                aycode: '',
             },
 
             isModalCreate: false,
@@ -377,54 +407,54 @@ export default{
 
 
 
-        loadAsyncDataFacultyLoad() {
+        loadSchedules() {
             const params = [
-                `sort_by=${this.sortFieldFacultyLoad}.${this.sortOrderFacultyLoad}`,
-                `lname=${this.search.lname}`,
-                `perpage=${this.perPageFacultyLoad}`,
-                `page=${this.pageFacultyLoad}`
+                `sort_by=${this.sortFieldSchedules}.${this.sortOrderSchedules}`,
+                `aycode=${this.search.aycode}`,
+                `perpage=${this.perPageSchedules}`,
+                `page=${this.pageSchedules}`
             ].join('&')
 
             this.loadingFacultyLoad = true;
-            axios.get(`/cpanel/get-faculty-load/${this.global_id}`)
+            axios.get(`/cpanel/get-schedules?${params}`)
                 .then(({ data }) => {
-                    this.dataFacultyLoad = [];
+                    this.schedules = [];
                     let currentTotal = data.total;
 
-                    if (data.total / this.perPageFacultyLoad > 1000) {
-                        currentTotal = this.perPageFacultyLoad * 1000
+                    if (data.total / this.perPageSchedules > 1000) {
+                        currentTotal = this.perPageSchedules * 1000
                     }
 
-                    this.totalFacultyLoad = currentTotal
+                    this.totalSchedules = currentTotal
                     data.data.forEach((item) => {
                         //item.release_date = item.release_date ? item.release_date.replace(/-/g, '/') : null
-                        this.dataFacultyLoad.push(item)
+                        this.schedules.push(item)
                     })
-                    this.loadingFacultyLoad = false
+                    this.loadingSchedules = false
                 })
                 .catch((error) => {
-                    this.dataFacultyLoad = []
-                    this.totalFacultyLoad = 0
-                    this.loadingFacultyLoad = false
+                    this.schedules = []
+                    this.totalSchedules = 0
+                    this.loadingSchedules = false
                     throw error
                 })
         },
         /*
         * Handle page-change event
         */
-        onPageChangeFacultyLoad(page) {
-            this.pageFacultyLoad = page
-            this.setPerPageFacultyLoad()
+        onPageChangeSchedules(page) {
+            this.pageSchedules = page
+            this.setPerPageSchedules()
         },
 
-        onSortFacultyLoad(field, order) {
+        onSortSchedules(field, order) {
             this.sortFieldFacultyLoad = field
             this.sortOrderFacultyLoad = order
-            this.setPerPageFacultyLoad()
+            this.setPerPageSchedules()
         },
 
-        setPerPageFacultyLoad(){
-            this.loadAsyncDataFacultyLoad()
+        setPerPageSchedules(){
+            this.loadSchedules()
         },
 
 
@@ -538,10 +568,21 @@ export default{
                 //load city first
             });
         },
+
+        loadAcadYear(){
+            this.acadYears = JSON.parse(this.propAcadYears);
+        },
+
+        emitBrowseCourse: function(n){
+            this.fields.schedule_id = n.schedule_id;
+            this.fields.course_code = n.course.course_code;
+        }
     },
 
     mounted() {
+        this.loadAcadYear();
         this.loadAsyncData();
+        this.loadSchedules();
     }
 }
 </script>
