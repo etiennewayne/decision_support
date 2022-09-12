@@ -47,7 +47,7 @@ class ScheduleController extends Controller
 
         $data = Schedule::with('acadyear', 'program', 'course', 'room')
             ->whereHas('acadyear', function($q) use ($aycode){
-                $q->where('code', 'like', $aycode . '%');
+                $q->where('code', $aycode);
             })
             ->whereHas('course', function($q) use ($course){
                 $q->where('course_code', 'like', $course . '%')

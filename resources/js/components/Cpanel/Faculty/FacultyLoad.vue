@@ -177,7 +177,7 @@
                             </b-table-column>
 
                             <b-table-column field="course" label="Course Code" v-slot="props">
-                                {{ props.row.course.course }}
+                                {{ props.row.course.course_code }}
                             </b-table-column>
 
                             <b-table-column field="course_desc" label="Course Description" v-slot="props">
@@ -283,11 +283,6 @@
             </form><!--close form-->
         </b-modal>
         <!--close modal-->
-
-
-
-
-
 
     </div>
 </template>
@@ -576,6 +571,8 @@ export default{
         emitBrowseCourse: function(n){
             this.fields.schedule_id = n.schedule_id;
             this.fields.course_code = n.course.course_code;
+
+            console.log(this.fields);
         }
     },
 

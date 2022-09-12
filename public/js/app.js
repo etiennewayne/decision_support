@@ -9028,11 +9028,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['propAcadYears'],
   data: function data() {
@@ -9281,6 +9276,7 @@ __webpack_require__.r(__webpack_exports__);
     emitBrowseCourse: function emitBrowseCourse(n) {
       this.fields.schedule_id = n.schedule_id;
       this.fields.course_code = n.course.course_code;
+      console.log(this.fields);
     }
   },
   mounted: function mounted() {
@@ -11502,6 +11498,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -31876,7 +31878,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n    .table > tbody > tr {\r\n\r\n        transition: background-color 0.5s ease;\r\n    }\r\n\r\n    .table > tbody > tr:hover {\r\n        background-color: rgb(233, 233, 233);\r\n    } */\n.modal-card-head[data-v-0e76d89c]{\r\n    background-color: green;\n}\n.modal-card-title[data-v-0e76d89c]{\r\n    color: white;\n}\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n    .table > tbody > tr {\r\n\r\n        transition: background-color 0.5s ease;\r\n    }\r\n\r\n    .table > tbody > tr:hover {\r\n        background-color: rgb(233, 233, 233);\r\n    } */\n.modal-card-head[data-v-0e76d89c]{\r\n    background-color: green;\n}\n.modal-card-title[data-v-0e76d89c]{\r\n    color: white;\n}\r\n\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -37966,7 +37968,7 @@ var render = function () {
                             return [
                               _vm._v(
                                 "\n                            " +
-                                  _vm._s(props.row.course.course) +
+                                  _vm._s(props.row.course.course_code) +
                                   "\n                        "
                               ),
                             ]
@@ -42363,7 +42365,7 @@ var render = function () {
                                   return [
                                     _vm._v(
                                       "\n                                " +
-                                        _vm._s(props.row.lname) +
+                                        _vm._s(props.row.course.course_code) +
                                         "\n                            "
                                     ),
                                   ]
@@ -42384,7 +42386,7 @@ var render = function () {
                                   return [
                                     _vm._v(
                                       "\n                                " +
-                                        _vm._s(props.row.fname) +
+                                        _vm._s(props.row.course.course_desc) +
                                         "\n                            "
                                     ),
                                   ]
@@ -42400,11 +42402,33 @@ var render = function () {
                                 key: "default",
                                 fn: function (props) {
                                   return [
-                                    _vm._v(
-                                      "\n                                " +
-                                        _vm._s(props.row.mname) +
-                                        "\n                            "
-                                    ),
+                                    props.row.mon
+                                      ? _c("span", [_vm._v("M")])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    props.row.tue
+                                      ? _c("span", [_vm._v("T")])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    props.row.wed
+                                      ? _c("span", [_vm._v("W")])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    props.row.thu
+                                      ? _c("span", [_vm._v("TH")])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    props.row.fri
+                                      ? _c("span", [_vm._v("F")])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    props.row.sat
+                                      ? _c("span", [_vm._v("SAT")])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    props.row.sun
+                                      ? _c("span", [_vm._v("SUN")])
+                                      : _vm._e(),
                                   ]
                                 },
                               },

@@ -55,15 +55,21 @@
                                 </b-table-column>
 
                                 <b-table-column field="course_code" label="Course Code" v-slot="props">
-                                    {{props.row.lname}}
+                                    {{props.row.course.course_code}}
                                 </b-table-column>
 
                                 <b-table-column field="schedule_time" label="Schedule Time" v-slot="props">
-                                    {{props.row.fname}}
+                                    {{props.row.course.course_desc}}
                                 </b-table-column>
 
                                 <b-table-column field="day" label="Day" v-slot="props">
-                                    {{props.row.mname}}
+                                    <span v-if="props.row.mon">M</span>
+                                    <span v-if="props.row.tue">T</span>
+                                    <span v-if="props.row.wed">W</span>
+                                    <span v-if="props.row.thu">TH</span>
+                                    <span v-if="props.row.fri">F</span>
+                                    <span v-if="props.row.sat">SAT</span>
+                                    <span v-if="props.row.sun">SUN</span>
                                 </b-table-column>
 
                                 <b-table-column field="" label="Action" v-slot="props">
