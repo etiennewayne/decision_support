@@ -99,6 +99,10 @@ Route::get('/cpanel/get-users', [App\Http\Controllers\Cpanel\UserController::cla
 Route::resource('/cpanel/schedules', App\Http\Controllers\Cpanel\ScheduleController::class);
 Route::get('/cpanel/get-schedules', [App\Http\Controllers\Cpanel\ScheduleController::class, 'getSchedule']);
 Route::get('/cpanel/get-conflict-data', [App\Http\Controllers\Cpanel\ScheduleController::class, 'getConflictData']);
+Route::get('/cpanel/get-recommended-faculty', [App\Http\Controllers\Cpanel\ScheduleController::class, 'getRecommendedFaculty']);
+
+
+
 
 Route::resource('/cpanel/faculty', App\Http\Controllers\Cpanel\FacultyController::class);
 Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getFaculty']);

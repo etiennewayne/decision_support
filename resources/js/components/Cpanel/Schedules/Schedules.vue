@@ -119,6 +119,7 @@
                                     <b-tooltip label="Delete" type="is-primary">
                                         <b-button class="button is-small mr-1 is-danger" icon-right="delete" @click="confirmDelete(props.row.schedule_id)"></b-button>
                                     </b-tooltip>
+                                    <search-recommended-faculty :prop-schedule_id="props.row.schedule_id"></search-recommended-faculty>
                                 </div>
                             </b-table-column>
 
@@ -140,62 +141,6 @@
                 </div><!--col -->
             </div><!-- cols -->
         </div><!--section div-->
-
-
-
-        <!--modal create-->
-        <b-modal v-model="isModalCreate" has-modal-card
-            trap-focus
-            :width="640"
-            aria-role="dialog"
-            aria-label="Modal"
-            aria-modal>
-
-            <form @submit.prevent="submit">
-                <div class="modal-card">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">PROGRAM</p>
-                        <button
-                            type="button"
-                            class="delete"
-                            @click="isModalCreate = false" />
-                    </header>
-
-                    <section class="modal-card-body">
-                        <div class="">
-                            <div class="columns">
-                                <div class="column">
-                                    <b-field label="Program Code" label-position="on-border"
-                                             :type="this.errors.program_code ? 'is-danger':''"
-                                             :message="this.errors.program_code ? this.errors.program_code[0] : ''">
-                                        <b-input v-model="fields.program_code"
-                                                 placeholder="Program Code" required>
-                                        </b-input>
-                                    </b-field>
-                                    <b-field label="Program Description" label-position="on-border"
-                                             :type="this.errors.program_desc ? 'is-danger':''"
-                                             :message="this.errors.program_desc ? this.errors.program_desc[0] : ''">
-                                        <b-input v-model="fields.program_desc"
-                                                 placeholder="Program Description" required>
-                                        </b-input>
-                                    </b-field>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <footer class="modal-card-foot">
-                        <b-button
-                            label="Close"
-                            @click="isModalCreate=false"/>
-                        <button
-                            :class="btnClass"
-                            label="Save"
-                            type="is-success">SAVE</button>
-                    </footer>
-                </div>
-            </form><!--close form-->
-        </b-modal>
-        <!--close modal-->
 
 
     </div>
@@ -226,7 +171,7 @@ export default{
 
             acadYears: [],
 
-            isModalCreate: false,
+            modalAssignFaculty: false,
 
             fields: {},
             errors: {},
@@ -295,14 +240,6 @@ export default{
             this.loadAsyncData()
         },
 
-        openModal(){
-            this.isModalCreate=true;
-            this.fields = {};
-            this.errors = {};
-        },
-
-
-
 
         submit: function(){
             if(this.global_id > 0){
@@ -317,7 +254,7 @@ export default{
                                 this.loadAsyncData();
                                 this.clearFields();
                                 this.global_id = 0;
-                                this.isModalCreate = false;
+                              
                             }
                         })
                     }
@@ -336,7 +273,7 @@ export default{
                             type: 'is-success',
                             confirmText: 'OK',
                             onConfirm: () => {
-                                this.isModalCreate = false;
+                                
                                 this.loadAsyncData();
                                 this.clearFields();
                                 this.global_id = 0;
@@ -385,8 +322,6 @@ export default{
         getData: function(data_id){
             this.clearFields();
             this.global_id = data_id;
-            this.isModalCreate = true;
-
             //nested axios for getting the address 1 by 1 or request by request
             axios.get('/cpanel/program/'+data_id).then(res=>{
                 this.fields = res.data;
@@ -397,9 +332,10 @@ export default{
 
         loadAcadYear(){
             this.acadYears = JSON.parse(this.propAcadYears);
-        }
+        },
 
 
+       
 
     },
 

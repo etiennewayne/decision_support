@@ -14,7 +14,7 @@ class Schedule extends Model
 
 
     protected $fillable = ['acadyear_id', 'program_id',
-        'course_id', 'room_id','start_time', 'end_time',
+        'course_id', 'room_id','start_time', 'end_time', 'faculty_id',
         'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'
     ];
 

@@ -58,6 +58,10 @@ class ScheduleController extends Controller
         return $data;
     }
 
+    public function getRecommendedFaculty(Request $req){
+        $scheduleId = $req->scheduleid;
+    }
+
     public function create(){
         $acadYears = AcademicYear::orderBy('code', 'asc')->get();
         $programs = Program::orderBy('program_code', 'asc')

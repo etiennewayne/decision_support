@@ -35,6 +35,8 @@ class CreateSchedulesTable extends Migration
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
 
+            $table->integer('faculty_id')->default(0);
+
             $table->tinyInteger('mon')->default(0);
             $table->tinyInteger('tue')->default(0);
             $table->tinyInteger('wed')->default(0);
