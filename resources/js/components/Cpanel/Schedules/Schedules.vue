@@ -119,7 +119,7 @@
                                     <b-tooltip label="Delete" type="is-primary">
                                         <b-button class="button is-small mr-1 is-danger" icon-right="delete" @click="confirmDelete(props.row.schedule_id)"></b-button>
                                     </b-tooltip>
-                                    <search-recommended-faculty :prop-schedule_id="props.row.schedule_id"></search-recommended-faculty>
+                                    <search-recommended-faculty :prop-schedule-id="props.row.schedule_id"></search-recommended-faculty>
                                 </div>
                             </b-table-column>
 

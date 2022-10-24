@@ -40194,7 +40194,7 @@ var render = function () {
                                 _vm._v(" "),
                                 _c("search-recommended-faculty", {
                                   attrs: {
-                                    "prop-schedule_id": props.row.schedule_id,
+                                    "prop-schedule-id": props.row.schedule_id,
                                   },
                                 }),
                               ],

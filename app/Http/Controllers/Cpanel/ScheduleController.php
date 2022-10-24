@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cpanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\AcademicYear;
 use App\Models\Program;
@@ -60,6 +61,14 @@ class ScheduleController extends Controller
 
     public function getRecommendedFaculty(Request $req){
         $scheduleId = $req->scheduleid;
+
+
+
+        $data = DB::table('schedules as a')
+            ->join('faculty as b', 'a.faculty_id', 'b.faculty_id')
+            ->where('a.schedule_id', $scheduleId)
+            ->get();
+        return $data;
     }
 
     public function create(){
