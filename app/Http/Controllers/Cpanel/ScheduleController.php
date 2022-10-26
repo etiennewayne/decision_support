@@ -61,7 +61,7 @@ class ScheduleController extends Controller
 
     public function getRecommendedFaculty(Request $req){
         $scheduleId = $req->scheduleid;
-
+        
 
 
         $data = DB::table('schedules as a')

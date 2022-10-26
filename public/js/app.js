@@ -11946,7 +11946,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this.total = currentTotal;
-        data.data.forEach(function (item) {
+        data.forEach(function (item) {
           _this.data.push(item);
         });
         _this.loading = false;
@@ -43020,7 +43020,7 @@ var render = function () {
                         },
                         [
                           _c("b-table-column", {
-                            attrs: { field: "course_id", label: "ID" },
+                            attrs: { field: "faculty_id", label: "ID" },
                             scopedSlots: _vm._u([
                               {
                                 key: "default",
@@ -43038,10 +43038,7 @@ var render = function () {
                           }),
                           _vm._v(" "),
                           _c("b-table-column", {
-                            attrs: {
-                              field: "course_code",
-                              label: "Course Code",
-                            },
+                            attrs: { field: "name", label: "Name" },
                             scopedSlots: _vm._u([
                               {
                                 key: "default",
@@ -43049,7 +43046,29 @@ var render = function () {
                                   return [
                                     _vm._v(
                                       "\n                                " +
-                                        _vm._s(props.row.course_code) +
+                                        _vm._s(props.row.lname) +
+                                        ", " +
+                                        _vm._s(props.row.fname) +
+                                        " " +
+                                        _vm._s(props.row.mname) +
+                                        "\n                            "
+                                    ),
+                                  ]
+                                },
+                              },
+                            ]),
+                          }),
+                          _vm._v(" "),
+                          _c("b-table-column", {
+                            attrs: { field: "sex", label: "Sex" },
+                            scopedSlots: _vm._u([
+                              {
+                                key: "default",
+                                fn: function (props) {
+                                  return [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(props.row.sex) +
                                         "\n                            "
                                     ),
                                   ]
@@ -43060,8 +43079,8 @@ var render = function () {
                           _vm._v(" "),
                           _c("b-table-column", {
                             attrs: {
-                              field: "course_desc",
-                              label: "Course Desc",
+                              field: "count_teaching",
+                              label: "Count Teaching",
                             },
                             scopedSlots: _vm._u([
                               {
@@ -43070,28 +43089,7 @@ var render = function () {
                                   return [
                                     _vm._v(
                                       "\n                                " +
-                                        _vm._s(props.row.course_desc) +
-                                        "\n                            "
-                                    ),
-                                  ]
-                                },
-                              },
-                            ]),
-                          }),
-                          _vm._v(" "),
-                          _c("b-table-column", {
-                            attrs: {
-                              field: "course_type",
-                              label: "Course Type",
-                            },
-                            scopedSlots: _vm._u([
-                              {
-                                key: "default",
-                                fn: function (props) {
-                                  return [
-                                    _vm._v(
-                                      "\n                                " +
-                                        _vm._s(props.row.course_type) +
+                                        _vm._s(props.row.count_teaching) +
                                         "\n                            "
                                     ),
                                   ]

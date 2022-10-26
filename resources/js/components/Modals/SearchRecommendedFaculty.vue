@@ -44,20 +44,20 @@
                                 default-sort-direction="defualtSortDirection"
                                 @sort="onSort">
 
-                                <b-table-column field="course_id" label="ID" v-slot="props">
+                                <b-table-column field="faculty_id" label="ID" v-slot="props">
                                     {{props.row.course_id}}
                                 </b-table-column>
 
-                                <b-table-column field="course_code" label="Course Code" v-slot="props">
-                                    {{props.row.course_code}}
+                                <b-table-column field="name" label="Name" v-slot="props">
+                                    {{props.row.lname}}, {{ props.row.fname }} {{ props.row.mname }}
                                 </b-table-column>
 
-                                <b-table-column field="course_desc" label="Course Desc" v-slot="props">
-                                    {{props.row.course_desc}}
+                                <b-table-column field="sex" label="Sex" v-slot="props">
+                                    {{props.row.sex}}
                                 </b-table-column>
 
-                                <b-table-column field="course_type" label="Course Type" v-slot="props">
-                                    {{props.row.course_type}}
+                                <b-table-column field="count_teaching" label="Count Teaching" v-slot="props">
+                                    {{props.row.count_teaching}}
                                 </b-table-column>
 
                                 <b-table-column field="" label="Action" v-slot="props">
@@ -136,7 +136,7 @@ export default {
                 }
 
                 this.total = currentTotal;
-                data.data.forEach((item) => {
+                data.forEach((item) => {
                     this.data.push(item);
                 });
 
