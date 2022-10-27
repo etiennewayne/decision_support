@@ -251,7 +251,7 @@ export default{
         submit: function(){
             if(this.global_id > 0){
                 //update
-                axios.put('/cpanel/program/'+this.global_id, this.fields).then(res=>{
+                axios.put('/cpanel/programs/'+this.global_id, this.fields).then(res=>{
                     if(res.data.status === 'updated'){
                         this.$buefy.dialog.alert({
                             title: 'UPDATED!',
@@ -272,7 +272,7 @@ export default{
                 })
             }else{
                 //INSERT HERE
-                axios.post('/cpanel/program', this.fields).then(res=>{
+                axios.post('/cpanel/programs', this.fields).then(res=>{
                     if(res.data.status === 'saved'){
                         this.$buefy.dialog.alert({
                             title: 'SAVED!',
@@ -311,7 +311,7 @@ export default{
         },
         //execute delete after confirming
         deleteSubmit(delete_id) {
-            axios.delete('/cpanel/program/' + delete_id).then(res => {
+            axios.delete('/cpanel/programs/' + delete_id).then(res => {
                 this.loadAsyncData();
             }).catch(err => {
                 if (err.response.status === 422) {
@@ -332,7 +332,7 @@ export default{
             this.isModalCreate = true;
 
             //nested axios for getting the address 1 by 1 or request by request
-            axios.get('/cpanel/program/'+data_id).then(res=>{
+            axios.get('/cpanel/programs/'+data_id).then(res=>{
                 this.fields = res.data;
                 //load city first
 

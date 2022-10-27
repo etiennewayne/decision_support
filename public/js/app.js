@@ -9660,7 +9660,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.global_id > 0) {
         //update
-        axios.put('/cpanel/program/' + this.global_id, this.fields).then(function (res) {
+        axios.put('/cpanel/programs/' + this.global_id, this.fields).then(function (res) {
           if (res.data.status === 'updated') {
             _this2.$buefy.dialog.alert({
               title: 'UPDATED!',
@@ -9683,7 +9683,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       } else {
         //INSERT HERE
-        axios.post('/cpanel/program', this.fields).then(function (res) {
+        axios.post('/cpanel/programs', this.fields).then(function (res) {
           if (res.data.status === 'saved') {
             _this2.$buefy.dialog.alert({
               title: 'SAVED!',
@@ -9727,7 +9727,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteSubmit: function deleteSubmit(delete_id) {
       var _this4 = this;
 
-      axios["delete"]('/cpanel/program/' + delete_id).then(function (res) {
+      axios["delete"]('/cpanel/programs/' + delete_id).then(function (res) {
         _this4.loadAsyncData();
       })["catch"](function (err) {
         if (err.response.status === 422) {
@@ -9746,7 +9746,7 @@ __webpack_require__.r(__webpack_exports__);
       this.global_id = data_id;
       this.isModalCreate = true; //nested axios for getting the address 1 by 1 or request by request
 
-      axios.get('/cpanel/program/' + data_id).then(function (res) {
+      axios.get('/cpanel/programs/' + data_id).then(function (res) {
         _this5.fields = res.data; //load city first
       });
     }

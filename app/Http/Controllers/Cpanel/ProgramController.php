@@ -20,6 +20,9 @@ class ProgramController extends Controller
         return view('cpanel.program'); //blade.php
     }
 
+    public function show($id){
+        return Program::find($id);
+    }
 
     public function getAllData(Request $req){
         $sort = explode('.', $req->sort_by);
@@ -45,6 +48,31 @@ class ProgramController extends Controller
         return response()->json([
             'status' => 'saved'
         ], 200);
+    }
+
+    public function update(Request $req, $id){
+        $req->validate([
+            'program_code' => ['required', 'unique:programs,program_code,' .$id.',program_id'],
+            'program_desc' => ['required']
+        ]);
+
+        $data = Program::find($id);
+
+        $data->program_code = strtoupper($req->program_code);
+        $data->program_desc = strtoupper($req->program_desc);
+        $data->save();
+        return response()->json([
+            'status' => 'updated'
+        ], 200);
+    }
+
+    public function destroy($id){
+        Program::destroy($id);
+
+        return response()->json([
+            'status' => 'deleted'
+        ], 200);
+
     }
 
 }
