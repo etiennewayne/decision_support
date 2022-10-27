@@ -18,8 +18,8 @@ class UserSeeder extends Seeder
         $data = [
             [
                 'username' => 'admin',
-                'lname' => 'DOMINGUEZ',
-                'fname' => 'JUNARD',
+                'lname' => 'CALIBO',
+                'fname' => 'ALEXANDER',
                 'mname' => 'P',
                 'suffix' => '',
                 'program_id' => 1,
@@ -33,11 +33,10 @@ class UserSeeder extends Seeder
                 'role' => 'ADMINISTRATOR',
                 'password' => Hash::make('a')
             ],
-
             [
                 'username' => 'faculty',
-                'lname' => 'DOMINGUEZ',
-                'fname' => 'JUNARD',
+                'lname' => 'NOVA',
+                'fname' => 'MAE',
                 'mname' => 'P',
                 'suffix' => '',
                 'program_id' => 1,
@@ -52,24 +51,6 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('a')
             ],
 
-
-            [
-                'username' => 'a',
-                'lname' => 'NERI',
-                'fname' => 'MAIRAMAE',
-                'mname' => 'P',
-                'suffix' => '',
-                'program_id' => 2,
-                'sex' => 'MALE',
-                'province' => 'MISAMIS OCCIDENTAL',
-                'city' => 'TANGUB CITY',
-                'barangay' => 'CANIANGAN',
-                'street' => 'P-6',
-                'email' => 'neri@dev.com',
-                'contact_no' => '09167789585',
-                'role' => 'STUDENT',
-                'password' => Hash::make('a')
-            ],
         ];
 
         \App\Models\User::insertOrIgnore($data);

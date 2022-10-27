@@ -72,6 +72,10 @@
                                 {{ props.row.room_desc }}
                             </b-table-column>
 
+                            <b-table-column field="max" label="Room Capacity" centered v-slot="props">
+                                {{ props.row.max }}
+                            </b-table-column>
+
                             <b-table-column label="Action" v-slot="props">
                                 <div class="is-flex">
                                     <b-tooltip label="Edit" type="is-primary">
