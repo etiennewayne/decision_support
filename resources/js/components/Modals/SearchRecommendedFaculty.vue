@@ -70,12 +70,24 @@
                         </div>
 
                     </div>
+
+                    <div class="faculty-selected">
+                        <div class="faculty-title">Faculty Selected</div>
+                        <div v-if="this.facultySelected">
+                            <span>{{ this.facultySelected.lname }}, {{ this.facultySelected.fname }} {{ this.facultySelected.mname }}</span>
+                            <b-button type="is-danger" class="is-small">X</b-button>
+                        </div>
+                    </div>
                 </section>
 
                 <footer class="modal-card-foot">
                     <b-button
                         label="Close"
                         @click="modalAssignFaculty=false"></b-button>
+                    <b-button
+                        type="is-success"
+                        label="Save Faculty"
+                        @click="saveFaculty"></b-button>
                 </footer>
             </div>
         </b-modal>
@@ -91,9 +103,9 @@ export default {
             type: String,
             default: '',
         },
-        propScheduleId: {
-            type: String,
-            default: ''
+        propCourseId: {
+            type: Number,
+            default: 0
         }
     },
 
@@ -107,15 +119,17 @@ export default {
             page: 1,
             perPage: 5,
             defaultSortDirection:'',
-            
+
             search: '',
             modalAssignFaculty: false,
+
+            facultySelected: {},
         }
     },
 
     methods: {
         assignFaculty(){
-            
+
         },
 
         loadAsyncData() {
@@ -123,7 +137,7 @@ export default {
                 `sort_by=${this.sortfield}.${this.sortOrder}`,
                 `perpage=${this.perPage}`,
                 `page=${this.page}`,
-                `scheduleid=${this.propScheduleId}`,
+                `courseid=${this.propCourseId}`,
                 `coursedesc=${this.search.courseDesc}`,
             ].join('&');
 
@@ -171,9 +185,25 @@ export default {
         },
 
         selectData(dataRow){
-            this.modalAssignFaculty = false;
-            this.$emit('browseRecommendedFaculty', dataRow);
+           // this.modalAssignFaculty = false;
+            //this.$emit('browseRecommendedFaculty', dataRow);
+            this.facultySelected = dataRow;
+        },
+        saveFaculty(){
+
         }
     }
 }
 </script>
+
+<style scoped>
+
+.faculty-selected{
+    margin: 15px;
+}
+
+.faculty-title{
+    font-weight: bold;
+    font-size: 1.3em;
+}
+</style>

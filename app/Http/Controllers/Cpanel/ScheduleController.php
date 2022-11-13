@@ -18,7 +18,6 @@ class ScheduleController extends Controller
 {
     //
 
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -45,8 +44,7 @@ class ScheduleController extends Controller
             $scheduleid = $req->scheduleid;
         }
 
-
-        $data = Schedule::with('acadyear', 'program', 'course', 'room')
+        $data = Schedule::with('acadyear', 'program', 'course', 'room', 'faculty')
             ->whereHas('acadyear', function($q) use ($aycode){
                 $q->where('code', $aycode);
             })
@@ -60,13 +58,11 @@ class ScheduleController extends Controller
     }
 
     public function getRecommendedFaculty(Request $req){
-        $scheduleId = $req->scheduleid;
-        
-
+        $courseid = $req->courseid;
 
         $data = DB::table('schedules as a')
             ->join('faculty as b', 'a.faculty_id', 'b.faculty_id')
-            ->where('a.schedule_id', $scheduleId)
+            ->where('a.course_id', $courseid)
             ->get();
         return $data;
     }

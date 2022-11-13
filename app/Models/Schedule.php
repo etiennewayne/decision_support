@@ -19,7 +19,6 @@ class Schedule extends Model
     ];
 
 
-
     public function acadyear(){
         return $this->hasOne(AcademicYear::class, 'acadyear_id', 'acadyear_id');
     }
@@ -34,6 +33,10 @@ class Schedule extends Model
 
     public function room(){
         return $this->hasOne(Room::class, 'room_id', 'room_id');
+    }
+
+    public function faculty(){
+        return $this->hasOne(Faculty::class, 'faculty_id', 'faculty_id');
     }
 
 

@@ -119,18 +119,22 @@
                                     <b-tooltip label="Delete" type="is-primary">
                                         <b-button class="button is-small mr-1 is-danger" icon-right="delete" @click="confirmDelete(props.row.schedule_id)"></b-button>
                                     </b-tooltip>
-                                    <search-recommended-faculty :prop-schedule-id="props.row.schedule_id"></search-recommended-faculty>
+                                    <search-recommended-faculty :prop-course-id="props.row.course_id"></search-recommended-faculty>
                                 </div>
                             </b-table-column>
-
 
                             <template #detail="props">
                                 <tr>
                                     <td>Program Description</td>
-                                    
+                                    <td>Faculty Assign</td>
                                 </tr>
                                 <tr>
                                     <td>{{ props.row.program.program_desc }}</td>
+                                    <td>
+                                        <span v-if="props.row.faculty">
+                                            {{ props.row.faculty.fname }} {{ props.row.faculty.mname }} {{ props.row.faculty.lname }}
+                                        </span>
+                                    </td>
                                 </tr>
                             </template>
                         </b-table>
@@ -254,7 +258,7 @@ export default{
                                 this.loadAsyncData();
                                 this.clearFields();
                                 this.global_id = 0;
-                              
+
                             }
                         })
                     }
@@ -273,7 +277,7 @@ export default{
                             type: 'is-success',
                             confirmText: 'OK',
                             onConfirm: () => {
-                                
+
                                 this.loadAsyncData();
                                 this.clearFields();
                                 this.global_id = 0;
@@ -335,7 +339,7 @@ export default{
         },
 
 
-       
+
 
     },
 
