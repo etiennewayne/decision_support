@@ -11999,6 +11999,9 @@ __webpack_require__.r(__webpack_exports__);
       //this.$emit('browseRecommendedFaculty', dataRow);
       this.facultySelected = dataRow;
     },
+    removeSelectedFaculty: function removeSelectedFaculty() {
+      this.facultySelected = {};
+    },
     saveFaculty: function saveFaculty() {}
   }
 });
@@ -40067,14 +40070,16 @@ var render = function () {
                             _c("td", [_vm._v("Faculty Assign")]),
                           ]),
                           _vm._v(" "),
-                          _c("tr", [
-                            _c("td", [
-                              _vm._v(_vm._s(props.row.program.program_desc)),
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              props.row.faculty
-                                ? _c("span", [
+                          props.row.faculty
+                            ? _c("tr", [
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(props.row.program.program_desc)
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c("span", [
                                     _vm._v(
                                       "\n                                        " +
                                         _vm._s(props.row.faculty.fname) +
@@ -40084,10 +40089,10 @@ var render = function () {
                                         _vm._s(props.row.faculty.lname) +
                                         "\n                                    "
                                     ),
-                                  ])
-                                : _vm._e(),
-                            ]),
-                          ]),
+                                  ]),
+                                ]),
+                              ])
+                            : _vm._e(),
                         ]
                       },
                     },
@@ -43302,6 +43307,7 @@ var render = function () {
                           {
                             staticClass: "is-small",
                             attrs: { type: "is-danger" },
+                            on: { click: _vm.removeSelectedFaculty },
                           },
                           [_vm._v("X")]
                         ),

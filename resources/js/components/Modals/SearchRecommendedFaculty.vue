@@ -75,7 +75,7 @@
                         <div class="faculty-title">Faculty Selected</div>
                         <div v-if="this.facultySelected">
                             <span>{{ this.facultySelected.lname }}, {{ this.facultySelected.fname }} {{ this.facultySelected.mname }}</span>
-                            <b-button type="is-danger" class="is-small">X</b-button>
+                            <b-button type="is-danger" @click="removeSelectedFaculty" class="is-small">X</b-button>
                         </div>
                     </div>
                 </section>
@@ -188,6 +188,10 @@ export default {
            // this.modalAssignFaculty = false;
             //this.$emit('browseRecommendedFaculty', dataRow);
             this.facultySelected = dataRow;
+        },
+
+        removeSelectedFaculty(){
+            this.facultySelected = {};
         },
         saveFaculty(){
 

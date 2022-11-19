@@ -128,10 +128,10 @@
                                     <td>Program Description</td>
                                     <td>Faculty Assign</td>
                                 </tr>
-                                <tr>
+                                <tr v-if="props.row.faculty">
                                     <td>{{ props.row.program.program_desc }}</td>
                                     <td>
-                                        <span v-if="props.row.faculty">
+                                        <span>
                                             {{ props.row.faculty.fname }} {{ props.row.faculty.mname }} {{ props.row.faculty.lname }}
                                         </span>
                                     </td>
