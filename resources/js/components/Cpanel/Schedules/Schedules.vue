@@ -119,14 +119,18 @@
                                     <b-tooltip label="Delete" type="is-primary">
                                         <b-button class="button is-small mr-1 is-danger" icon-right="delete" @click="confirmDelete(props.row.schedule_id)"></b-button>
                                     </b-tooltip>
-                                    <search-recommended-faculty :prop-course-id="props.row.course_id"></search-recommended-faculty>
+                                    <search-recommended-faculty
+                                        :prop-course-id="props.row.course_id"
+                                        :prop-schedule-id="props.row.schedule_id"
+                                        @refresh="loadAsyncData"
+                                    ></search-recommended-faculty>
                                 </div>
                             </b-table-column>
 
                             <template #detail="props">
                                 <tr>
                                     <td>Program Description</td>
-                                    <td>Faculty Assign</td>
+                                    <td>Faculty Assigned</td>
                                 </tr>
                                 <tr v-if="props.row.faculty">
                                     <td>{{ props.row.program.program_desc }}</td>

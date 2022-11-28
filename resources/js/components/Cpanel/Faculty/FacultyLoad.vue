@@ -1,288 +1,77 @@
 <template>
     <div>
-        <div class="section">
-            
+        <div class="section filter">
+
             <div class="columns is-centered">
-                <div class="column is-6">
+                <div class="column is-8">
                     <div class="box">
-
-                        <div class="table-title">
-                            LIST OF FACULTY
-                        </div>
-
-                        <div class="level">
-                            <div class="level-left">
-                                <b-field label="Page">
-                                    <b-select v-model="perPage" @input="setPerPage">
-                                        <option value="5">5 per page</option>
-                                        <option value="10">10 per page</option>
-                                        <option value="15">15 per page</option>
-                                        <option value="20">20 per page</option>
-                                    </b-select>
-                                </b-field>
-                            </div>
-
-                            <div class="level-right">
-                                <div class="level-item">
-                                    <b-field label="Search">
-                                        <b-input type="text"
-                                                 v-model="search.lname" placeholder="Search Lastname"
-                                                 @keyup.native.enter="loadAsyncData"/>
-                                        <p class="control">
-                                            <b-tooltip label="Search" type="is-success">
-                                                <b-button type="is-primary" icon-right="account-filter" @click="loadAsyncData"/>
-                                            </b-tooltip>
-                                        </p>
-                                    </b-field>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="buttons mt-3 is-right">
-                            <b-button @click="selected = null" icon-left="close" class=" is-small is-danger">CLEAR</b-button>
-                            <b-button @click="openModal" icon-left="plus" class=" is-small is-success">NEW</b-button>
-
-                            <modal-browse-schedule :prop-course="fields.course_code" :prop-acad-years="acadYears" @browseCourse = "emitBrowseCourse($event)"></modal-browse-schedule>
-                        </div>
-
-                        <b-table
-                            striped
-                            :data="data"
-                            :loading="loading"
-                            paginated
-                            focusable
-                            :selected.sync="selected"
-                            backend-pagination
-                            :total="total"
-                            :pagination-rounded="true"
-                            :per-page="perPage"
-                            @page-change="onPageChange"
-                            aria-next-label="Next page"
-                            aria-previous-label="Previous page"
-                            aria-page-label="Page"
-                            aria-current-label="Current page"
-                            backend-sorting
-                            :default-sort-direction="defaultSortDirection"
-                            @sort="onSort">
-
-                            <b-table-column field="faculty_id" label="ID" v-slot="props">
-                                {{ props.row.faculty_id }}
-                            </b-table-column>
-
-                            <b-table-column field="lname" label="Name" v-slot="props">
-                                {{ props.row.lname }}, {{ props.row.fname }} {{ props.row.mname }}
-                            </b-table-column>
-
-                            <b-table-column field="sex" label="Sex" v-slot="props">
-                                {{ props.row.sex }}
-                            </b-table-column>
-
-                            <b-table-column field="active" label="Active" v-slot="props">
-                                {{ props.row.active }}
-                            </b-table-column>
-
-                            <b-table-column label="Action" v-slot="props">
-                                <div class="is-flex">
-                                    <b-tooltip label="Edit" type="is-primary">
-                                        <b-button class="button is-small mr-1 is-primary" tag="a" icon-right="pencil" @click="getData(props.row.faculty_id)"></b-button>
-                                    </b-tooltip>
-                                    <b-tooltip label="Delete" type="is-primary">
-                                        <b-button class="button is-small mr-1 is-danger" icon-right="delete" @click="confirmDelete(props.row.faculty_id)"></b-button>
-                                    </b-tooltip>
-                                </div>
-                            </b-table-column>
-                        </b-table>
-
-                    </div>
-                </div><!--col -->
-
-
-                <div class="column is-6">
-                    <div class="box">
-
                         <div class="table-title">
                             LIST OF FACULTY LOAD
-                        </div>
-
-                        <div class="level">
-                            <div class="level-left">
-                                <b-field label="Page">
-                                    <b-select v-model="perPage" @input="setPerPage">
-                                        <option value="5">5 per page</option>
-                                        <option value="10">10 per page</option>
-                                        <option value="15">15 per page</option>
-                                        <option value="20">20 per page</option>
-                                    </b-select>
-                                </b-field>
-                            </div>
-
-                            <div class="level-right">
-                                <div class="level-item">
-                                    <b-field label="Search">
-                                        <b-input type="text"
-                                                 v-model="search.lname" placeholder="Search Course"
-                                                 @keyup.native.enter="loadAsyncData"/>
-                                        <p class="control">
-                                            <b-tooltip label="Search" type="is-success">
-                                                <b-button type="is-primary" icon-right="account-filter" @click="loadSchedules"/>
-                                            </b-tooltip>
-                                        </p>
-                                    </b-field>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="columns">
                             <div class="column">
                                 <b-field label="Academic Year">
-                                    <b-select v-model="search.aycode">
-                                        <option v-for="(item, index) in acadYears" :key="index" :value="item.code">{{ item.code }}</option>
+                                    <b-select v-model="fields.ay">
+                                        <option v-for="(item, index) in acadYears" :key="index" :value="item.acadyear_id">{{ item.code }} ({{ item.acadyear_desc }})</option>
                                     </b-select>
-                                     <p class="control">
-                                        <b-tooltip label="Search" type="is-success">
-                                            <b-button type="is-primary" icon-right="account-filter" @click="loadSchedules"/>
-                                        </b-tooltip>
-                                    </p>
                                 </b-field>
+                            </div>
+
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <modal-browse-faculty
+                                    :prop-faculty="facultyFullName"
+                                    @browseFaculty="emitBrowseFaculty">
+                                </modal-browse-faculty>
                             </div>
                         </div>
 
-                        <div class="buttons mt-3 is-right">
-                            <b-button @click="selectedSchedule = null" icon-left="close" class=" is-small is-danger">CLEAR</b-button>
-                            <b-button @click="openModal" icon-left="plus" class=" is-small is-success">NEW</b-button>
+                        <div class="buttons">
+                            <b-button label="Generate Faculty Load" type="is-info" @click="loadFacultySchedules"></b-button>
                         </div>
-
-                        <b-table
-                            striped
-                            :data="schedules"
-                            :loading="loadingSchedules"
-                            paginated
-                            backend-pagination
-                            :total="totalSchedules"
-                            :pagination-rounded="true"
-                            :per-page="perPageSchedules"
-                            @page-change="onPageChangeSchedules"
-                            aria-next-label="Next page"
-                            aria-previous-label="Previous page"
-                            aria-page-label="Page"
-                            aria-current-label="Current page"
-                            backend-sorting
-                            focusable
-                            :selected.sync="selectedSchedule"
-                            :default-sort-direction="defaultSortDirectionSchedules"
-                            @sort="onSort">
-
-                            <b-table-column field="schedule_id" label="ID" v-slot="props">
-                                {{ props.row.faculty_id }}
-                            </b-table-column>
-
-                            <b-table-column field="course" label="Course Code" v-slot="props">
-                                {{ props.row.course.course_code }}
-                            </b-table-column>
-
-                            <b-table-column field="course_desc" label="Course Description" v-slot="props">
-                                {{ props.row.course.course_desc }}
-                            </b-table-column>
-
-                            <b-table-column label="Action" v-slot="props">
-                                <div class="is-flex">
-                                    <b-tooltip label="Edit" type="is-primary">
-                                        <b-button class="button is-small mr-1 is-primary" tag="a" icon-right="pencil" @click="getData(props.row.faculty_id)"></b-button>
-                                    </b-tooltip>
-                                    <b-tooltip label="Delete" type="is-primary">
-                                        <b-button class="button is-small mr-1 is-danger" icon-right="delete" @click="confirmDelete(props.row.faculty_id)"></b-button>
-                                    </b-tooltip>
-                                </div>
-                            </b-table-column>
-                        </b-table>
-                    </div>
+                    </div><!--box -->
                 </div><!--col -->
-
 
             </div><!-- cols -->
         </div><!--section div-->
 
+        <div class="print-section">
+            <div style="font-weight: bold; margin: 10px auto; text-align: center;">FACULTY LOAD</div>
 
+            <div v-if="data.length > 0" class="print-body">
 
-        <!--modal create-->
-        <b-modal v-model="isModalCreate" has-modal-card
-                 trap-focus
-                 :width="640"
-                 aria-role="dialog"
-                 aria-label="Modal"
-                 aria-modal>
-
-            <form @submit.prevent="submit">
-                <div class="modal-card">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">FACULTY INFORMATION</p>
-                        <button
-                            type="button"
-                            class="delete"
-                            @click="isModalCreate = false" />
-                    </header>
-
-                    <section class="modal-card-body">
-                        <div class="">
-                            <div class="columns">
-                                <div class="column">
-
-                                    <b-field label="Lastname" label-position="on-border"
-                                            :type="this.errors.lname ? 'is-danger':''"
-                                            :message="this.errors.lname ? this.errors.lname[0] : ''">
-                                        <b-input v-model="fields.lname"
-                                            placeholder="Lastname" required>
-                                        </b-input>
-                                    </b-field>
-
-                                    <b-field label="Firstname" label-position="on-border"
-                                            :type="this.errors.fname ? 'is-danger':''"
-                                            :message="this.errors.fname ? this.errors.fname[0] : ''">
-                                        <b-input v-model="fields.fname"
-                                            placeholder="Firstname" required>
-                                        </b-input>
-                                    </b-field>
-
-                                    <b-field label="Middlename" label-position="on-border"
-                                            :type="this.errors.mname ? 'is-danger':''"
-                                            :message="this.errors.mname ? this.errors.mname[0] : ''">
-                                        <b-input v-model="fields.mname"
-                                            placeholder="Middlename">
-                                        </b-input>
-                                    </b-field>
-
-                                    <b-field label="Course Unit" label-position="on-border"
-                                            :type="this.errors.sex ? 'is-danger':''"
-                                            :message="this.errors.sex ? this.errors.sex[0] : ''">
-                                        <b-select v-model="fields.sex"
-                                            placeholder="Sex" required>
-
-                                            <option value="MALE">MALE</option>
-                                            <option value="FEMALE">FEMALE</option>
-                                        </b-select>
-                                    </b-field>
-
-                                    <b-field label="Active">
-                                        <b-checkbox v-model="fields.active"></b-checkbox>
-                                    </b-field>
-
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <footer class="modal-card-foot">
-                        <b-button
-                            label="Close"
-                            @click="isModalCreate=false"/>
-                        <button
-                            :class="btnClass"
-                            label="Save"
-                            type="is-success">SAVE</button>
-                    </footer>
+                <div style="margin: 15px 0;">
+                    <div class="has-text-weight-bold">INSTRUCTOR: {{ data[0].lname }}, {{ data[0].fname }} {{ data[0].mname }}</div>
+                    <div class="has-text-weight-bold">SCHOOL YEAR: {{ data[0].acadyear_desc }}</div>
                 </div>
-            </form><!--close form-->
-        </b-modal>
-        <!--close modal-->
+
+                <div style="margin: 15px 0;">
+                    <div class="has-text-weight-bold">COURSES: </div>
+                </div>
+                <table class="table">
+                    <tr v-for="(item, index) in data" :key="index">
+                        <td>{{ item.course_code }}</td>
+                        <td>{{ item.course_desc }}</td>
+                        <td>{{ item.start_time | formatTime }}</td>
+                        <td>{{ item.end_time | formatTime }}</td>
+                        <td>{{ item.course_type }}</td>
+                        <td>{{ item.course_unit }}</td>
+                        <td>
+                            <span v-if="item.mon">M</span>
+                            <span v-if="item.tue">T</span>
+                            <span v-if="item.wed">W</span>
+                            <span v-if="item.thu">TH</span>
+                            <span v-if="item.fri">F</span>
+                            <span v-if="item.sat">SAT</span>
+                            <span v-if="item.sun">SUN</span>
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
 
     </div>
 </template>
@@ -290,52 +79,16 @@
 <script>
 
 export default{
-
     props: ['propAcadYears'],
-
     data() {
+
         return{
             data: [],
-            total: 0,
-            loading: false,
-            sortField: 'faculty_id',
-            sortOrder: 'desc',
-            page: 1,
-            perPage: 10,
-            defaultSortDirection: 'asc',
-            selected: {},
-
-            schedules: [],
-            totalSchedules: 0,
-            loadingSchedules: false,
-            sortFieldSchedules: 'faculty_id',
-            sortOrderSchedules: 'desc',
-            pageSchedules: 1,
-            perPageSchedules: 10,
-            defaultSortDirectionSchedules: 'asc',
-            selectedSchedule: {},
-
+            faculty: {},
             acadYears: [],
+            facultyFullName: '',
 
-            global_id : 0,
-
-            search: {
-                lname: '',
-                aycode: '',
-            },
-
-            isModalCreate: false,
-
-            fields: {
-                lname: null,
-                fname: null,
-                mname: null,
-                sex: null,
-                active: true
-            },
-            errors: {},
-
-            courseTypes: [],
+            fields: {},
 
             btnClass: {
                 'is-success': true,
@@ -347,261 +100,53 @@ export default{
     },
 
     methods: {
-        /*
-        * Load async data
-        */
-        loadAsyncData() {
-            const params = [
-                `sort_by=${this.sortField}.${this.sortOrder}`,
-                `lname=${this.search.lname}`,
-                `perpage=${this.perPage}`,
-                `page=${this.page}`
-            ].join('&')
-
-            this.loading = true
-            axios.get(`/cpanel/get-faculty?${params}`)
-                .then(({ data }) => {
-                    this.data = [];
-                    let currentTotal = data.total;
-
-                    if (data.total / this.perPage > 1000) {
-                        currentTotal = this.perPage * 1000
-                    }
-
-                    this.total = currentTotal
-                    data.data.forEach((item) => {
-                        //item.release_date = item.release_date ? item.release_date.replace(/-/g, '/') : null
-                        this.data.push(item)
-                    })
-                    this.loading = false
-                })
-                .catch((error) => {
-                    this.data = []
-                    this.total = 0
-                    this.loading = false
-                    throw error
-                })
-        },
-        /*
-        * Handle page-change event
-        */
-        onPageChange(page) {
-            this.page = page
-            this.loadAsyncData()
-        },
-
-        onSort(field, order) {
-            this.sortField = field
-            this.sortOrder = order
-            this.loadAsyncData()
-        },
-
-        setPerPage(){
-            this.loadAsyncData()
-        },
-
-
-
-        loadSchedules() {
-            const params = [
-                `sort_by=${this.sortFieldSchedules}.${this.sortOrderSchedules}`,
-                `aycode=${this.search.aycode}`,
-                `perpage=${this.perPageSchedules}`,
-                `page=${this.pageSchedules}`
-            ].join('&')
-
-            this.loadingFacultyLoad = true;
-            axios.get(`/cpanel/get-schedules?${params}`)
-                .then(({ data }) => {
-                    this.schedules = [];
-                    let currentTotal = data.total;
-
-                    if (data.total / this.perPageSchedules > 1000) {
-                        currentTotal = this.perPageSchedules * 1000
-                    }
-
-                    this.totalSchedules = currentTotal
-                    data.data.forEach((item) => {
-                        //item.release_date = item.release_date ? item.release_date.replace(/-/g, '/') : null
-                        this.schedules.push(item)
-                    })
-                    this.loadingSchedules = false
-                })
-                .catch((error) => {
-                    this.schedules = []
-                    this.totalSchedules = 0
-                    this.loadingSchedules = false
-                    throw error
-                })
-        },
-        /*
-        * Handle page-change event
-        */
-        onPageChangeSchedules(page) {
-            this.pageSchedules = page
-            this.setPerPageSchedules()
-        },
-
-        onSortSchedules(field, order) {
-            this.sortFieldFacultyLoad = field
-            this.sortOrderFacultyLoad = order
-            this.setPerPageSchedules()
-        },
-
-        setPerPageSchedules(){
-            this.loadSchedules()
-        },
-
-
-
-
-
-
-
-
-
-
-
-        openModal(){
-            this.isModalCreate=true;
-            this.clearFields();
-            this.errors = {};
-        },
-
-
-        submit: function(){
-            if(this.global_id > 0){
-                //update
-                axios.put('/cpanel/faculty/'+this.global_id, this.fields).then(res=>{
-                    if(res.data.status === 'updated'){
-                        this.$buefy.dialog.alert({
-                            title: 'UPDATED!',
-                            message: 'Successfully updated.',
-                            type: 'is-success',
-                            onConfirm: () => {
-                                this.loadAsyncData();
-                                this.clearFields();
-                                this.global_id = 0;
-                                this.isModalCreate = false;
-                            }
-                        })
-                    }
-                }).catch(err=>{
-                    if(err.response.status === 422){
-                        this.errors = err.response.data.errors;
-                    }
-                })
-            }else{
-                //INSERT HERE
-                axios.post('/cpanel/faculty', this.fields).then(res=>{
-                    if(res.data.status === 'saved'){
-                        this.$buefy.dialog.alert({
-                            title: 'SAVED!',
-                            message: 'Successfully saved.',
-                            type: 'is-success',
-                            confirmText: 'OK',
-                            onConfirm: () => {
-                                this.isModalCreate = false;
-                                this.loadAsyncData();
-                                this.clearFields();
-                                this.global_id = 0;
-                            }
-                        })
-                    }
-                }).catch(err=>{
-                    if(err.response.status === 422){
-                        this.errors = err.response.data.errors;
-                    }
-                });
-            }
-        },
-
-
-        //alert box ask for deletion
-        confirmDelete(delete_id) {
-            this.$buefy.dialog.confirm({
-                title: 'DELETE!',
-                type: 'is-danger',
-                message: 'Are you sure you want to delete this data?',
-                cancelText: 'Cancel',
-                confirmText: 'Delete',
-                onConfirm: () => this.deleteSubmit(delete_id)
-            });
-        },
-        //execute delete after confirming
-        deleteSubmit(delete_id) {
-            axios.delete('/cpanel/faculty/' + delete_id).then(res => {
-                this.loadAsyncData();
-            }).catch(err => {
-                if (err.response.status === 422) {
-                    this.errors = err.response.data.errors;
-                }
-            });
-        },
-
-        clearFields(){
-            this.fields = {
-                lname: null,
-                fname: null,
-                mname: null,
-                sex: null,
-                active: true
-            };
-        },
-
-
-        //update code here
-        getData: function(data_id){
-            this.clearFields();
-            this.global_id = data_id;
-            this.isModalCreate = true;
-
-            //nested axios for getting the address 1 by 1 or request by request
-            axios.get('/cpanel/faculty/'+data_id).then(res=>{
-                this.fields = res.data;
-                this.fields.active = res.data.active == 1 ? true : false;
-                //load city first
-            });
-        },
 
         loadAcadYear(){
             this.acadYears = JSON.parse(this.propAcadYears);
         },
 
-        emitBrowseCourse: function(n){
-            this.fields.schedule_id = n.schedule_id;
-            this.fields.course_code = n.course.course_code;
+        emitBrowseFaculty(d){
+            let mname = '';
+            if(d.mname){
+                mname = d.mname;
+            }
 
-            console.log(this.fields);
+            this.facultyFullName  = d.lname + ', ' + d.fname + ' ' + mname;
+            this.fields.fid = d.faculty_id;
+        },
+
+        loadFacultySchedules: function(){
+
+            if(!this.fields.fid){
+                this.$buefy.dialog.alert({
+                    message: 'Please select faculty.'
+                });
+            }
+            if(!this.fields.ay){
+                this.$buefy.dialog.alert({
+                    message: 'Please select academic year.'
+                });
+            }
+
+            const params = [
+                `fid=${this.fields.fid}`,
+                `ayid=${this.fields.ay}`,
+            ].join('&');
+
+            axios.get(`/cpanel/get-faculty-load?${params}`).then(res=>{
+                this.data = res.data
+            })
         }
+
+
     },
 
     mounted() {
-        this.loadAcadYear();
-        this.loadAsyncData();
-        this.loadSchedules();
+       this.loadAcadYear()
     }
 }
 </script>
 
 
-<style scoped>
-/*
-    .table > tbody > tr {
-
-        transition: background-color 0.5s ease;
-    }
-
-    .table > tbody > tr:hover {
-        background-color: rgb(233, 233, 233);
-    } */
-
-.modal-card-head{
-    background-color: green;
-}
-.modal-card-title{
-    color: white;
-}
-
-
+<style scoped src="../../../../sass/faculty-load-print.css">
 </style>

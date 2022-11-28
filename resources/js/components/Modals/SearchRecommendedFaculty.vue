@@ -1,9 +1,24 @@
 <template>
 
     <div>
-        <b-tooltip label="Assign Faculty" type="is-primary">
-            <b-button class="button is-small mr-1 is-info" icon-right="clipboard-account-outline" @click="openModal"></b-button>
+        <b-tooltip label="Faculty Options" type="is-primary">
+            <b-dropdown aria-role="list">
+                <template #trigger="{ active }">
+                    <b-button
+                        label="Option"
+                        type="is-info is-small"
+                        :icon-right="active ? 'menu-up' : 'menu-down'">
+                    </b-button>
+                </template>
+
+                <b-dropdown-item aria-role="listitem" @click="openModal">Assign Faculty</b-dropdown-item>
+                <b-dropdown-item aria-role="listitem" @click="removeFaculty">Remove Faculty</b-dropdown-item>
+
+
+            </b-dropdown>
         </b-tooltip>
+
+
 
         <b-modal v-model="this.modalAssignFaculty" has-modal-card
                  trap-focus scroll="keep" aria-role="dialog" aria-modal>
@@ -17,7 +32,13 @@
 
                 <section class="modal-card-body">
                     <div>
+                        <b-field label="Search Option" label-position="on-border">
+                            <b-select v-model="isLoadAll">
+                                <option value="0">Load Recommended Faculty</option>
+                                <option value="1">Load All Faculty</option>
+                            </b-select>
 
+                        </b-field>
                         <b-field label="Search" label-position="on-border" >
                             <b-input type="text" v-model="search.courseCode" placeholder="Search Course Code..." expanded auto-focus></b-input>
                             <b-input type="text" v-model="search.courseDesc" placeholder="Search Course Description..." expanded auto-focus></b-input>
@@ -45,7 +66,7 @@
                                 @sort="onSort">
 
                                 <b-table-column field="faculty_id" label="ID" v-slot="props">
-                                    {{props.row.course_id}}
+                                    {{props.row.faculty_id}}
                                 </b-table-column>
 
                                 <b-table-column field="name" label="Name" v-slot="props">
@@ -56,7 +77,7 @@
                                     {{props.row.sex}}
                                 </b-table-column>
 
-                                <b-table-column field="count_teaching" label="Count Teaching" v-slot="props">
+                                <b-table-column field="count_teaching" label="No. of Teaching" centered v-slot="props">
                                     {{props.row.count_teaching}}
                                 </b-table-column>
 
@@ -69,6 +90,8 @@
                             </b-table>
                         </div>
 
+
+
                     </div>
 
                     <div class="faculty-selected">
@@ -76,6 +99,12 @@
                         <div v-if="this.facultySelected">
                             <span>{{ this.facultySelected.lname }}, {{ this.facultySelected.fname }} {{ this.facultySelected.mname }}</span>
                             <b-button type="is-danger" @click="removeSelectedFaculty" class="is-small">X</b-button>
+                        </div>
+                        <div v-if="this.errors.faculty_id">
+                            <span
+                                style="font-weight: bold; margin-top: 5px; color: red; font-style: italic;">
+                                {{ this.errors.faculty_id[0] }}
+                            </span>
                         </div>
                     </div>
                 </section>
@@ -106,6 +135,10 @@ export default {
         propCourseId: {
             type: Number,
             default: 0
+        },
+        propScheduleId: {
+            type: Number,
+            default: 0
         }
     },
 
@@ -123,7 +156,10 @@ export default {
             search: '',
             modalAssignFaculty: false,
 
+            isLoadAll: 0,
+
             facultySelected: {},
+            errors: {},
         }
     },
 
@@ -139,6 +175,7 @@ export default {
                 `page=${this.page}`,
                 `courseid=${this.propCourseId}`,
                 `coursedesc=${this.search.courseDesc}`,
+                `isloadall=${this.isLoadAll}`,
             ].join('&');
 
             this.loading = true;
@@ -179,6 +216,9 @@ export default {
             this.loadAsyncData();
         },
 
+
+
+
         openModal(){
             this.loadAsyncData();
             this.modalAssignFaculty = true;
@@ -188,13 +228,68 @@ export default {
            // this.modalAssignFaculty = false;
             //this.$emit('browseRecommendedFaculty', dataRow);
             this.facultySelected = dataRow;
+            console.log(dataRow);
         },
 
+        refreshParent(){
+            this.$emit('refresh')
+        },
         removeSelectedFaculty(){
             this.facultySelected = {};
-        },
-        saveFaculty(){
 
+        },
+
+        saveFaculty(){
+            this.errors = {};
+
+            axios.post('/cpanel/save-faculty', {
+                faculty_id: this.facultySelected.faculty_id,
+                schedule_id: this.propScheduleId,
+            }).then(res=>{
+                if(res.data.status === 'saved'){
+                    this.modalAssignFaculty = false;
+                    // this.$buefy.toast({
+                    //     title: 'SAVED!',
+                    //     message: 'Faculty saved successfully.',
+                    //     type: 'is-success'
+                    // })
+
+                    this.$buefy.dialog.alert({
+                        title: 'SAVED?',
+                        type: 'is-success',
+                        message: 'Faculty saved successfully.',
+                        confirmText: 'Ok',
+                        onConfirm: ()=> {
+                            this.refreshParent()
+                        }
+                    });
+
+
+                }
+            }).catch(err=>{
+                //console.log(err.response.status)
+                if(err.response.status === 422){
+                    this.errors = err.response.data.errors;
+                    //console.log(this.errors);
+                }
+            })
+        },
+
+        removeFaculty(){
+            axios.post('/cpanel/remove-faculty/'+ this.propScheduleId).then(res=>{
+                if(res.data.status === 'removed'){
+                    this.$buefy.dialog.alert({
+                        title: 'REMOVED?',
+                        type: 'is-success',
+                        message: 'Faculty removed successfully.',
+                        confirmText: 'Ok',
+                        onConfirm: ()=> {
+                            this.refreshParent()
+                        }
+                    });
+
+                }
+            })
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cpanel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Faculty;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -10,6 +11,7 @@ use App\Models\AcademicYear;
 use App\Models\Program;
 use App\Models\Schedule;
 use App\Models\Room;
+use App\Models\User;
 
 use App\Rules\DetectConflictRule;
 
@@ -58,12 +60,25 @@ class ScheduleController extends Controller
     }
 
     public function getRecommendedFaculty(Request $req){
+        $isLoadAll = $req->isloadall;
+        //return $isLoadAll;
         $courseid = $req->courseid;
 
-        $data = DB::table('schedules as a')
-            ->join('faculty as b', 'a.faculty_id', 'b.faculty_id')
-            ->where('a.course_id', $courseid)
-            ->get();
+        if($isLoadAll > 0){
+            $data = Faculty::where('active', 1)->get();
+        }else{
+            $data = DB::table('schedules as a')
+                ->join('faculty as b', 'a.faculty_id', 'b.faculty_id')
+                ->where('a.course_id', $courseid)
+                ->select('a.schedule_id', 'b.lname', 'b.fname', 'b.faculty_id', 'b.mname',
+                    DB::raw('(count(b.faculty_id)) as count_teaching'),
+                    'b.sex'
+                )
+                ->orderBy('count_teaching', 'desc')
+                ->groupBy('b.faculty_id')
+                ->get();
+        }
+
         return $data;
     }
 
@@ -272,6 +287,32 @@ class ScheduleController extends Controller
         return $data;
     }
 
+    public function saveFaculty(Request $req){
+        $req->validate([
+            'faculty_id' => ['required']
+        ], $message = [
+            'faculty_id.required' => 'Please select faculty.'
+        ]);
+
+        $data = Schedule::find($req->schedule_id);
+        $data->faculty_id = $req->faculty_id;
+        $data->save();
+
+        return response()->json([
+            'status' => 'saved'
+        ], 200);
+    }
+
+    public function removeFaculty($id){
+
+        $data = Schedule::find($id);
+        $data->faculty_id = 0;
+        $data->save();
+
+        return response()->json([
+            'status' => 'removed'
+        ], 200);
+    }
 
     public function destroy($id){
         Schedule::destroy($id);

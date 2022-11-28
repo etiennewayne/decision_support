@@ -101,11 +101,16 @@ Route::get('/cpanel/get-schedules', [App\Http\Controllers\Cpanel\ScheduleControl
 Route::get('/cpanel/get-conflict-data', [App\Http\Controllers\Cpanel\ScheduleController::class, 'getConflictData']);
 Route::get('/cpanel/get-recommended-faculty', [App\Http\Controllers\Cpanel\ScheduleController::class, 'getRecommendedFaculty']);
 
+Route::post('/cpanel/save-faculty', [App\Http\Controllers\Cpanel\ScheduleController::class, 'saveFaculty']);
+Route::post('/cpanel/remove-faculty/{id}', [App\Http\Controllers\Cpanel\ScheduleController::class, 'removeFaculty']);
 
 
 
 Route::resource('/cpanel/faculty', App\Http\Controllers\Cpanel\FacultyController::class);
 Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getFaculty']);
+Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getFaculty']);
+
+
 
 Route::resource('/cpanel/faculty-load', App\Http\Controllers\Cpanel\FacultyLoadController::class);
 Route::get('/cpanel/get-faculty-load', [App\Http\Controllers\Cpanel\FacultyLoadController::class, 'getFacultyLoad']);

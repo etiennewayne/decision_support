@@ -1,0 +1,26 @@
+.print-section{
+    width: 865px;
+    /*border: 1px solid red;*/
+    margin: auto;
+}
+
+.print-body{
+    width: 650px;
+
+    margin: auto;
+}
+
+
+@media print {
+    .filter{
+        display: none;
+    }
+
+    .print-body{
+        margin: auto;
+    }
+}
+
+
+
+

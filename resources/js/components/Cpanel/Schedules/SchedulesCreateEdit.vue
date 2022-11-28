@@ -118,14 +118,24 @@
                                        <th>ID</th>
                                        <th>Course Code</th>
                                        <th>Description</th>
-                                       <th>Time</th>
+                                       <th>Time & Day</th>
+                                       <th>Day</th>
                                        <th>Room</th>
                                    </tr>
                                    <tr v-for="(item, index) in conflictData" :key="index">
                                        <td>{{ item.schedule_id }}</td>
                                        <td>{{ item.course.course_code }}</td>
                                        <td>{{ item.course.course_desc }}</td>
-                                       <td>{{ item.start_time | formatTime }} - {{ item.end_time | formatTime }}
+                                       <td>{{ item.start_time | formatTime }} - {{ item.end_time | formatTime }}</td>
+                                       <td>
+                                           <span class="days" v-if="item.mon">M</span>
+                                           <span class="days" v-if="item.tue">T</span>
+                                           <span class="days" v-if="item.wed">W</span>
+                                           <span class="days" v-if="item.thu">TH</span>
+                                           <span class="days" v-if="item.fri">F</span>
+                                           <span class="days" v-if="item.sat">SAT</span>
+                                           <span class="days" v-if="item.sun">SUN</span>
+                                       </td>
                                        <td>{{ item.room.room }}</td>
                                    </tr>
                                </table>
