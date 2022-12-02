@@ -8963,6 +8963,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8981,8 +8983,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/get-user').then(function (res) {
-        _this.user = res.data;
-        console.log(_this.user);
+        _this.user = res.data; ///console.log(this.user);
       });
     }
   },
@@ -9356,9 +9357,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
 //
 //
 //
@@ -10543,35 +10541,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['propPrograms', 'propId'],
   data: function data() {
@@ -10619,12 +10588,7 @@ __webpack_require__.r(__webpack_exports__);
               message: 'Successfully updated.',
               type: 'is-success',
               onConfirm: function onConfirm() {
-                _this4.loadAsyncData();
-
-                _this4.clearFields();
-
-                _this4.global_id = 0;
-                _this4.isModalCreate = false;
+                window.location = '/cpanel/users';
               }
             });
           }
@@ -10662,9 +10626,8 @@ __webpack_require__.r(__webpack_exports__);
       this.global_id = data_id;
       this.isModalCreate = true; //nested axios for getting the address 1 by 1 or request by request
 
-      axios.get('/users/' + data_id).then(function (res) {
+      axios.get('/cpanel/users/' + data_id).then(function (res) {
         _this5.fields = res.data;
-        _this5.fields.office = res.data.office_id;
         var tempData = res.data; //load city first
 
         axios.get('/load-cities?prov=' + _this5.fields.province).then(function (res) {
@@ -10698,6 +10661,10 @@ __webpack_require__.r(__webpack_exports__);
     initData: function initData() {
       var id = parseInt(this.propId);
       this.programs = JSON.parse(this.propPrograms);
+
+      if (id > 0) {
+        this.getData(id);
+      }
     }
   },
   mounted: function mounted() {
@@ -31918,7 +31885,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n    .table > tbody > tr {\r\n\r\n        transition: background-color 0.5s ease;\r\n    }\r\n\r\n    .table > tbody > tr:hover {\r\n        background-color: rgb(233, 233, 233);\r\n    } */\n.modal-card-head[data-v-cf7ad904]{\r\n        background-color: green;\n}\n.modal-card-title[data-v-cf7ad904]{\r\n        color: white;\n}\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n    .table > tbody > tr {\r\n\r\n        transition: background-color 0.5s ease;\r\n    }\r\n\r\n    .table > tbody > tr:hover {\r\n        background-color: rgb(233, 233, 233);\r\n    } */\n.modal-card-head[data-v-cf7ad904]{\r\n        background-color: green;\n}\n.modal-card-title[data-v-cf7ad904]{\r\n        color: white;\n}\r\n\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -36441,7 +36408,7 @@ var render = function () {
                             _c("b-input", {
                               attrs: {
                                 type: "text",
-                                placeholder: "Search Lastname",
+                                placeholder: "Search Course",
                               },
                               nativeOn: {
                                 keyup: function ($event) {
@@ -37886,10 +37853,6 @@ var render = function () {
                   1
                 ),
                 _vm._v(" "),
-                _c("b-navbar-item", { attrs: { href: "/cpanel/schedules" } }, [
-                  _vm._v("\n                Schedules\n            "),
-                ]),
-                _vm._v(" "),
                 _c(
                   "b-navbar-dropdown",
                   { attrs: { label: "Faculty" } },
@@ -37916,6 +37879,10 @@ var render = function () {
                   ],
                   1
                 ),
+                _vm._v(" "),
+                _c("b-navbar-item", { attrs: { href: "/cpanel/schedules" } }, [
+                  _vm._v("\n                Schedules\n            "),
+                ]),
                 _vm._v(" "),
                 _c("b-navbar-item", { attrs: { href: "/cpanel/users" } }, [
                   _vm._v("\n                User\n            "),
@@ -38044,7 +38011,7 @@ var render = function () {
                             _c("b-input", {
                               attrs: {
                                 type: "text",
-                                placeholder: "Search Lastname",
+                                placeholder: "Search program",
                               },
                               nativeOn: {
                                 keyup: function ($event) {
@@ -38067,11 +38034,11 @@ var render = function () {
                                 },
                               },
                               model: {
-                                value: _vm.search.lname,
+                                value: _vm.search.program_code,
                                 callback: function ($$v) {
-                                  _vm.$set(_vm.search, "lname", $$v)
+                                  _vm.$set(_vm.search, "program_code", $$v)
                                 },
-                                expression: "search.lname",
+                                expression: "search.program_code",
                               },
                             }),
                             _vm._v(" "),
@@ -38546,7 +38513,7 @@ var render = function () {
                             _c("b-input", {
                               attrs: {
                                 type: "text",
-                                placeholder: "Search Lastname",
+                                placeholder: "Search room",
                               },
                               nativeOn: {
                                 keyup: function ($event) {
@@ -38569,11 +38536,11 @@ var render = function () {
                                 },
                               },
                               model: {
-                                value: _vm.search.lname,
+                                value: _vm.search.room,
                                 callback: function ($$v) {
-                                  _vm.$set(_vm.search, "lname", $$v)
+                                  _vm.$set(_vm.search, "room", $$v)
                                 },
-                                expression: "search.lname",
+                                expression: "search.room",
                               },
                             }),
                             _vm._v(" "),
@@ -40354,11 +40321,7 @@ var render = function () {
                           },
                           [
                             _c("b-input", {
-                              attrs: {
-                                type: "text",
-                                placeholder: "Suffix",
-                                required: "",
-                              },
+                              attrs: { type: "text", placeholder: "Suffix" },
                               model: {
                                 value: _vm.fields.suffix,
                                 callback: function ($$v) {
@@ -40597,109 +40560,6 @@ var render = function () {
                           "b-field",
                           {
                             attrs: {
-                              label: "Programs",
-                              "label-position": "on-border",
-                              expanded: "",
-                              type: this.errors.program_id ? "is-danger" : "",
-                              message: this.errors.program_id
-                                ? this.errors.program_id[0]
-                                : "",
-                            },
-                          },
-                          [
-                            _c(
-                              "b-select",
-                              {
-                                attrs: { expanded: "" },
-                                model: {
-                                  value: _vm.fields.program_id,
-                                  callback: function ($$v) {
-                                    _vm.$set(_vm.fields, "program_id", $$v)
-                                  },
-                                  expression: "fields.program_id",
-                                },
-                              },
-                              _vm._l(_vm.programs, function (item, index) {
-                                return _c(
-                                  "option",
-                                  {
-                                    key: index,
-                                    domProps: { value: item.program_id },
-                                  },
-                                  [
-                                    _vm._v(
-                                      _vm._s(item.program_code) +
-                                        " - " +
-                                        _vm._s(item.program_desc)
-                                    ),
-                                  ]
-                                )
-                              }),
-                              0
-                            ),
-                          ],
-                          1
-                        ),
-                      ],
-                      1
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "columns" }, [
-                    _c(
-                      "div",
-                      { staticClass: "column" },
-                      [
-                        _c(
-                          "b-field",
-                          {
-                            attrs: {
-                              label: "Last School Attended",
-                              "label-position": "on-border",
-                              type: this.errors.last_school_attended
-                                ? "is-danger"
-                                : "",
-                              message: this.errors.last_school_attended
-                                ? this.errors.last_school_attended[0]
-                                : "",
-                            },
-                          },
-                          [
-                            _c("b-input", {
-                              attrs: {
-                                type: "text",
-                                placeholder: "Last School Attended",
-                                required: "",
-                              },
-                              model: {
-                                value: _vm.fields.last_school_attended,
-                                callback: function ($$v) {
-                                  _vm.$set(
-                                    _vm.fields,
-                                    "last_school_attended",
-                                    $$v
-                                  )
-                                },
-                                expression: "fields.last_school_attended",
-                              },
-                            }),
-                          ],
-                          1
-                        ),
-                      ],
-                      1
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "columns" }, [
-                    _c(
-                      "div",
-                      { staticClass: "column" },
-                      [
-                        _c(
-                          "b-field",
-                          {
-                            attrs: {
                               label: "Role",
                               "label-position": "on-border",
                               expanded: "",
@@ -40729,10 +40589,6 @@ var render = function () {
                                 _vm._v(" "),
                                 _c("option", { attrs: { value: "STAFF" } }, [
                                   _vm._v("STAFF"),
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "STUDENT" } }, [
-                                  _vm._v("STUDENT"),
                                 ]),
                               ]
                             ),

@@ -22,11 +22,46 @@ class FacultySeeder extends Seeder
                 'mname' => 'MAPA',
                 'sex' => 'MALE'
             ],
-
             [
                 'lname' => 'FLORIZA',
                 'fname' => 'JADE ANN',
                 'mname' => 'ESPELLOGO',
+                'sex' => 'FEMALE'
+            ],
+            [
+                'lname' => 'CABATINGAN',
+                'fname' => 'CARIN',
+                'mname' => 'Z',
+                'sex' => 'FEMALE'
+            ],
+            [
+                'lname' => 'CABIDO',
+                'fname' => 'MANUEL',
+                'mname' => 'C',
+                'sex' => 'MALE'
+            ],
+            [
+                'lname' => 'HILOT',
+                'fname' => 'GENEVIEVE',
+                'mname' => 'B',
+                'sex' => 'FEMALE'
+            ],
+            [
+                'lname' => 'SELATONA',
+                'fname' => 'JANZIEL',
+                'mname' => 'B',
+                'sex' => 'FEMALE'
+            ],
+            [
+                'lname' => 'TIA',
+                'fname' => 'JENIEFFER',
+                'mname' => 'T',
+                'sex' => 'FEMALE'
+            ],
+            [
+                'lname' => 'TAGAAN',
+                'fname' => 'CHARY MAE',
+                'mname' => '',
                 'sex' => 'FEMALE'
             ],
 

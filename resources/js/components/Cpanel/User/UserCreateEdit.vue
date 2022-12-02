@@ -61,7 +61,7 @@
                                                  :type="this.errors.suffix ? 'is-danger':''"
                                                  :message="this.errors.suffix ? this.errors.suffix[0] : ''">
                                             <b-input type="text" v-model="fields.suffix"
-                                                     placeholder="Suffix" required>
+                                                     placeholder="Suffix">
                                             </b-input>
                                         </b-field>
                                     </div>
@@ -109,7 +109,6 @@
                                     </div>
                                 </div>
 
-
                                 <div class="columns">
                                     <div class="column">
                                         <b-field label="Sex" label-position="on-border" expanded
@@ -122,31 +121,6 @@
                                             </b-select>
                                         </b-field>
                                     </div>
-
-                                    <div class="column">
-                                        <b-field label="Programs" label-position="on-border" expanded
-                                                 :type="this.errors.program_id ? 'is-danger':''"
-                                                 :message="this.errors.program_id ? this.errors.program_id[0] : ''">
-                                            <b-select v-model="fields.program_id" expanded>
-                                                <option v-for="(item, index) in programs" :key="index" :value="item.program_id">{{ item.program_code }} - {{ item.program_desc }}</option>
-                                            </b-select>
-                                        </b-field>
-                                    </div>
-                                </div>
-
-                                <div class="columns">
-                                    <div class="column">
-                                        <b-field label="Last School Attended" label-position="on-border"
-                                                 :type="this.errors.last_school_attended ? 'is-danger':''"
-                                                 :message="this.errors.last_school_attended ? this.errors.last_school_attended[0] : ''">
-                                            <b-input type="text" v-model="fields.last_school_attended"
-                                                     placeholder="Last School Attended" required>
-                                            </b-input>
-                                        </b-field>
-                                    </div>
-                                </div>
-
-                                <div class="columns">
                                     <div class="column">
                                         <b-field label="Role" label-position="on-border" expanded
                                                  :type="this.errors.role ? 'is-danger':''"
@@ -154,13 +128,10 @@
                                             <b-select v-model="fields.role" expanded>
                                                 <option value="ADMIN">ADMINISTRATOR</option>
                                                 <option value="STAFF">STAFF</option>
-                                                <option value="STUDENT">STUDENT</option>
                                             </b-select>
                                         </b-field>
                                     </div>
                                 </div>
-
-
 
                                 <div class="columns">
                                     <div class="column">
@@ -270,10 +241,7 @@ export default {
                             message: 'Successfully updated.',
                             type: 'is-success',
                             onConfirm: () => {
-                                this.loadAsyncData();
-                                this.clearFields();
-                                this.global_id = 0;
-                                this.isModalCreate = false;
+                               window.location = '/cpanel/users'
                             }
                         })
                     }
@@ -314,9 +282,8 @@ export default {
 
 
             //nested axios for getting the address 1 by 1 or request by request
-            axios.get('/users/'+data_id).then(res=>{
+            axios.get('/cpanel/users/'+data_id).then(res=>{
                 this.fields = res.data;
-                this.fields.office = res.data.office_id;
                 let tempData = res.data;
                 //load city first
                 axios.get('/load-cities?prov=' + this.fields.province).then(res=>{
@@ -343,6 +310,10 @@ export default {
         initData: function(){
            let id = parseInt(this.propId);
             this.programs = JSON.parse(this.propPrograms);
+            
+            if(id > 0){
+                this.getData(id);
+            }
         }
 
 

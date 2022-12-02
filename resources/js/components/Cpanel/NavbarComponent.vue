@@ -35,10 +35,6 @@
 
                 </b-navbar-dropdown>
 
-                <b-navbar-item href="/cpanel/schedules">
-                    Schedules
-                </b-navbar-item>
-
                 <b-navbar-dropdown label="Faculty">
                     
                     <b-navbar-item href="/cpanel/faculty">
@@ -51,6 +47,12 @@
 
 
                 </b-navbar-dropdown>
+
+                <b-navbar-item href="/cpanel/schedules">
+                    Schedules
+                </b-navbar-item>
+
+                
 
                 <b-navbar-item href="/cpanel/users">
                     User
@@ -95,7 +97,7 @@ export default {
         initUser(){
             axios.get('/get-user').then(res =>{
                 this.user = res.data;
-                console.log(this.user);
+                ///console.log(this.user);
             })
         }
     },

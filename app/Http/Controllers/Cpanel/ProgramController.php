@@ -27,7 +27,8 @@ class ProgramController extends Controller
     public function getAllData(Request $req){
         $sort = explode('.', $req->sort_by);
 
-        $data = Program::orderBy('program_code', 'asc')
+        $data = Program::where('program_code', 'like', $req->programcode . '%')
+            ->orderBy('program_code', 'asc')
             ->paginate($req->perpage);
         return $data;
     }

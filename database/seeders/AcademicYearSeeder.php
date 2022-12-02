@@ -18,13 +18,26 @@ class AcademicYearSeeder extends Seeder
         $data = [
 
             [
-                'code' => '2021-2022-1',
+                'code' => '201',
+                'semester' => '1ST SEMESTER',
+                'acadyear_desc' => 'ACADEMIC YEAR 2020 - 2021 1ST SEMESTER',
+                'active' => 1,
+            ],
+            [
+                'code' => '202',
+                'semester' => '2ND SEMESTER',
+                'acadyear_desc' => 'ACADEMIC YEAR 2020 - 2021 1ST SEMESTER',
+                'active' => 1,
+            ],
+
+            [
+                'code' => '211',
                 'semester' => '1ST SEMESTER',
                 'acadyear_desc' => 'ACADEMIC YEAR 2021 - 2022 1ST SEMESTER',
                 'active' => 1,
             ],
             [
-                'code' => '2021-2022-2',
+                'code' => '212',
                 'semester' => '2ND SEMESTER',
                 'acadyear_desc' => 'ACADEMIC YEAR 2021 - 2022 2ND SEMESTER',
                 'active' => 1,

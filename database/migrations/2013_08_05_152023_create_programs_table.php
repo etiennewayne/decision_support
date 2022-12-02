@@ -17,7 +17,6 @@ class CreateProgramsTable extends Migration
             $table->id('program_id');
             $table->string('program_code')->unique();
             $table->string('program_desc')->nullable();
-            $table->string('is_admin')->default(0);
             $table->tinyInteger('active')->default(1);
             $table->timestamps();
         });

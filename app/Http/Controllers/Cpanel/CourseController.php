@@ -26,7 +26,8 @@ class CourseController extends Controller
     public function getCourses(Request $req){
         $sort = explode('.', $req->sort_by);
 
-        return Course::orderBy($sort[0], $sort[1])
+        return Course::where('course_code', 'like', $req->course . '%')
+            ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);
     }
 

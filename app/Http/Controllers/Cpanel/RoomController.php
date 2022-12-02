@@ -30,7 +30,8 @@ class RoomController extends Controller
     public function getRooms(Request $req){
         $sort = explode('.', $req->sort_by);
 
-        $data = Room::orderBy('room', 'asc')
+        $data = Room::where('room', 'like', $req->room . '%')
+            ->orderBy('room', 'asc')
             ->paginate($req->perpage);
         return $data;
     }

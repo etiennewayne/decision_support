@@ -25,7 +25,7 @@
                                 <div class="level-item">
                                     <b-field label="Search">
                                         <b-input type="text"
-                                                 v-model="search.course" placeholder="Search Lastname"
+                                                 v-model="search.course" placeholder="Search Course"
                                                  @keyup.native.enter="loadAsyncData"/>
                                         <p class="control">
                                             <b-tooltip label="Search" type="is-success">

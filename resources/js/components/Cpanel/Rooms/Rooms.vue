@@ -26,7 +26,7 @@
                                 <div class="level-item">
                                     <b-field label="Search">
                                         <b-input type="text"
-                                                 v-model="search.lname" placeholder="Search Lastname"
+                                                 v-model="search.room" placeholder="Search room"
                                                  @keyup.native.enter="loadAsyncData"/>
                                         <p class="control">
                                              <b-tooltip label="Search" type="is-success">
@@ -87,9 +87,6 @@
                                 </div>
                             </b-table-column>
                         </b-table>
-
-
-
                     </div>
                 </div><!--col -->
             </div><!-- cols -->

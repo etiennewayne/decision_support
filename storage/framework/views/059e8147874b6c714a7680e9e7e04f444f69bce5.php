@@ -1,5 +1,7 @@
 <?php $__env->startSection('content'); ?>
-    <user-create-edit prop-programs='<?php echo json_encode($programs, 15, 512) ?>' prop-id="<?php echo e($id); ?>"></user-create-edit>
+    <user-create-edit prop-programs='<?php echo json_encode($programs, 15, 512) ?>' 
+        prop-id="<?php echo e($id); ?>">
+    </user-create-edit>
 <?php $__env->stopSection(); ?>
 
 

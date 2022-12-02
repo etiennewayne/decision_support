@@ -16,8 +16,10 @@ class AcademicYearController extends Controller
 
 
     public function getAcadYears(Request $req){
+
         $sort = explode('.', $req->sort_by);
-        return AcademicYear::orderBy($sort[0], $sort[1])
+        return AcademicYear::where('code', 'like', $req->acadyearcode . '%')
+            ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);
     }
 

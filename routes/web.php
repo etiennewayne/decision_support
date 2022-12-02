@@ -57,7 +57,6 @@ Route::post('/sign-up', [App\Http\Controllers\SignUpController::class, 'store'])
 
 
 
-
 //ADDRESS
 Route::get('/load-provinces', [App\Http\Controllers\AddressController::class, 'loadProvinces']);
 Route::get('/load-cities', [App\Http\Controllers\AddressController::class, 'loadCities']);
@@ -90,8 +89,6 @@ Route::get('/cpanel/get-courses', [App\Http\Controllers\Cpanel\CourseController:
 Route::get('/cpanel/get-browse-courses', [App\Http\Controllers\Cpanel\CourseController::class, 'getBrowseCoursesForModal']);
 //for modal
 
-
-
 Route::resource('/cpanel/users', App\Http\Controllers\Cpanel\UserController::class);
 Route::get('/cpanel/get-users', [App\Http\Controllers\Cpanel\UserController::class, 'getUsers']);
 
@@ -105,19 +102,13 @@ Route::post('/cpanel/save-faculty', [App\Http\Controllers\Cpanel\ScheduleControl
 Route::post('/cpanel/remove-faculty/{id}', [App\Http\Controllers\Cpanel\ScheduleController::class, 'removeFaculty']);
 
 
-
 Route::resource('/cpanel/faculty', App\Http\Controllers\Cpanel\FacultyController::class);
 Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getFaculty']);
 Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getFaculty']);
 
 
-
 Route::resource('/cpanel/faculty-load', App\Http\Controllers\Cpanel\FacultyLoadController::class);
 Route::get('/cpanel/get-faculty-load', [App\Http\Controllers\Cpanel\FacultyLoadController::class, 'getFacultyLoad']);
-
-
-
-
 
 
 

@@ -41,6 +41,7 @@ class UserController extends Controller
 
         return view('cpanel.user.user-create-edit')
             ->with('programs', $programs)
+            ->with('data', '')
             ->with('id', 0);
     }
     public function store(Request $req){
@@ -68,11 +69,9 @@ class UserController extends Controller
             'fname' => strtoupper($req->fname),
             'mname' => strtoupper($req->mname),
             'suffix' => strtoupper($req->suffix),
-            'program_id' => $req->program_id,
             'sex' => $req->sex,
             'email' => $req->email,
             'contact_no' => $req->contact_no,
-            'last_school_attended' => strtoupper($req->last_school_attended),
             'role' => $req->role,
             'province' => $req->province,
             'city' => $req->city,
@@ -93,7 +92,8 @@ class UserController extends Controller
 
         return view('cpanel.user.user-create-edit')
             ->with('programs', $programs)
-            ->with('data', $data);
+            ->with('data', $data)
+            ->with('id', $id);
     }
 
 
@@ -116,6 +116,7 @@ class UserController extends Controller
         $data->fname = strtoupper($req->fname);
         $data->mname = strtoupper($req->mname);
         $data->sex = $req->sex;
+        $data->contact_no = $req->contact_no;
         $data->email = $req->email;
         $data->role = $req->role;
         $data->province = $req->province;
