@@ -170,7 +170,7 @@ class ScheduleController extends Controller
     public function edit($id){
         $acadYears = AcademicYear::orderBy('code', 'asc')->get();
         $programs = Program::orderBy('program_code', 'asc')
-            ->where('is_admin', 0)
+            //->where('is_admin', 0)
             ->get();
         $rooms = Room::orderBy('room', 'asc')->get();
 
