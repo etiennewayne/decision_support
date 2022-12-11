@@ -85,7 +85,7 @@ class ScheduleController extends Controller
     public function create(){
         $acadYears = AcademicYear::orderBy('code', 'asc')->get();
         $programs = Program::orderBy('program_code', 'asc')
-            ->where('is_admin', 0)
+            //->where('is_admin', 0)
             ->get();
         $rooms = Room::orderBy('room', 'asc')->get();
 

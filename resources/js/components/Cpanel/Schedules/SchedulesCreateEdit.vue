@@ -75,7 +75,7 @@
                                 <b-field
                                          :type="this.errors.schedule ? 'is-danger':''"
                                          :message="this.errors.schedule ? this.errors.schedule[0] : ''">
-                                    <input type="hidden" v-model="fields.schedule"></input>
+                                    <input type="hidden" v-model="fields.schedule" />
                                 </b-field>
 
 
