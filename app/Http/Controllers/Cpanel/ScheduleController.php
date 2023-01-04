@@ -159,7 +159,6 @@ class ScheduleController extends Controller
             'fri' => $fri,
             'sat' => $sat,
             'sun' => $sun,
-
         ]);
 
         return response()->json([

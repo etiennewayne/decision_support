@@ -98,6 +98,12 @@ Route::get('/cpanel/get-schedules', [App\Http\Controllers\Cpanel\ScheduleControl
 Route::get('/cpanel/get-conflict-data', [App\Http\Controllers\Cpanel\ScheduleController::class, 'getConflictData']);
 Route::get('/cpanel/get-recommended-faculty', [App\Http\Controllers\Cpanel\ScheduleController::class, 'getRecommendedFaculty']);
 
+
+Route::resource('/cpanel/enrolment', App\Http\Controllers\Cpanel\EnrolmentController::class);
+Route::get('/cpanel/get-student-enrollees', [App\Http\Controllers\Cpanel\EnrolmentController::class, 'getStudentEnrollees']);
+Route::get('/cpanel/get-students', [App\Http\Controllers\Cpanel\EnrolmentController::class, 'getStudents']);
+
+
 Route::post('/cpanel/save-faculty', [App\Http\Controllers\Cpanel\ScheduleController::class, 'saveFaculty']);
 Route::post('/cpanel/remove-faculty/{id}', [App\Http\Controllers\Cpanel\ScheduleController::class, 'removeFaculty']);
 

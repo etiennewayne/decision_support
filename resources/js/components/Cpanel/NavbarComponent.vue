@@ -33,6 +33,10 @@
                         Courses
                     </b-navbar-item>
 
+                    <b-navbar-item href="/cpanel/enrolment">
+                        Enrolment
+                    </b-navbar-item>
+
                 </b-navbar-dropdown>
 
                 <b-navbar-dropdown label="Faculty">
