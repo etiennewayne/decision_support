@@ -7,7 +7,7 @@
 
         <b-modal v-model="this.isModalActive" has-modal-card
                  trap-focus scroll="keep" aria-role="dialog" aria-modal>
-            <div class="modal-card card-width">
+            <div class="modal-card" style="width: 760px;">
                 <header class="modal-card-head">
                     <p class="modal-card-title">SELECT SCHEDULE</p>
                     <button type="button" class="delete"
@@ -54,6 +54,10 @@
                                     {{props.row.schedule_id}}
                                 </b-table-column>
 
+                                <b-table-column field="schedule_id" label="Program" v-slot="props">
+                                    {{props.row.program.program_code }}
+                                </b-table-column>
+
                                 <b-table-column field="course_code" label="Course Code" v-slot="props">
                                     {{props.row.course.course_code}}
                                 </b-table-column>
@@ -98,18 +102,8 @@
 
 <script>
 export default {
-    props: {
-        propCourse: {
-            type: String,
-            default: '',
-        },
-        propAcadYears: {
-            type: Array,
-            default: '',
-        },
+    props: ['propCourse', 'propAcadYears'],
 
-       
-    },
     data(){
         return{
             data: [],
@@ -125,7 +119,7 @@ export default {
             errors:{},
 
             acadYears: [],
-           
+
             search: {
                 scheduleid: '',
                 course: '',
@@ -199,10 +193,9 @@ export default {
             this.acadYears = JSON.parse(this.propAcadYears);
         }
 
-
     },
 
-  
+
 
     computed: {
         valueCourse(){

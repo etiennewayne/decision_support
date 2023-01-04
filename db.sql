@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v12.14 (64 bit)
-MySQL - 10.4.13-MariaDB : Database - dental_pass
+MySQL - 10.4.24-MariaDB : Database - decision_support
 *********************************************************************
 */
 
@@ -12,9 +12,32 @@ MySQL - 10.4.13-MariaDB : Database - dental_pass
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`dental_pass` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`decision_support` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
-USE `dental_pass`;
+USE `decision_support`;
+
+/*Table structure for table `academic_years` */
+
+DROP TABLE IF EXISTS `academic_years`;
+
+CREATE TABLE `academic_years` (
+  `acadyear_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `semester` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `acadyear_desc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`acadyear_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `academic_years` */
+
+insert  into `academic_years`(`acadyear_id`,`code`,`semester`,`acadyear_desc`,`active`,`created_at`,`updated_at`) values 
+(1,'201','1ST SEMESTER','ACADEMIC YEAR 2020 - 2021 1ST SEMESTER',1,NULL,NULL),
+(2,'202','2ND SEMESTER','ACADEMIC YEAR 2020 - 2021 1ST SEMESTER',1,NULL,NULL),
+(3,'211','1ST SEMESTER','ACADEMIC YEAR 2021 - 2022 1ST SEMESTER',1,NULL,NULL),
+(4,'212','2ND SEMESTER','ACADEMIC YEAR 2021 - 2022 2ND SEMESTER',1,NULL,NULL);
 
 /*Table structure for table `barangays` */
 
@@ -22,17 +45,17 @@ DROP TABLE IF EXISTS `barangays`;
 
 CREATE TABLE `barangays` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `brgyCode` varchar(255) DEFAULT NULL,
-  `brgyRef` varchar(3) DEFAULT NULL,
-  `brgyDesc` text DEFAULT NULL,
-  `regCode` varchar(255) DEFAULT NULL,
-  `provCode` varchar(255) DEFAULT NULL,
-  `citymunCode` varchar(255) DEFAULT NULL,
+  `brgyCode` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `brgyRef` varchar(3) CHARACTER SET utf8 DEFAULT NULL,
+  `brgyDesc` text CHARACTER SET utf8 DEFAULT NULL,
+  `regCode` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `provCode` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `citymunCode` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `active` tinyint(1) DEFAULT 1,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=42030 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42030 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `barangays` */
 
@@ -42073,15 +42096,16 @@ DROP TABLE IF EXISTS `cities`;
 
 CREATE TABLE `cities` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
-  `psgcCode` varchar(255) DEFAULT NULL,
-  `citymunDesc` text DEFAULT NULL,
-  `regDesc` varchar(255) DEFAULT NULL,
-  `provCode` varchar(255) DEFAULT NULL,
-  `citymunCode` varchar(255) DEFAULT NULL,
-  `zipcode` varchar(10) DEFAULT NULL,
-  `active` tinyint(4) DEFAULT 1,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1648 DEFAULT CHARSET=utf8;
+  `psgcCode` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `citymunDesc` text CHARACTER SET utf8 DEFAULT NULL,
+  `regDesc` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `provCode` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `citymunCode` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `zipcode` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
+  `active` tinyint(1) DEFAULT 1,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `citymunCode` (`citymunCode`)
+) ENGINE=InnoDB AUTO_INCREMENT=1648 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `cities` */
 
@@ -43734,6 +43758,157 @@ insert  into `cities`(`id`,`psgcCode`,`citymunDesc`,`regDesc`,`provCode`,`citymu
 (1646,'168506000','SAN JOSE (Capital)','16','1685','168506',NULL,1),
 (1647,'168507000','TUBAJON','16','1685','168507',NULL,1);
 
+/*Table structure for table `course_types` */
+
+DROP TABLE IF EXISTS `course_types`;
+
+CREATE TABLE `course_types` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `course_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `course_types` */
+
+insert  into `course_types`(`id`,`course_type`,`created_at`,`updated_at`) values 
+(1,'LEC',NULL,NULL),
+(2,'LAB',NULL,NULL);
+
+/*Table structure for table `courses` */
+
+DROP TABLE IF EXISTS `courses`;
+
+CREATE TABLE `courses` (
+  `course_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `course_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `course_desc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `course_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `course_unit` tinyint(4) NOT NULL DEFAULT 3,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`course_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `courses` */
+
+insert  into `courses`(`course_id`,`course_code`,`course_desc`,`course_type`,`course_unit`,`created_at`,`updated_at`) values 
+(1,'CIC 122 (LEC)','DATA STRUCTURES AND ALGORITHM','LEC',1,NULL,NULL),
+(2,'CIC 122 (LAB)','DATA STRUCTURES AND ALGORITHM','LAB',2,NULL,NULL),
+(3,'NSTP 1','NATIONAL SERVICE AND TRAINING 11','LEC',3,NULL,NULL),
+(4,'NSTP 2','NATIONAL SERVICE AND TRAINING 2','LEC',3,NULL,NULL),
+(5,'ALWAY 1','HISTORY OF TANGUB AND GADTC, CORE VALUES','LEC',2,NULL,NULL),
+(6,'ALWAY 2','EMPOWERING THE ALFONSOS','LEC',2,NULL,NULL),
+(7,'PATH-FIT 2','FITNESS TRAINING','LEC',2,NULL,NULL),
+(8,'MSC 122','CALCULUS 1 WITH ANALYTIC GEOMETRY','LEC',3,NULL,NULL),
+(9,'CIC 121 (LAB)','COMPUTER PROGRAMMING 2','LAB',1,NULL,NULL),
+(10,'GE KOMFIL','KONTEKSWALISADONG KOMUNIKASYON FILIPINO','LEC',3,NULL,NULL),
+(11,'GE CONWOR','THE CONTEMPORARY WORLD','LEC',3,NULL,NULL),
+(12,'PSC 225 (LEC)','OBJECT-ORIENTED PROGRAMMING (LEC)','LEC',1,NULL,NULL),
+(13,'PSC 225 (LAB)','OBJECT-ORIENTED PROGRAMMING (LAB)','LAB',2,NULL,NULL),
+(14,'JRIZ','RIZAL\'S LIFE AND WORKS','LAB',3,NULL,NULL),
+(15,'ESC 323 (LEC)','MODELING AND SIMULATION (LEC)','LEC',2,NULL,NULL),
+(16,'ESC 323 (LAB)','MODELING AND SIMULATION (LAB)','LAB',1,NULL,NULL),
+(17,'PSC 321 (LAB)','SOFTWARE ENGINEERING 2 (LAB)','LAB',1,NULL,NULL),
+(18,'PSC 321 (LEC)','SOFTWARE ENGINEERING 2 (LEC)','LEC',2,NULL,NULL),
+(19,'GE PURCOM','PURPOSIVE COMMUNICATION','LEC',3,'2023-01-04 20:54:25','2023-01-04 20:54:25'),
+(20,'GE USELF','UNDERSTANDING THE SELF','LEC',3,'2023-01-04 20:55:13','2023-01-04 20:55:13'),
+(21,'GE RPHIS','READING IN PHILIPPINE HISTORY','LEC',3,'2023-01-04 20:56:26','2023-01-04 20:56:26'),
+(22,'GE ARTAPP','ART APPRECIATION','LEC',3,'2023-01-04 20:58:14','2023-01-04 20:58:14'),
+(23,'GE MODMAT','MATHEMATICS IN THE MODERN WORLD','LEC',3,'2023-01-04 20:59:28','2023-01-04 20:59:28'),
+(24,'GE STS','SCIENCE, TECHNOLOGY AND SOCIETY','LEC',3,'2023-01-04 21:00:50','2023-01-04 21:00:50'),
+(25,'GE ETHICS','ETHICS','LEC',3,'2023-01-04 21:05:10','2023-01-04 21:05:10'),
+(26,'ALWAY 3','PUBLIC SPEAKING AND DEVELOPMENT 1','LEC',2,'2023-01-04 21:10:54','2023-01-04 21:10:54'),
+(27,'PATH-FIT 3','DANCE','LEC',2,'2023-01-04 21:11:37','2023-01-04 21:11:37'),
+(28,'FE 113','FUNDAMENTALS OF ENGLISH FOR TEACHERS','LEC',3,'2023-01-04 21:28:22','2023-01-04 21:28:22'),
+(29,'PLIT 213','SURVEY IN PHILIPPINE LITERATURE IN ENGLISH','LEC',3,'2023-01-04 21:29:53','2023-01-04 21:29:53');
+
+/*Table structure for table `curriculums` */
+
+DROP TABLE IF EXISTS `curriculums`;
+
+CREATE TABLE `curriculums` (
+  `curriculum_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `course_id` bigint(20) unsigned NOT NULL,
+  `semester_id` bigint(20) unsigned NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`curriculum_id`),
+  KEY `course_id` (`course_id`),
+  CONSTRAINT `curriculums_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `curriculums` */
+
+/*Table structure for table `enrolment_details` */
+
+DROP TABLE IF EXISTS `enrolment_details`;
+
+CREATE TABLE `enrolment_details` (
+  `enrolment_detail_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `enrolment_id` bigint(20) unsigned NOT NULL,
+  `schedule_id` bigint(20) unsigned NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`enrolment_detail_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `enrolment_details` */
+
+insert  into `enrolment_details`(`enrolment_detail_id`,`enrolment_id`,`schedule_id`,`created_at`,`updated_at`) values 
+(1,1,6,NULL,NULL),
+(2,1,5,NULL,NULL),
+(3,3,6,'2023-01-05 04:51:34','2023-01-05 04:51:34'),
+(4,3,8,'2023-01-05 04:51:34','2023-01-05 04:51:34');
+
+/*Table structure for table `enrolments` */
+
+DROP TABLE IF EXISTS `enrolments`;
+
+CREATE TABLE `enrolments` (
+  `enrolment_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `acadyear_id` bigint(20) DEFAULT NULL,
+  `student_id` bigint(20) unsigned NOT NULL,
+  `program_id` bigint(20) unsigned NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`enrolment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `enrolments` */
+
+insert  into `enrolments`(`enrolment_id`,`acadyear_id`,`student_id`,`program_id`,`created_at`,`updated_at`) values 
+(3,4,1,1,'2023-01-05 04:51:34','2023-01-05 04:51:34');
+
+/*Table structure for table `faculty` */
+
+DROP TABLE IF EXISTS `faculty`;
+
+CREATE TABLE `faculty` (
+  `faculty_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `lname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sex` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`faculty_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `faculty` */
+
+insert  into `faculty`(`faculty_id`,`lname`,`fname`,`mname`,`sex`,`active`,`created_at`,`updated_at`) values 
+(1,'SANTARITA','JUNREY','MAPA','MALE',1,NULL,NULL),
+(2,'FLORIZA','JADE ANN','ESPELLOGO','FEMALE',1,NULL,NULL),
+(3,'CABATINGAN','CARIN','Z','FEMALE',1,NULL,NULL),
+(4,'CABIDO','MANUEL','C','MALE',1,NULL,NULL),
+(5,'HILOT','GENEVIEVE','B','FEMALE',1,NULL,NULL),
+(6,'SELATONA','JANZIEL','B','FEMALE',1,NULL,NULL),
+(7,'TIA','JENIEFFER','T','FEMALE',1,NULL,NULL),
+(8,'TAGAAN','CHARY MAE','','FEMALE',1,NULL,NULL);
+
 /*Table structure for table `failed_jobs` */
 
 DROP TABLE IF EXISTS `failed_jobs`;
@@ -43761,30 +43936,25 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=282 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `migrations` */
 
 insert  into `migrations`(`id`,`migration`,`batch`) values 
-(6,'2013_11_09_103158_create_offices_table',1),
-(7,'2014_10_12_000000_create_users_table',1),
-(8,'2014_10_12_100000_create_password_resets_table',1),
-(9,'2019_08_19_000000_create_failed_jobs_table',1),
-(10,'2019_12_14_000001_create_personal_access_tokens_table',1);
-
-/*Table structure for table `offices` */
-
-DROP TABLE IF EXISTS `offices`;
-
-CREATE TABLE `offices` (
-  `office_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `office_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`office_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-/*Data for the table `offices` */
+(119,'2022_08_19_113417_create_faculties_table',1),
+(269,'2013_08_05_152023_create_programs_table',2),
+(270,'2013_08_06_132737_create_roles_table',2),
+(271,'2014_10_12_000000_create_users_table',2),
+(272,'2014_10_12_100000_create_password_resets_table',2),
+(273,'2019_08_19_000000_create_failed_jobs_table',2),
+(274,'2019_12_14_000001_create_personal_access_tokens_table',2),
+(275,'2022_08_19_113417_create_faculty_table',2),
+(276,'2022_08_19_113417_create_rooms_table',2),
+(277,'2022_08_19_113418_create_course_types_table',2),
+(278,'2022_08_19_113419_create_semesters_table',2),
+(279,'2022_08_19_114621_create_academic_years_table',2),
+(280,'2022_08_19_114755_create_courses_table',2),
+(281,'2022_08_22_155117_create_schedules_table',2);
 
 /*Table structure for table `password_resets` */
 
@@ -43820,112 +43990,265 @@ CREATE TABLE `personal_access_tokens` (
 
 /*Data for the table `personal_access_tokens` */
 
+/*Table structure for table `programs` */
+
+DROP TABLE IF EXISTS `programs`;
+
+CREATE TABLE `programs` (
+  `program_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `program_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `program_desc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`program_id`),
+  UNIQUE KEY `programs_program_code_unique` (`program_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `programs` */
+
+insert  into `programs`(`program_id`,`program_code`,`program_desc`,`active`,`created_at`,`updated_at`) values 
+(1,'BSCS','BACHELOR OF SCIENCE IN COMPUTER SCIENCE',1,NULL,NULL),
+(2,'BSED-MATH','BACHELOR OF SCIENCE IN EDUCATION MAJOR IN MATH',1,NULL,NULL),
+(3,'BSED-FIL','BACHELOR OF SCIENCE IN EDUCATION MAJOR IN FILIPINO',1,NULL,NULL),
+(4,'BSED-ENGL','BACHELOR OF SCIENCE IN EDUCATION MAJOR IN ENGLISH',1,NULL,NULL),
+(5,'BS CRIM','BACHELOR OF SCIENCE IN CRIMINOLOGY',1,NULL,NULL),
+(6,'BSBA-HRM','BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN HUMAN RESOURCE MANAGEMENT',1,NULL,NULL),
+(7,'BSBA-MM','BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN MARKETING MANAGEMENT',1,NULL,NULL);
+
 /*Table structure for table `provinces` */
 
 DROP TABLE IF EXISTS `provinces`;
 
 CREATE TABLE `provinces` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `country_id` int(10) unsigned NOT NULL,
-  `psgcCode` varchar(255) DEFAULT NULL,
-  `provDesc` text DEFAULT NULL,
-  `regCode` varchar(255) DEFAULT NULL,
-  `provCode` varchar(255) DEFAULT NULL,
+  `psgcCode` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `provDesc` text CHARACTER SET utf8 DEFAULT NULL,
+  `regCode` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `provCode` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `active` tinyint(4) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `provinces` */
 
-insert  into `provinces`(`id`,`country_id`,`psgcCode`,`provDesc`,`regCode`,`provCode`,`active`) values 
-(1,1,'012800000','ILOCOS NORTE','01','0128',1),
-(2,1,'012900000','ILOCOS SUR','01','0129',1),
-(3,1,'013300000','LA UNION','01','0133',1),
-(4,1,'015500000','PANGASINAN','01','0155',1),
-(5,1,'020900000','BATANES','02','0209',1),
-(6,1,'021500000','CAGAYAN','02','0215',1),
-(7,1,'023100000','ISABELA','02','0231',1),
-(8,1,'025000000','NUEVA VIZCAYA','02','0250',1),
-(9,1,'025700000','QUIRINO','02','0257',1),
-(10,1,'030800000','BATAAN','03','0308',1),
-(11,1,'031400000','BULACAN','03','0314',1),
-(12,1,'034900000','NUEVA ECIJA','03','0349',1),
-(13,1,'035400000','PAMPANGA','03','0354',1),
-(14,1,'036900000','TARLAC','03','0369',1),
-(15,1,'037100000','ZAMBALES','03','0371',1),
-(16,1,'037700000','AURORA','03','0377',1),
-(17,1,'041000000','BATANGAS','04','0410',1),
-(18,1,'042100000','CAVITE','04','0421',1),
-(19,1,'043400000','LAGUNA','04','0434',1),
-(20,1,'045600000','QUEZON','04','0456',1),
-(21,1,'045800000','RIZAL','04','0458',1),
-(22,1,'174000000','MARINDUQUE','17','1740',1),
-(23,1,'175100000','OCCIDENTAL MINDORO','17','1751',1),
-(24,1,'175200000','ORIENTAL MINDORO','17','1752',1),
-(25,1,'175300000','PALAWAN','17','1753',1),
-(26,1,'175900000','ROMBLON','17','1759',1),
-(27,1,'050500000','ALBAY','05','0505',1),
-(28,1,'051600000','CAMARINES NORTE','05','0516',1),
-(29,1,'051700000','CAMARINES SUR','05','0517',1),
-(30,1,'052000000','CATANDUANES','05','0520',1),
-(31,1,'054100000','MASBATE','05','0541',1),
-(32,1,'056200000','SORSOGON','05','0562',1),
-(33,1,'060400000','AKLAN','06','0604',1),
-(34,1,'060600000','ANTIQUE','06','0606',1),
-(35,1,'061900000','CAPIZ','06','0619',1),
-(36,1,'063000000','ILOILO','06','0630',1),
-(37,1,'064500000','NEGROS OCCIDENTAL','06','0645',1),
-(38,1,'067900000','GUIMARAS','06','0679',1),
-(39,1,'071200000','BOHOL','07','0712',1),
-(40,1,'072200000','CEBU','07','0722',1),
-(41,1,'074600000','NEGROS ORIENTAL','07','0746',1),
-(42,1,'076100000','SIQUIJOR','07','0761',1),
-(43,1,'082600000','EASTERN SAMAR','08','0826',1),
-(44,1,'083700000','LEYTE','08','0837',1),
-(45,1,'084800000','NORTHERN SAMAR','08','0848',1),
-(46,1,'086000000','SAMAR (WESTERN SAMAR)','08','0860',1),
-(47,1,'086400000','SOUTHERN LEYTE','08','0864',1),
-(48,1,'087800000','BILIRAN','08','0878',1),
-(49,1,'097200000','ZAMBOANGA DEL NORTE','09','0972',1),
-(50,1,'097300000','ZAMBOANGA DEL SUR','09','0973',1),
-(51,1,'098300000','ZAMBOANGA SIBUGAY','09','0983',1),
-(52,1,'099700000','CITY OF ISABELA','09','0997',1),
-(53,1,'101300000','BUKIDNON','10','1013',1),
-(54,1,'101800000','CAMIGUIN','10','1018',1),
-(55,1,'103500000','LANAO DEL NORTE','10','1035',1),
-(56,1,'104200000','MISAMIS OCCIDENTAL','10','1042',1),
-(57,1,'104300000','MISAMIS ORIENTAL','10','1043',1),
-(58,1,'112300000','DAVAO DEL NORTE','11','1123',1),
-(59,1,'112400000','DAVAO DEL SUR','11','1124',1),
-(60,1,'112500000','DAVAO ORIENTAL','11','1125',1),
-(61,1,'118200000','COMPOSTELA VALLEY','11','1182',1),
-(62,1,'118600000','DAVAO OCCIDENTAL','11','1186',1),
-(63,1,'124700000','COTABATO (NORTH COTABATO)','12','1247',1),
-(64,1,'126300000','SOUTH COTABATO','12','1263',1),
-(65,1,'126500000','SULTAN KUDARAT','12','1265',1),
-(66,1,'128000000','SARANGANI','12','1280',1),
-(67,1,'129800000','COTABATO CITY','12','1298',1),
-(68,1,'133900000','NCR, CITY OF MANILA, FIRST DISTRICT','13','1339',1),
-(69,1,'133900000','CITY OF MANILA','13','1339',1),
-(70,1,'137400000','NCR, SECOND DISTRICT','13','1374',1),
-(71,1,'137500000','NCR, THIRD DISTRICT','13','1375',1),
-(72,1,'137600000','NCR, FOURTH DISTRICT','13','1376',1),
-(73,1,'140100000','ABRA','14','1401',1),
-(74,1,'141100000','BENGUET','14','1411',1),
-(75,1,'142700000','IFUGAO','14','1427',1),
-(76,1,'143200000','KALINGA','14','1432',1),
-(77,1,'144400000','MOUNTAIN PROVINCE','14','1444',1),
-(78,1,'148100000','APAYAO','14','1481',1),
-(79,1,'150700000','BASILAN','15','1507',1),
-(80,1,'153600000','LANAO DEL SUR','15','1536',1),
-(81,1,'153800000','MAGUINDANAO','15','1538',1),
-(82,1,'156600000','SULU','15','1566',1),
-(83,1,'157000000','TAWI-TAWI','15','1570',1),
-(84,1,'160200000','AGUSAN DEL NORTE','16','1602',1),
-(85,1,'160300000','AGUSAN DEL SUR','16','1603',1),
-(86,1,'166700000','SURIGAO DEL NORTE','16','1667',1),
-(87,1,'166800000','SURIGAO DEL SUR','16','1668',1),
-(88,1,'168500000','DINAGAT ISLANDS','16','1685',1);
+insert  into `provinces`(`id`,`psgcCode`,`provDesc`,`regCode`,`provCode`,`active`) values 
+(1,'012800000','ILOCOS NORTE','01','0128',0),
+(2,'012900000','ILOCOS SUR','01','0129',0),
+(3,'013300000','LA UNION','01','0133',0),
+(4,'015500000','PANGASINAN','01','0155',0),
+(5,'020900000','BATANES','02','0209',0),
+(6,'021500000','CAGAYAN','02','0215',0),
+(7,'023100000','ISABELA','02','0231',0),
+(8,'025000000','NUEVA VIZCAYA','02','0250',0),
+(9,'025700000','QUIRINO','02','0257',0),
+(10,'030800000','BATAAN','03','0308',0),
+(11,'031400000','BULACAN','03','0314',0),
+(12,'034900000','NUEVA ECIJA','03','0349',0),
+(13,'035400000','PAMPANGA','03','0354',0),
+(14,'036900000','TARLAC','03','0369',0),
+(15,'037100000','ZAMBALES','03','0371',0),
+(16,'037700000','AURORA','03','0377',0),
+(17,'041000000','BATANGAS','04','0410',0),
+(18,'042100000','CAVITE','04','0421',0),
+(19,'043400000','LAGUNA','04','0434',0),
+(20,'045600000','QUEZON','04','0456',0),
+(21,'045800000','RIZAL','04','0458',0),
+(22,'174000000','MARINDUQUE','17','1740',0),
+(23,'175100000','OCCIDENTAL MINDORO','17','1751',0),
+(24,'175200000','ORIENTAL MINDORO','17','1752',0),
+(25,'175300000','PALAWAN','17','1753',0),
+(26,'175900000','ROMBLON','17','1759',0),
+(27,'050500000','ALBAY','05','0505',0),
+(28,'051600000','CAMARINES NORTE','05','0516',0),
+(29,'051700000','CAMARINES SUR','05','0517',0),
+(30,'052000000','CATANDUANES','05','0520',0),
+(31,'054100000','MASBATE','05','0541',0),
+(32,'056200000','SORSOGON','05','0562',0),
+(33,'060400000','AKLAN','06','0604',0),
+(34,'060600000','ANTIQUE','06','0606',0),
+(35,'061900000','CAPIZ','06','0619',0),
+(36,'063000000','ILOILO','06','0630',0),
+(37,'064500000','NEGROS OCCIDENTAL','06','0645',0),
+(38,'067900000','GUIMARAS','06','0679',0),
+(39,'071200000','BOHOL','07','0712',0),
+(40,'072200000','CEBU','07','0722',0),
+(41,'074600000','NEGROS ORIENTAL','07','0746',0),
+(42,'076100000','SIQUIJOR','07','0761',0),
+(43,'082600000','EASTERN SAMAR','08','0826',0),
+(44,'083700000','LEYTE','08','0837',0),
+(45,'084800000','NORTHERN SAMAR','08','0848',0),
+(46,'086000000','SAMAR (WESTERN SAMAR)','08','0860',0),
+(47,'086400000','SOUTHERN LEYTE','08','0864',0),
+(48,'087800000','BILIRAN','08','0878',0),
+(49,'097200000','ZAMBOANGA DEL NORTE','09','0972',0),
+(50,'097300000','ZAMBOANGA DEL SUR','09','0973',0),
+(51,'098300000','ZAMBOANGA SIBUGAY','09','0983',0),
+(52,'099700000','CITY OF ISABELA','09','0997',0),
+(53,'101300000','BUKIDNON','10','1013',0),
+(54,'101800000','CAMIGUIN','10','1018',0),
+(55,'103500000','LANAO DEL NORTE','10','1035',0),
+(56,'104200000','MISAMIS OCCIDENTAL','10','1042',1),
+(57,'104300000','MISAMIS ORIENTAL','10','1043',0),
+(58,'112300000','DAVAO DEL NORTE','11','1123',0),
+(59,'112400000','DAVAO DEL SUR','11','1124',0),
+(60,'112500000','DAVAO ORIENTAL','11','1125',0),
+(61,'118200000','COMPOSTELA VALLEY','11','1182',0),
+(62,'118600000','DAVAO OCCIDENTAL','11','1186',0),
+(63,'124700000','COTABATO (NORTH COTABATO)','12','1247',0),
+(64,'126300000','SOUTH COTABATO','12','1263',0),
+(65,'126500000','SULTAN KUDARAT','12','1265',0),
+(66,'128000000','SARANGANI','12','1280',0),
+(67,'129800000','COTABATO CITY','12','1298',0),
+(68,'133900000','NCR, CITY OF MANILA, FIRST DISTRICT','13','1339',0),
+(69,'133900000','CITY OF MANILA','13','1339',0),
+(70,'137400000','NCR, SECOND DISTRICT','13','1374',0),
+(71,'137500000','NCR, THIRD DISTRICT','13','1375',0),
+(72,'137600000','NCR, FOURTH DISTRICT','13','1376',0),
+(73,'140100000','ABRA','14','1401',0),
+(74,'141100000','BENGUET','14','1411',0),
+(75,'142700000','IFUGAO','14','1427',0),
+(76,'143200000','KALINGA','14','1432',0),
+(77,'144400000','MOUNTAIN PROVINCE','14','1444',0),
+(78,'148100000','APAYAO','14','1481',0),
+(79,'150700000','BASILAN','15','1507',0),
+(80,'153600000','LANAO DEL SUR','15','1536',0),
+(81,'153800000','MAGUINDANAO','15','1538',0),
+(82,'156600000','SULU','15','1566',0),
+(83,'157000000','TAWI-TAWI','15','1570',0),
+(84,'160200000','AGUSAN DEL NORTE','16','1602',0),
+(85,'160300000','AGUSAN DEL SUR','16','1603',0),
+(86,'166700000','SURIGAO DEL NORTE','16','1667',0),
+(87,'166800000','SURIGAO DEL SUR','16','1668',0),
+(88,'168500000','DINAGAT ISLANDS','16','1685',0);
+
+/*Table structure for table `roles` */
+
+DROP TABLE IF EXISTS `roles`;
+
+CREATE TABLE `roles` (
+  `role_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `roles` */
+
+insert  into `roles`(`role_id`,`role`,`created_at`,`updated_at`) values 
+(1,'ADMINISTRATOR',NULL,NULL),
+(2,'FACULTY',NULL,NULL);
+
+/*Table structure for table `rooms` */
+
+DROP TABLE IF EXISTS `rooms`;
+
+CREATE TABLE `rooms` (
+  `room_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `room` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `room_desc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `max` int(11) NOT NULL DEFAULT 40,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`room_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `rooms` */
+
+insert  into `rooms`(`room_id`,`room`,`room_desc`,`max`,`created_at`,`updated_at`) values 
+(1,'MB 201','LECTURE ROOM',40,NULL,NULL),
+(2,'MB 202','LECTURE ROOM',40,NULL,NULL),
+(3,'CLAB 101','COMPUTER LABORATORY 1',40,NULL,NULL),
+(4,'CLAB 102','COMPUTER LABORATORY 2',40,NULL,NULL);
+
+/*Table structure for table `schedules` */
+
+DROP TABLE IF EXISTS `schedules`;
+
+CREATE TABLE `schedules` (
+  `schedule_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `acadyear_id` bigint(20) unsigned NOT NULL,
+  `program_id` bigint(20) unsigned NOT NULL,
+  `course_id` bigint(20) unsigned NOT NULL,
+  `room_id` bigint(20) unsigned NOT NULL,
+  `start_time` time DEFAULT NULL,
+  `end_time` time DEFAULT NULL,
+  `faculty_id` int(11) NOT NULL DEFAULT 0,
+  `mon` tinyint(4) NOT NULL DEFAULT 0,
+  `tue` tinyint(4) NOT NULL DEFAULT 0,
+  `wed` tinyint(4) NOT NULL DEFAULT 0,
+  `thu` tinyint(4) NOT NULL DEFAULT 0,
+  `fri` tinyint(4) NOT NULL DEFAULT 0,
+  `sat` tinyint(4) NOT NULL DEFAULT 0,
+  `sun` tinyint(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`schedule_id`),
+  KEY `schedules_acadyear_id_foreign` (`acadyear_id`),
+  KEY `schedules_program_id_foreign` (`program_id`),
+  KEY `schedules_course_id_foreign` (`course_id`),
+  KEY `schedules_room_id_foreign` (`room_id`),
+  CONSTRAINT `schedules_acadyear_id_foreign` FOREIGN KEY (`acadyear_id`) REFERENCES `academic_years` (`acadyear_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `schedules_course_id_foreign` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `schedules_program_id_foreign` FOREIGN KEY (`program_id`) REFERENCES `programs` (`program_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `schedules_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `schedules` */
+
+insert  into `schedules`(`schedule_id`,`acadyear_id`,`program_id`,`course_id`,`room_id`,`start_time`,`end_time`,`faculty_id`,`mon`,`tue`,`wed`,`thu`,`fri`,`sat`,`sun`,`created_at`,`updated_at`) values 
+(1,1,1,1,1,'08:30:00','10:00:00',1,1,0,0,1,0,0,0,NULL,NULL),
+(2,1,1,1,3,'08:30:00','10:00:00',1,0,1,0,0,1,0,0,NULL,NULL),
+(3,1,1,5,2,'11:00:00','12:00:00',8,1,0,1,0,1,0,0,NULL,NULL),
+(4,4,1,1,1,'08:30:00','10:00:00',0,1,0,0,1,0,0,0,NULL,NULL),
+(5,4,1,1,3,'08:30:00','10:00:00',0,0,1,0,0,1,0,0,NULL,NULL),
+(6,4,1,5,3,'11:00:00','12:00:00',0,0,1,0,0,1,0,0,NULL,NULL),
+(7,4,4,29,1,'13:00:00','15:00:00',0,1,0,1,0,1,0,0,'2023-01-04 22:05:38','2023-01-04 22:05:38'),
+(8,4,4,28,2,'09:30:00','12:00:00',0,0,1,0,1,0,0,0,'2023-01-04 22:07:09','2023-01-04 22:13:15'),
+(9,4,1,29,1,'09:00:00','11:30:00',0,0,0,1,0,0,0,0,'2023-01-04 22:09:00','2023-01-04 22:09:00'),
+(10,4,1,28,2,'12:00:00','14:00:00',0,1,0,0,0,0,1,0,'2023-01-04 22:10:50','2023-01-04 22:10:50');
+
+/*Table structure for table `semesters` */
+
+DROP TABLE IF EXISTS `semesters`;
+
+CREATE TABLE `semesters` (
+  `semester_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `semester` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`semester_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `semesters` */
+
+insert  into `semesters`(`semester_id`,`semester`,`created_at`,`updated_at`) values 
+(1,'1ST SEMESTER',NULL,NULL),
+(2,'2ND SEMESTER',NULL,NULL);
+
+/*Table structure for table `students` */
+
+DROP TABLE IF EXISTS `students`;
+
+CREATE TABLE `students` (
+  `student_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `student_ref` varchar(255) DEFAULT NULL,
+  `lname` varchar(255) DEFAULT NULL,
+  `fname` varchar(255) DEFAULT NULL,
+  `mname` varchar(255) DEFAULT NULL,
+  `sex` varchar(255) DEFAULT NULL,
+  `program_id` bigint(20) unsigned NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`student_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `students` */
+
+insert  into `students`(`student_id`,`student_ref`,`lname`,`fname`,`mname`,`sex`,`program_id`,`created_at`,`updated_at`) values 
+(1,'188004','MACAHIDHID','JESSA',NULL,'FEMALE',1,NULL,NULL),
+(2,'189854','DELA CRUZ','JUAN',NULL,'MALE',2,NULL,NULL);
 
 /*Table structure for table `users` */
 
@@ -43938,14 +44261,14 @@ CREATE TABLE `users` (
   `fname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `suffix` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `role` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sex` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `province` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `barangay` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `street` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contact_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `role` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -43954,12 +44277,13 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `users_username_unique` (`username`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `users` */
 
-insert  into `users`(`user_id`,`username`,`lname`,`fname`,`mname`,`suffix`,`sex`,`province`,`city`,`barangay`,`street`,`email`,`contact_no`,`role`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values 
-(1,'admin','DOMINGUEZ','JUNARD','P',NULL,'MALE','MISAMIS OCCIDENTAL','TANGUB CITY','CANIANGAN','P-6','angel@dev.com','09167789585','ADMINISTRATOR',NULL,'$2y$10$34Vda5nW5tCKvI1Zhmvlv.sL8l4yMVNoFSJcGcUOW7tLqyYW2AKFe',NULL,NULL,NULL);
+insert  into `users`(`user_id`,`username`,`lname`,`fname`,`mname`,`suffix`,`email`,`contact_no`,`role`,`sex`,`province`,`city`,`barangay`,`street`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values 
+(1,'admin','CALIBO','ALEXANDER','P','','angel@dev.com','09167789585','ADMINISTRATOR','MALE','1042','104215','104215025','P-BOUGAINVILLA',NULL,'$2y$10$gjJ8031vfFa9tsbY9FM8b.uAY1ewJfg6S3TTNRjGDRyBZx3IpkZWm',NULL,NULL,NULL),
+(2,'faculty','NOVA','MAE','P','','faculty@dev.com','091166554878','FACULTY','MALE','1042','104215','104215025','P-BOUGAINVILLA',NULL,'$2y$10$7ocxVY28PxOTW1YHXjm5Ne.m8hNE0LkCU3U8b2TIBn6cVFjIGrUlq',NULL,NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

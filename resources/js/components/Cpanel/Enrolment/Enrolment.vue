@@ -79,7 +79,7 @@
                                 {{ props.row.enrolment_id }}
                             </b-table-column>
 
-                           
+
                             <b-table-column field="code" label="A.Y." v-slot="props">
                                 {{ props.row.academic_year.code }}
                             </b-table-column>
@@ -100,17 +100,17 @@
                                 {{ props.row.student.program.program_code }}
                             </b-table-column>
 
-           
+
 
                             <b-table-column label="Action" v-slot="props">
                                 <div class="is-flex">
-                                    <b-tooltip label="Edit" type="is-primary">
-                                        <b-button class="button is-small mr-1 is-primary" tag="a" icon-right="pencil" :href="`/cpanel/schedules/${props.row.enrolment_id}/edit`"></b-button>
-                                    </b-tooltip>
+<!--                                    <b-tooltip label="Edit" type="is-primary">-->
+<!--                                        <b-button class="button is-small mr-1 is-primary" tag="a" icon-right="pencil" :href="`/cpanel/enrolment/${props.row.enrolment_id}/edit`"></b-button>-->
+<!--                                    </b-tooltip>-->
                                     <b-tooltip label="Delete" type="is-primary">
                                         <b-button class="button is-small mr-1 is-danger" icon-right="delete" @click="confirmDelete(props.row.enrolment_id)"></b-button>
                                     </b-tooltip>
-                                    
+
                                 </div>
                             </b-table-column>
 

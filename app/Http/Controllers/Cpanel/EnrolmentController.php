@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cpanel;
 
 use App\Http\Controllers\Controller;
+use App\Models\EnrolmentDetail;
 use Illuminate\Http\Request;
 
 use App\Models\AcademicYear;
@@ -32,7 +33,7 @@ class EnrolmentController extends Controller
 
     public function getStudents(Request $req){
         $sort = explode('.', $req->sort_by);
-        $data = Student::orderBy('lname', 'asc')
+        $data = Student::with(['program'])->orderBy('lname', 'asc')
             ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);;
         return $data;
@@ -41,7 +42,7 @@ class EnrolmentController extends Controller
 
     public function getStudentEnrollees(Request $req){
         $sort = explode('.', $req->sort_by);
-        
+
         // $data = DB::table('student_enrolments as a')
         //     ->join('academic_years as b', 'a.acadyear_id', 'b.acadyear_id')
         //     ->join('students as c', 'a.student_id', 'c.student_id')
@@ -51,7 +52,7 @@ class EnrolmentController extends Controller
         //     ->select('a.enrolment_id', 'a.acadyear_id', 'a.student_id', 'a.program_id as enrolment_program_id', 'a.schedule_id',
         //         'b.code', 'b.semester', 'b.acadyear_desc',
         //         'c.student_ref', 'c.lname', 'c.fname', 'c.mname', 'c.sex', 'c.program_id as student_program_id',
-        //         'd.program_code', 'd.program_desc', 
+        //         'd.program_code', 'd.program_desc',
         //         'e.course_id', 'e.room_id', 'e.program_id as schedule_program_id', 'e.start_time', 'e.end_time',
         //         'f.course_code', 'f.course_desc'
         //     )
@@ -81,12 +82,35 @@ class EnrolmentController extends Controller
 
 
     public function store(Request $req){
-        Enrolment::create([
 
+        $data = Enrolment::create([
+            'acadyear_id' => $req->acadyear_id,
+            'student_id' => $req->student_id,
+            'program_id' => $req->program_id,
         ]);
+
+        foreach ($req->enrolment_details as $sched){
+            EnrolmentDetail::create([
+                'enrolment_id' => $data->enrolment_id,
+                'schedule_id' => $sched['schedule_id']
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'saved'
+        ], 200);
 
     }
 
+    public function edit($id){
+        $acadYears = AcademicYear::orderBy('code', 'asc')->get();
+        $programs = Program::orderBy('program_code', 'asc')
+            //->where('is_admin', 0)
+            ->get();
+        return view('cpanel.enrolment.enrolment-create-edit')
+            ->with('acadYears', $acadYears)
+            ->with('programs', $programs);
+    }
 
     public function destroy($id){
         Enrolment::destroy($id);

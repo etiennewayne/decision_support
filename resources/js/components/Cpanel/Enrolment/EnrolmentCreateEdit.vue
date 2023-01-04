@@ -2,7 +2,7 @@
     <div>
         <div class="section">
             <div class="columns is-centered">
-                <div class="column is-6">
+                <div class="column is-10">
                     <form @submit.prevent="submit">
 
                         <div class="box">
@@ -19,14 +19,53 @@
                                     </b-select>
                                 </b-field>
 
-                                <modal-browse-student 
+                                <modal-browse-student
                                     :prop-student="fullname"
                                     @browseStudent="emitBrowseStudent($event)"></modal-browse-student>
 
-               
+                                <hr>
+
+                                <div style="font-weight: bold;">Schedules</div>
+                                <div>
+                                    <table class="table is-fullwidth">
+                                        <tr>
+                                            <th>Schedule Id</th>
+                                            <th>Course Code</th>
+                                            <th>Course Desc</th>
+                                            <th>Time</th>
+                                            <th>Day</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        <tr v-for="(item, index) in fields.enrolment_details">
+                                            <td>{{ item.schedule_id}}</td>
+                                            <td>{{ item.course_code}}</td>
+                                            <td>{{ item.course_desc}}</td>
+                                            <td>{{ item.schedule_time}}</td>
+                                            <td>
+                                                <span class="days" v-if="item.mon">M</span>
+                                                <span class="days" v-if="item.tue">T</span>
+                                                <span class="days" v-if="item.wed">W</span>
+                                                <span class="days" v-if="item.thu">TH</span>
+                                                <span class="days" v-if="item.fri">F</span>
+                                                <span class="days" v-if="item.sat">SAT</span>
+                                                <span class="days" v-if="item.sun">SUN</span>
+                                            </td>
+                                            <td>
+                                                <b-button type="is-info" class="is-small is-danger mt-5" icon-right="trash" @click="removeSchedule(index)">Remove</b-button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <div class="buttons">
+                                                <modal-browse-schedule-enrolment class="mt-5" :prop-ay-id="fields.acadyear_id"
+                                                    @browseSchedule="emitBrowseSchedule($event)"></modal-browse-schedule-enrolment>
+<!--                                                <b-button type="is-info" class="is-small mt-5" @click="addSchedule">Add</b-button>-->
+                                            </div>
+                                        </tr>
+                                    </table>
+                                </div>
 
                                 <div class="buttons mt-4 is-right">
-                                    <button class="button is-primary">SAVE</button>
+                                    <b-button class="button is-primary" @click="submit">SAVE</b-button>
                                 </div>
                             </div>
                         </div> <!-- box -->
@@ -36,79 +75,13 @@
 
         </div><!--section-->
 
-        <!--modal create-->
-        <b-modal v-model="modalConflict" has-modal-card
-             trap-focus
-             :width="640"
-             aria-role="dialog"
-             aria-label="Modal"
-             aria-modal>
-
-
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">CONFLICT(S)</p>
-                    <button
-                        type="button"
-                        class="delete"
-                        @click="modalConflict = false" />
-                </header>
-
-                <section class="modal-card-body">
-                    <div class="">
-                        <div class="columns">
-                            <div class="column">
-
-                               <table class="table">
-                                   <tr>
-                                       <th>ID</th>
-                                       <th>Course Code</th>
-                                       <th>Description</th>
-                                       <th>Time & Day</th>
-                                       <th>Day</th>
-                                       <th>Room</th>
-                                   </tr>
-                                   <tr v-for="(item, index) in conflictData" :key="index">
-                                       <td>{{ item.schedule_id }}</td>
-                                       <td>{{ item.course.course_code }}</td>
-                                       <td>{{ item.course.course_desc }}</td>
-                                       <td>{{ item.start_time | formatTime }} - {{ item.end_time | formatTime }}</td>
-                                       <td>
-                                           <span class="days" v-if="item.mon">M</span>
-                                           <span class="days" v-if="item.tue">T</span>
-                                           <span class="days" v-if="item.wed">W</span>
-                                           <span class="days" v-if="item.thu">TH</span>
-                                           <span class="days" v-if="item.fri">F</span>
-                                           <span class="days" v-if="item.sat">SAT</span>
-                                           <span class="days" v-if="item.sun">SUN</span>
-                                       </td>
-                                       <td>{{ item.room.room }}</td>
-                                   </tr>
-                               </table>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <footer class="modal-card-foot">
-                    <b-button
-                        label="Close"
-                        @click="modalConflict=false"/>
-                </footer>
-            </div>
-
-        </b-modal>
-        <!--close modal-->
-
     </div><!--root div-->
 </template>
 
 <script>
-import axios from 'axios';
-
 
 export default {
+
     props: ['propAcadYears', 'propPrograms', 'propData'],
 
     data(){
@@ -125,21 +98,17 @@ export default {
 
             acadYears: [],
             programs: [],
-            rooms: [],
-
-            conflictData: {},
-            modalConflict: false,
 
             fullname: '',
+
 
         }
     },
 
     methods: {
 
-
-
         initData: function(){
+
             this.acadYears = JSON.parse(this.propAcadYears);
             this.programs = JSON.parse(this.propPrograms);
         },
@@ -147,13 +116,62 @@ export default {
         emitBrowseStudent: function(rowData){
             console.log(rowData);
             this.fullname = rowData.lname + ', ' + rowData.fname + ' ' + rowData.mname
+            this.fields.student_id = rowData.student_id;
+            this.fields.program_id = rowData.program_id;
+        },
+
+        emitBrowseSchedule: function(rowData){
+            console.log(rowData);
+
+            if(this.fields.program_id !== rowData.program_id){
+                this.$buefy.dialog.confirm({
+                    title: 'Continue?',
+                    type: 'is-info',
+                    message: 'Course program is different from the course of the student. Do you want to continue to load this course?',
+                    cancelText: 'Cancel',
+                    confirmText: 'Continue',
+                    onConfirm: () => {
+                        this.fields.enrolment_details.push({
+                            schedule_id: rowData.schedule_id,
+                            course_code: rowData.course.course_code,
+                            course_desc: rowData.course.course_desc,
+                            schedule_time: rowData.start_time + " - " + rowData.end_time,
+                            mon: rowData.mon,
+                            tue: rowData.tue,
+                            wed: rowData.wed,
+                            thu: rowData.thu,
+                            fri: rowData.fri,
+                            sat: rowData.sat,
+                            sun: rowData.sun,
+                        });
+                    }
+                });
+            }else{
+                this.fields.enrolment_details.push({
+                    schedule_id: rowData.schedule_id,
+                    course_code: rowData.course.course_code,
+                    course_desc: rowData.course.course_desc,
+                    schedule_time: rowData.start_time + " - " + rowData.end_time,
+                    mon: rowData.mon,
+                    tue: rowData.tue,
+                    wed: rowData.wed,
+                    thu: rowData.thu,
+                    fri: rowData.fri,
+                    sat: rowData.sat,
+                    sun: rowData.sun,
+                });
+            }
+
+
+
+
         },
 
         submit: function(){
 
             if(this.global_id > 0){
                 //update
-                axios.put('/cpanel/schedules/' + this.global_id, this.fields).then(res=>{
+                axios.put('/cpanel/enrolment/' + this.global_id, this.fields).then(res=>{
                 //console.log(res.data);
                     if(res.data.status === 'updated'){
                         this.$buefy.dialog.alert({
@@ -161,7 +179,7 @@ export default {
                             message: 'Successfully updated.',
                             type: 'is-success',
                             onConfirm: () => {
-                                window.location = '/cpanel/schedules';
+                                window.location = '/cpanel/enrolment';
                             }
                         })
                     }
@@ -174,7 +192,7 @@ export default {
                 })
             }else{
                 //insert
-                axios.post('/cpanel/schedules', this.fields).then(res=>{
+                axios.post('/cpanel/enrolment', this.fields).then(res=>{
                 //console.log(res.data);
                     if(res.data.status === 'saved'){
                         this.$buefy.dialog.alert({
@@ -182,7 +200,7 @@ export default {
                             message: 'Successfully saved.',
                             type: 'is-success',
                             onConfirm: () => {
-                                window.location = '/cpanel/schedules';
+                                window.location = '/cpanel/enrolment';
                             }
                         })
                     }
@@ -200,6 +218,10 @@ export default {
                     }
                 })
             }
+        },
+
+        removeSchedule(index){
+            this.fields.enrolment_details.splice(index, 1);
         }
 
     },

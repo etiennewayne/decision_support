@@ -15,13 +15,13 @@
 
 
         <b-modal v-model="this.isModalActive" has-modal-card
-                 trap-focus scroll="keep" aria-role="dialog" aria-modal>
-            <div class="modal-card card-width">
+                 trap-focus scroll="keep">
+
+            <div class="modal-card" style="width: 800px;">
                 <header class="modal-card-head">
                     <p class="modal-card-title">Select Student</p>
                     <button type="button" class="delete"
                             @click="isModalActive = false"/>
-
                 </header>
 
                 <section class="modal-card-body">
@@ -67,6 +67,10 @@
 
                                 <b-table-column field="mname" label="Middlename" v-slot="props">
                                     {{props.row.mname}}
+                                </b-table-column>
+
+                                <b-table-column field="mname" label="Middlename" v-slot="props">
+                                    {{props.row.program.program_code}}
                                 </b-table-column>
 
                                 <b-table-column field="" label="Action" v-slot="props">

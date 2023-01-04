@@ -59,6 +59,31 @@ class ScheduleController extends Controller
         return $data;
     }
 
+
+    public function getSchedulesForEnrolment(Request $req){
+        $sort = explode('.', $req->sort_by);
+        $ayid = $req->ayid;
+        $course = $req->course;
+
+        $scheduleid = '';
+
+        if ($req->has('scheduleid')) {
+            //if request has schedule id
+            $scheduleid = $req->scheduleid;
+        }
+
+        $data = Schedule::with('acadyear', 'program', 'course', 'room', 'faculty')
+            ->whereHas('acadyear', function($q) use ($ayid){
+                $q->where('acadyear_id', $ayid);
+            })
+            ->whereHas('course', function($q) use ($course){
+                $q->where('course_code', 'like', $course . '%')
+                    ->orWhere('course_desc', 'like', $course . '%');
+            })
+            ->paginate($req->perpage);
+        return $data;
+    }
+
     public function getRecommendedFaculty(Request $req){
         $isLoadAll = $req->isloadall;
         //return $isLoadAll;
