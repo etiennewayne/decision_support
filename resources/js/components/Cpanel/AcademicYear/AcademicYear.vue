@@ -71,14 +71,27 @@
                                 {{ props.row.semester }}
                             </b-table-column>
 
+                            <b-table-column field="active" label="Active" v-slot="props">
+                                <span v-if="props.row.active === 1" class="active">Yes</span>
+                                <span v-else class="not-active">No</span>
+
+                            </b-table-column>
+
                             <b-table-column label="Action" v-slot="props">
                                 <div class="is-flex">
                                     <b-tooltip label="Edit" type="is-primary">
                                         <b-button class="button is-small mr-1 is-primary" tag="a" icon-right="pencil" @click="getData(props.row.acadyear_id)"></b-button>
                                     </b-tooltip>
+
+                                    <b-tooltip label="Set Active" type="is-primary">
+                                        <b-button class="button is-small mr-1 is-primary" icon-right="thumb-up-outline" @click="setActive(props.row.acadyear_id)"></b-button>
+                                    </b-tooltip>
+
+
                                     <b-tooltip label="Delete" type="is-primary">
                                         <b-button class="button is-small mr-1 is-danger" icon-right="delete" @click="confirmDelete(props.row.acadyear_id)"></b-button>
                                     </b-tooltip>
+
                                 </div>
                             </b-table-column>
                         </b-table>
@@ -354,6 +367,22 @@ export default{
             axios.get('/get-open-semesters').then(res=>{
                 this.semesters = res.data;
             });
+        },
+
+
+        setActive(ayId){
+            axios.post('/cpanel/set-active-ay/' + ayId).then(res=>{
+                if(res.data.status === 'active'){
+                    this.$buefy.dialog.alert({
+                        title: 'Active!',
+                        type: 'is-success',
+                        message: 'Set active successfully.',
+                        confirmText: 'Ok',
+                    });
+                    this.loadAsyncData()
+                }
+
+            })
         }
 
 
@@ -379,6 +408,24 @@ export default{
         background-color: rgb(233, 233, 233);
     } */
 
+.active{
+    padding: 5px;
+    font-weight: bold;
+    font-size: .8em;
+    background-color: green;
+    margin: 5px;
+    color: white;
+}
+
+.not-active{
+    padding: 5px;
+    font-weight: bold;
+    font-size: .8em;
+    background-color: red;
+    margin: 5px;
+    color: white;
+
+}
 .modal-card-head{
     background-color: green;
 }

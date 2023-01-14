@@ -71,6 +71,7 @@ Route::resource('/cpanel/dashboard', App\Http\Controllers\Cpanel\CpanelDashboard
 
 Route::resource('/cpanel/acad-years', App\Http\Controllers\Cpanel\AcademicYearController::class);
 Route::get('/cpanel/get-acad-years', [App\Http\Controllers\Cpanel\AcademicYearController::class, 'getAcadYears']);
+Route::post('/cpanel/set-active-ay/{id}', [App\Http\Controllers\Cpanel\AcademicYearController::class, 'setActive']);
 
 
 Route::resource('/cpanel/rooms', App\Http\Controllers\Cpanel\RoomController::class);

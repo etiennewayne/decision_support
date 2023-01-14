@@ -99,7 +99,6 @@
                                 {{ props.row.start_time | formatTime }} - {{ props.row.end_time | formatTime }}
                             </b-table-column>
 
-
                             <b-table-column field="days" label="Days" v-slot="props">
                                 <span class="days" v-if="props.row.mon">M</span>
                                 <span class="days" v-if="props.row.tue">T</span>
@@ -166,9 +165,8 @@ export default{
             sortField: 'program_id',
             sortOrder: 'desc',
             page: 1,
-            perPage: 5,
+            perPage: 10,
             defaultSortDirection: 'asc',
-
 
             global_id : 0,
 
@@ -189,7 +187,6 @@ export default{
                 'button': true,
                 'is-loading':false,
             },
-
         }
 
     },
@@ -325,7 +322,6 @@ export default{
            this.fields = {};
         },
 
-
         //update code here
         getData: function(data_id){
             this.clearFields();
@@ -340,16 +336,22 @@ export default{
 
         loadAcadYear(){
             this.acadYears = JSON.parse(this.propAcadYears);
+            //console.log(this.acadYears);
+            this.acadYears.forEach(el => {
+                if(el.active === 1){
+                    this.search.aycode = el.code
+                }
+            });
+            this.loadAsyncData();
         },
-
-
 
 
     },
 
     mounted() {
-        this.loadAsyncData();
         this.loadAcadYear();
+
+
     }
 }
 </script>

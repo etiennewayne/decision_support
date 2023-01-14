@@ -7745,6 +7745,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7924,6 +7937,22 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/get-open-semesters').then(function (res) {
         _this6.semesters = res.data;
+      });
+    },
+    setActive: function setActive(ayId) {
+      var _this7 = this;
+
+      axios.post('/cpanel/set-active-ay/' + ayId).then(function (res) {
+        if (res.data.status === 'active') {
+          _this7.$buefy.dialog.alert({
+            title: 'Active!',
+            type: 'is-success',
+            message: 'Set active successfully.',
+            confirmText: 'Ok'
+          });
+
+          _this7.loadAsyncData();
+        }
       });
     }
   },
@@ -9388,6 +9417,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['propAcadYears'],
   data: function data() {
@@ -9437,6 +9467,9 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/cpanel/get-faculty-load?".concat(params)).then(function (res) {
         _this.data = res.data;
       });
+    },
+    printMe: function printMe() {
+      window.print();
     }
   },
   mounted: function mounted() {
@@ -10439,7 +10472,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['propAcadYears'],
   data: function data() {
@@ -10450,7 +10482,7 @@ __webpack_require__.r(__webpack_exports__);
       sortField: 'program_id',
       sortOrder: 'desc',
       page: 1,
-      perPage: 5,
+      perPage: 10,
       defaultSortDirection: 'asc',
       global_id: 0,
       search: {
@@ -10607,11 +10639,19 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     loadAcadYear: function loadAcadYear() {
-      this.acadYears = JSON.parse(this.propAcadYears);
+      var _this6 = this;
+
+      this.acadYears = JSON.parse(this.propAcadYears); //console.log(this.acadYears);
+
+      this.acadYears.forEach(function (el) {
+        if (el.active === 1) {
+          _this6.search.aycode = el.code;
+        }
+      });
+      this.loadAsyncData();
     }
   },
   mounted: function mounted() {
-    this.loadAsyncData();
     this.loadAcadYear();
   }
 });
@@ -10629,8 +10669,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -10791,7 +10829,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['propAcadYears', 'propPrograms', 'propData', 'propRooms'],
   data: function data() {
@@ -10852,12 +10893,14 @@ __webpack_require__.r(__webpack_exports__);
       this.fields.course_desc = rowData.course_desc;
       this.fields.course_id = rowData.course_id;
     },
-    submit: function submit() {
+    submit: function submit(forceSave) {
       var _this = this;
+
+      this.fields.forcesave = forceSave;
 
       if (this.global_id > 0) {
         //update
-        axios__WEBPACK_IMPORTED_MODULE_0___default().put('/cpanel/schedules/' + this.global_id, this.fields).then(function (res) {
+        axios.put('/cpanel/schedules/' + this.global_id, this.fields).then(function (res) {
           //console.log(res.data);
           if (res.data.status === 'updated') {
             _this.$buefy.dialog.alert({
@@ -10878,7 +10921,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       } else {
         //insert
-        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/cpanel/schedules', this.fields).then(function (res) {
+        axios.post('/cpanel/schedules', this.fields).then(function (res) {
           //console.log(res.data);
           if (res.data.status === 'saved') {
             _this.$buefy.dialog.alert({
@@ -12689,7 +12732,10 @@ __webpack_require__.r(__webpack_exports__);
       page: 1,
       perPage: 5,
       defaultSortDirection: '',
-      search: '',
+      search: {
+        course_code: '',
+        course_desc: ''
+      },
       modalAssignFaculty: false,
       isLoadAll: 0,
       facultySelected: {},
@@ -12701,7 +12747,7 @@ __webpack_require__.r(__webpack_exports__);
     loadAsyncData: function loadAsyncData() {
       var _this = this;
 
-      var params = ["sort_by=".concat(this.sortfield, ".").concat(this.sortOrder), "perpage=".concat(this.perPage), "page=".concat(this.page), "courseid=".concat(this.propCourseId), "coursedesc=".concat(this.search.courseDesc), "isloadall=".concat(this.isLoadAll)].join('&');
+      var params = ["sort_by=".concat(this.sortfield, ".").concat(this.sortOrder), "perpage=".concat(this.perPage), "page=".concat(this.page), "courseid=".concat(this.propCourseId), "coursedesc=".concat(this.search.course_desc), "isloadall=".concat(this.isLoadAll)].join('&');
       this.loading = true;
       axios.get("/cpanel/get-recommended-faculty?".concat(params)).then(function (_ref) {
         var data = _ref.data;
@@ -12778,9 +12824,17 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       })["catch"](function (err) {
-        //console.log(err.response.status)
         if (err.response.status === 422) {
-          _this2.errors = err.response.data.errors; //console.log(this.errors);
+          _this2.errors = err.response.data.errors;
+
+          if (_this2.errors.faculty) {
+            _this2.$buefy.dialog.alert({
+              title: 'Conflict!',
+              type: 'is-danger',
+              message: _this2.errors.faculty[0],
+              confirmText: 'Ok'
+            });
+          }
         }
       });
     },
@@ -32741,7 +32795,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\n    .table > tbody > tr {\n\n        transition: background-color 0.5s ease;\n    }\n\n    .table > tbody > tr:hover {\n        background-color: rgb(233, 233, 233);\n    } */\n.modal-card-head[data-v-0ce56f0c]{\n    background-color: green;\n}\n.modal-card-title[data-v-0ce56f0c]{\n    color: white;\n}\n\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\n    .table > tbody > tr {\n\n        transition: background-color 0.5s ease;\n    }\n\n    .table > tbody > tr:hover {\n        background-color: rgb(233, 233, 233);\n    } */\n.active[data-v-0ce56f0c]{\n    padding: 5px;\n    font-weight: bold;\n    font-size: .8em;\n    background-color: green;\n    margin: 5px;\n    color: white;\n}\n.not-active[data-v-0ce56f0c]{\n    padding: 5px;\n    font-weight: bold;\n    font-size: .8em;\n    background-color: red;\n    margin: 5px;\n    color: white;\n}\n.modal-card-head[data-v-0ce56f0c]{\n    background-color: green;\n}\n.modal-card-title[data-v-0ce56f0c]{\n    color: white;\n}\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -32933,7 +32987,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\n    .table > tbody > tr {\n\n        transition: background-color 0.5s ease;\n    }\n\n    .table > tbody > tr:hover {\n        background-color: rgb(233, 233, 233);\n    } */\n.modal-card-head[data-v-1b3a56f4]{\n        background-color: green;\n}\n.modal-card-title[data-v-1b3a56f4]{\n        color: white;\n}\n\n\n\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\n    .table > tbody > tr {\n\n        transition: background-color 0.5s ease;\n    }\n\n    .table > tbody > tr:hover {\n        background-color: rgb(233, 233, 233);\n    } */\n.modal-card-head[data-v-1b3a56f4]{\n        background-color: green;\n}\n.modal-card-title[data-v-1b3a56f4]{\n        color: white;\n}\n\n\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -37616,6 +37670,26 @@ var render = function () {
                     }),
                     _vm._v(" "),
                     _c("b-table-column", {
+                      attrs: { field: "active", label: "Active" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function (props) {
+                            return [
+                              props.row.active === 1
+                                ? _c("span", { staticClass: "active" }, [
+                                    _vm._v("Yes"),
+                                  ])
+                                : _c("span", { staticClass: "not-active" }, [
+                                    _vm._v("No"),
+                                  ]),
+                            ]
+                          },
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("b-table-column", {
                       attrs: { label: "Action" },
                       scopedSlots: _vm._u([
                         {
@@ -37645,6 +37719,33 @@ var render = function () {
                                         on: {
                                           click: function ($event) {
                                             return _vm.getData(
+                                              props.row.acadyear_id
+                                            )
+                                          },
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "b-tooltip",
+                                    {
+                                      attrs: {
+                                        label: "Set Active",
+                                        type: "is-primary",
+                                      },
+                                    },
+                                    [
+                                      _c("b-button", {
+                                        staticClass:
+                                          "button is-small mr-1 is-primary",
+                                        attrs: {
+                                          "icon-right": "thumb-up-outline",
+                                        },
+                                        on: {
+                                          click: function ($event) {
+                                            return _vm.setActive(
                                               props.row.acadyear_id
                                             )
                                           },
@@ -39982,6 +40083,19 @@ var render = function () {
                   attrs: { label: "Generate Faculty Load", type: "is-info" },
                   on: { click: _vm.loadFacultySchedules },
                 }),
+                _vm._v(" "),
+                _c("b-button", {
+                  attrs: {
+                    label: "Print",
+                    type: "is-info",
+                    "icon-left": "printer",
+                  },
+                  on: {
+                    click: function ($event) {
+                      return _vm.printMe()
+                    },
+                  },
+                }),
               ],
               1
             ),
@@ -41886,7 +42000,7 @@ var render = function () {
                 on: {
                   submit: function ($event) {
                     $event.preventDefault()
-                    return _vm.submit.apply(null, arguments)
+                    return _vm.submit("No")
                   },
                 },
               },
@@ -41894,7 +42008,7 @@ var render = function () {
                 _c("div", { staticClass: "box" }, [
                   _c("div", { staticClass: "subtitle" }, [
                     _vm._v(
-                      "\n                            SCHEDULE INFORMATION ENTRY\n                        "
+                      "\n                                SCHEDULE INFORMATION ENTRY\n                            "
                     ),
                   ]),
                   _vm._v(" "),
@@ -42215,31 +42329,6 @@ var render = function () {
                       _vm._v(" "),
                       _c(
                         "b-field",
-                        { attrs: { label: "Force to save" } },
-                        [
-                          _c(
-                            "b-checkbox",
-                            {
-                              attrs: {
-                                "true-value": "Yes",
-                                "false-value": "No",
-                              },
-                              model: {
-                                value: _vm.fields.forcesave,
-                                callback: function ($$v) {
-                                  _vm.$set(_vm.fields, "forcesave", $$v)
-                                },
-                                expression: "fields.forcesave",
-                              },
-                            },
-                            [_vm._v(_vm._s(_vm.fields.forcesave))]
-                          ),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "b-field",
                         {
                           attrs: {
                             type: this.errors.schedule ? "is-danger" : "",
@@ -42426,6 +42515,15 @@ var render = function () {
                   on: {
                     click: function ($event) {
                       _vm.modalConflict = false
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c("b-button", {
+                  attrs: { label: "Continue Saving", type: "is-primary" },
+                  on: {
+                    click: function ($event) {
+                      return _vm.submit("Yes")
                     },
                   },
                 }),
@@ -45678,11 +45776,11 @@ var render = function () {
                           "auto-focus": "",
                         },
                         model: {
-                          value: _vm.search.courseCode,
+                          value: _vm.search.course_code,
                           callback: function ($$v) {
-                            _vm.$set(_vm.search, "courseCode", $$v)
+                            _vm.$set(_vm.search, "course_code", $$v)
                           },
-                          expression: "search.courseCode",
+                          expression: "search.course_code",
                         },
                       }),
                       _vm._v(" "),
@@ -45694,11 +45792,11 @@ var render = function () {
                           "auto-focus": "",
                         },
                         model: {
-                          value: _vm.search.courseDesc,
+                          value: _vm.search.course_desc,
                           callback: function ($$v) {
-                            _vm.$set(_vm.search, "courseDesc", $$v)
+                            _vm.$set(_vm.search, "course_desc", $$v)
                           },
-                          expression: "search.courseDesc",
+                          expression: "search.course_desc",
                         },
                       }),
                       _vm._v(" "),

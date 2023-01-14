@@ -30,6 +30,7 @@
 
                         <div class="buttons">
                             <b-button label="Generate Faculty Load" type="is-info" @click="loadFacultySchedules"></b-button>
+                            <b-button label="Print" type="is-info" icon-left="printer" @click="printMe()"></b-button>
                         </div>
                     </div><!--box -->
                 </div><!--col -->
@@ -136,6 +137,10 @@ export default{
             axios.get(`/cpanel/get-faculty-load?${params}`).then(res=>{
                 this.data = res.data
             })
+        },
+
+        printMe(){
+            window.print()
         }
 
 

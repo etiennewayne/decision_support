@@ -40,8 +40,8 @@
 
                         </b-field>
                         <b-field label="Search" label-position="on-border" >
-                            <b-input type="text" v-model="search.courseCode" placeholder="Search Course Code..." expanded auto-focus></b-input>
-                            <b-input type="text" v-model="search.courseDesc" placeholder="Search Course Description..." expanded auto-focus></b-input>
+                            <b-input type="text" v-model="search.course_code" placeholder="Search Course Code..." expanded auto-focus></b-input>
+                            <b-input type="text" v-model="search.course_desc" placeholder="Search Course Description..." expanded auto-focus></b-input>
                             <p class="control">
                                 <b-button class="is-primary" icon-pack="fa" icon-left="search" @click="loadAsyncData"></b-button>
                             </p>
@@ -153,7 +153,10 @@ export default {
             perPage: 5,
             defaultSortDirection:'',
 
-            search: '',
+            search: {
+                course_code: '',
+                course_desc: '',
+            },
             modalAssignFaculty: false,
 
             isLoadAll: 0,
@@ -174,7 +177,7 @@ export default {
                 `perpage=${this.perPage}`,
                 `page=${this.page}`,
                 `courseid=${this.propCourseId}`,
-                `coursedesc=${this.search.courseDesc}`,
+                `coursedesc=${this.search.course_desc}`,
                 `isloadall=${this.isLoadAll}`,
             ].join('&');
 
@@ -267,10 +270,17 @@ export default {
 
                 }
             }).catch(err=>{
-                //console.log(err.response.status)
                 if(err.response.status === 422){
                     this.errors = err.response.data.errors;
-                    //console.log(this.errors);
+
+                    if(this.errors.faculty){
+                        this.$buefy.dialog.alert({
+                            title: 'Conflict!',
+                            type: 'is-danger',
+                            message: this.errors.faculty[0],
+                            confirmText: 'Ok',
+                        });
+                    }
                 }
             })
         },

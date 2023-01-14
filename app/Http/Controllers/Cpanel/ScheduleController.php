@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cpanel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Faculty;
+use App\Rules\ConflictFacultyRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -312,13 +313,36 @@ class ScheduleController extends Controller
     }
 
     public function saveFaculty(Request $req){
+
+        //get //all data of a schedule
+        $data = Schedule::with(['course'])
+            ->find($req->schedule_id);
+
+        $ayid = $data->acadyear_id;
+        $startTime = $data->start_time;
+        $endTime = $data->end_time;
+        $mon = $data->mon;
+        $tue = $data->tue;
+        $wed = $data->wed;
+        $thu = $data->thu;
+        $fri = $data->fri;
+        $sat = $data->sat;
+        $sun = $data->sun;
+
         $req->validate([
-            'faculty_id' => ['required']
+            'faculty_id' => ['required', new ConflictFacultyRule($ayid, $startTime, $endTime, $mon, $tue, $wed, $thu, $fri, $sat, $sun)],
         ], $message = [
             'faculty_id.required' => 'Please select faculty.'
         ]);
 
-        $data = Schedule::find($req->schedule_id);
+        //count course distinct faculty
+        //must only have 4 preparation course
+        $countCourse = Schedule::where('faculty_id', $req->faculty_id)
+            ->select('course_id')
+            ->distinct()
+            ->get();
+        //return $countCourse;
+
         $data->faculty_id = $req->faculty_id;
         $data->save();
 

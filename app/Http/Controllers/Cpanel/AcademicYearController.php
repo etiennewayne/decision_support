@@ -5,10 +5,15 @@ namespace App\Http\Controllers\Cpanel;
 use App\Http\Controllers\Controller;
 use App\Models\AcademicYear;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AcademicYearController extends Controller
 {
     //
+    public function __constructor(){
+        $this->middleware('auth');
+    }
+
 
     public function index(){
         return view('cpanel.academicyear.academic-year');
@@ -60,6 +65,25 @@ class AcademicYearController extends Controller
 
         return response()->json([
             'status' => 'updated'
+        ], 200);
+    }
+
+    public function setACtive($ayId){
+
+        DB::table('academic_years')
+            ->where('active', 1)
+            ->update([
+                'active' => 0
+            ]);
+
+        DB::table('academic_years')
+            ->where('acadyear_id', $ayId)
+            ->update([
+                'active' => 1
+            ]);
+
+        return response()->json([
+            'status' => 'active'
         ], 200);
     }
 

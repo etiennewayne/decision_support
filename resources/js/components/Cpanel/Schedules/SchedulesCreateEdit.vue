@@ -3,7 +3,7 @@
         <div class="section">
             <div class="columns is-centered">
                 <div class="column is-6">
-                    <form @submit.prevent="submit">
+                    <form @submit.prevent="submit('No')">
 
                         <div class="box">
                             <div class="subtitle">
@@ -67,10 +67,10 @@
                                 </b-field>
 
                                 <br>
-                                <b-field label="Force to save">
-                                    <b-checkbox v-model="fields.forcesave" true-value="Yes"
-                                                false-value="No">{{ fields.forcesave }}</b-checkbox>
-                                </b-field>
+<!--                                <b-field label="Force to save">-->
+<!--                                    <b-checkbox v-model="fields.forcesave" true-value="Yes"-->
+<!--                                                false-value="No">{{ fields.forcesave }}</b-checkbox>-->
+<!--                                </b-field>-->
 
                                 <b-field
                                          :type="this.errors.schedule ? 'is-danger':''"
@@ -149,6 +149,10 @@
                     <b-button
                         label="Close"
                         @click="modalConflict=false"/>
+                    <b-button
+                        label="Continue Saving"
+                        type="is-primary"
+                        @click="submit('Yes')"/>
                 </footer>
             </div>
 
@@ -159,8 +163,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 
 export default {
     props: ['propAcadYears', 'propPrograms', 'propData', 'propRooms'],
@@ -197,9 +199,6 @@ export default {
     },
 
     methods: {
-
-
-
         initData: function(){
             this.acadYears = JSON.parse(this.propAcadYears);
             this.programs = JSON.parse(this.propPrograms);
@@ -236,7 +235,8 @@ export default {
             this.fields.course_id = rowData.course_id;
         },
 
-        submit: function(){
+        submit: function(forceSave){
+            this.fields.forcesave = forceSave;
 
             if(this.global_id > 0){
                 //update
