@@ -9418,6 +9418,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['propAcadYears'],
   data: function data() {
@@ -9474,6 +9477,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.loadAcadYear();
+  },
+  computed: {
+    totalUnits: function totalUnits() {
+      var ntotal = 0;
+      this.data.forEach(function (el) {
+        ntotal += el.course_unit;
+      });
+      return ntotal;
+    }
   }
 });
 
@@ -33395,7 +33407,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".print-section[data-v-0e76d89c]{\n    width: 865px;\n    /*border: 1px solid red;*/\n    margin: auto;\n}\n.print-body[data-v-0e76d89c]{\n    width: 650px;\n\n    margin: auto;\n}\n@media print {\n.filter[data-v-0e76d89c]{\n        display: none;\n}\n.print-body[data-v-0e76d89c]{\n        margin: auto;\n}\n}\n\n\n\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".print-section[data-v-0e76d89c]{\n    width: 865px;\n    /*border: 1px solid red;*/\n    margin: auto;\n}\n.print-body[data-v-0e76d89c]{\n    width: 750px;\n\n    margin: auto;\n}\n@media print {\n.filter[data-v-0e76d89c]{\n        display: none;\n}\n.print-body[data-v-0e76d89c]{\n        margin: auto;\n}\n}\n\n\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -40141,42 +40153,62 @@ var render = function () {
             _c(
               "table",
               { staticClass: "table" },
-              _vm._l(_vm.data, function (item, index) {
-                return _c("tr", { key: index }, [
-                  _c("td", [_vm._v(_vm._s(item.course_code))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(item.course_desc))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(_vm._s(_vm._f("formatTime")(item.start_time))),
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(_vm._s(_vm._f("formatTime")(item.end_time))),
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(item.course_type))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(item.course_unit))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    item.mon ? _c("span", [_vm._v("M")]) : _vm._e(),
+              [
+                _vm._l(_vm.data, function (item, index) {
+                  return _c("tr", { key: index }, [
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(item.course_code) +
+                          " (" +
+                          _vm._s(item.course_type) +
+                          ")"
+                      ),
+                    ]),
                     _vm._v(" "),
-                    item.tue ? _c("span", [_vm._v("T")]) : _vm._e(),
+                    _c("td", [_vm._v(_vm._s(item.course_desc))]),
                     _vm._v(" "),
-                    item.wed ? _c("span", [_vm._v("W")]) : _vm._e(),
+                    _c("td", [
+                      _vm._v(_vm._s(_vm._f("formatTime")(item.start_time))),
+                    ]),
                     _vm._v(" "),
-                    item.thu ? _c("span", [_vm._v("TH")]) : _vm._e(),
+                    _c("td", [
+                      _vm._v(_vm._s(_vm._f("formatTime")(item.end_time))),
+                    ]),
                     _vm._v(" "),
-                    item.fri ? _c("span", [_vm._v("F")]) : _vm._e(),
+                    _c("td", [_vm._v(_vm._s(item.course_type))]),
                     _vm._v(" "),
-                    item.sat ? _c("span", [_vm._v("SAT")]) : _vm._e(),
+                    _c("td", [_vm._v(_vm._s(item.course_unit))]),
                     _vm._v(" "),
-                    item.sun ? _c("span", [_vm._v("SUN")]) : _vm._e(),
-                  ]),
-                ])
-              }),
-              0
+                    _c("td", [
+                      item.mon ? _c("span", [_vm._v("M")]) : _vm._e(),
+                      _vm._v(" "),
+                      item.tue ? _c("span", [_vm._v("T")]) : _vm._e(),
+                      _vm._v(" "),
+                      item.wed ? _c("span", [_vm._v("W")]) : _vm._e(),
+                      _vm._v(" "),
+                      item.thu ? _c("span", [_vm._v("TH")]) : _vm._e(),
+                      _vm._v(" "),
+                      item.fri ? _c("span", [_vm._v("F")]) : _vm._e(),
+                      _vm._v(" "),
+                      item.sat ? _c("span", [_vm._v("SAT")]) : _vm._e(),
+                      _vm._v(" "),
+                      item.sun ? _c("span", [_vm._v("SUN")]) : _vm._e(),
+                    ]),
+                  ])
+                }),
+                _vm._v(" "),
+                _c("tr", [
+                  _c(
+                    "td",
+                    {
+                      staticStyle: { "font-weight": "bold" },
+                      attrs: { colspan: "6" },
+                    },
+                    [_vm._v("Total Units: " + _vm._s(_vm.totalUnits))]
+                  ),
+                ]),
+              ],
+              2
             ),
           ])
         : _vm._e(),
@@ -41753,7 +41785,9 @@ var render = function () {
                             _vm._v(
                               "\n                            " +
                                 _vm._s(props.row.course.course_code) +
-                                "\n                        "
+                                " (" +
+                                _vm._s(props.row.course.course_type) +
+                                ")\n                        "
                             ),
                           ]
                         },

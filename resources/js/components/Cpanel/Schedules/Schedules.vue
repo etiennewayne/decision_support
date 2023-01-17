@@ -84,7 +84,7 @@
                             </b-table-column>
 
                             <b-table-column field="course_code" label="Course Code" v-slot="props">
-                                {{ props.row.course.course_code }}
+                                {{ props.row.course.course_code }} ({{ props.row.course.course_type }})
                             </b-table-column>
 
                             <b-table-column field="course_desc" label="Course Description" v-slot="props">

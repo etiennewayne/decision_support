@@ -7,7 +7,8 @@ use Illuminate\Contracts\Validation\Rule;
 
 class ConflictFacultyRule implements Rule
 {
-    private $ayid, $startTime, $endTime, $mon, $tue, $wed,$thu, $fri, $sat, $sun,$facultyId;
+    private $ayid, $startTime, $endTime, $mon, $tue, $wed,$thu, $fri, $sat, $sun;
+
 
 
     /**
@@ -76,6 +77,7 @@ class ConflictFacultyRule implements Rule
                 $sun == 1 ? $q->orWhere('sun', 1): '';
             });
         }
+
 
         $exists = $exists->where('acadyear_id', $ayid)
             ->exists();

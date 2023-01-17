@@ -43,7 +43,7 @@ class CourseController extends Controller
 
     public function store(Request $req){
         $req->validate([
-            'course_code' => ['required', 'unique:courses'],
+            'course_code' => ['required'],
             'course_desc' => ['required'],
             'course_type' => ['required'],
             'course_unit' => ['required'],
@@ -63,7 +63,7 @@ class CourseController extends Controller
 
     public function update(Request $req, $id){
         $req->validate([
-            'course_code' => ['required', 'unique:courses,course_code,'. $id . ',course_id'],
+            'course_code' => ['required'],
             'course_desc' => ['required'],
             'course_type' => ['required'],
             'course_unit' => ['required'],

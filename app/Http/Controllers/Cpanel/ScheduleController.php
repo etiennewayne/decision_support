@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Cpanel;
 use App\Http\Controllers\Controller;
 use App\Models\Faculty;
 use App\Rules\ConflictFacultyRule;
+use App\Rules\FacultyMaxUnitRule;
+use App\Rules\FacultyPreparationRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -313,6 +315,9 @@ class ScheduleController extends Controller
     }
 
     public function saveFaculty(Request $req){
+        //return $req;
+
+        $acadyear = AcademicYear::where('active', 1)->first(); //get current acadyear
 
         //get //all data of a schedule
         $data = Schedule::with(['course'])
@@ -330,18 +335,11 @@ class ScheduleController extends Controller
         $sun = $data->sun;
 
         $req->validate([
-            'faculty_id' => ['required', new ConflictFacultyRule($ayid, $startTime, $endTime, $mon, $tue, $wed, $thu, $fri, $sat, $sun)],
+            'faculty_id' => ['required', new ConflictFacultyRule($ayid, $startTime, $endTime, $mon, $tue, $wed, $thu, $fri, $sat, $sun)
+                , new FacultyPreparationRule($acadyear), new FacultyMaxUnitRule($acadyear, $req->schedule_id)],
         ], $message = [
             'faculty_id.required' => 'Please select faculty.'
         ]);
-
-        //count course distinct faculty
-        //must only have 4 preparation course
-        $countCourse = Schedule::where('faculty_id', $req->faculty_id)
-            ->select('course_id')
-            ->distinct()
-            ->get();
-        //return $countCourse;
 
         $data->faculty_id = $req->faculty_id;
         $data->save();

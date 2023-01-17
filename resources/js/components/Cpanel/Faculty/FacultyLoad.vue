@@ -53,7 +53,7 @@
                 </div>
                 <table class="table">
                     <tr v-for="(item, index) in data" :key="index">
-                        <td>{{ item.course_code }}</td>
+                        <td>{{ item.course_code }} ({{ item.course_type }})</td>
                         <td>{{ item.course_desc }}</td>
                         <td>{{ item.start_time | formatTime }}</td>
                         <td>{{ item.end_time | formatTime }}</td>
@@ -69,6 +69,9 @@
                             <span v-if="item.sun">SUN</span>
                         </td>
 
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;" colspan="6">Total Units: {{ totalUnits }}</td>
                     </tr>
                 </table>
             </div>
@@ -148,6 +151,17 @@ export default{
 
     mounted() {
        this.loadAcadYear()
+    },
+
+    computed: {
+        totalUnits(){
+            let ntotal = 0;
+            this.data.forEach(el =>{
+                ntotal += el.course_unit
+            })
+            return ntotal;
+        }
+
     }
 }
 </script>
