@@ -112,7 +112,7 @@ Route::post('/cpanel/remove-faculty/{id}', [App\Http\Controllers\Cpanel\Schedule
 
 Route::resource('/cpanel/faculty', App\Http\Controllers\Cpanel\FacultyController::class);
 Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getFaculty']);
-Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getFaculty']);
+//Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getFaculty']);
 
 
 Route::resource('/cpanel/faculty-load', App\Http\Controllers\Cpanel\FacultyLoadController::class);

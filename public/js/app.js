@@ -12927,6 +12927,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     propCourse: {
@@ -12947,10 +12960,10 @@ __webpack_require__.r(__webpack_exports__);
       data: [],
       total: 0,
       loading: false,
-      sortfield: 'course_id',
+      sortfield: 'faculty_id',
       sortOrder: 'desc',
       page: 1,
-      perPage: 5,
+      perPage: 10,
       defaultSortDirection: '',
       search: {
         course_code: '',
@@ -12979,7 +12992,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this.total = currentTotal;
-        data.forEach(function (item) {
+        data.data.forEach(function (item) {
           _this.data.push(item);
         });
         _this.loading = false;
@@ -46546,6 +46559,67 @@ var render = function () {
                 [
                   _c(
                     "b-field",
+                    { attrs: { label: "Page" } },
+                    [
+                      _c(
+                        "b-select",
+                        {
+                          on: { input: _vm.setPerPage },
+                          model: {
+                            value: _vm.perPage,
+                            callback: function ($$v) {
+                              _vm.perPage = $$v
+                            },
+                            expression: "perPage",
+                          },
+                        },
+                        [
+                          _c("option", { attrs: { value: "5" } }, [
+                            _vm._v("5 per page"),
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "10" } }, [
+                            _vm._v("10 per page"),
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "15" } }, [
+                            _vm._v("15 per page"),
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "20" } }, [
+                            _vm._v("20 per page"),
+                          ]),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-select",
+                        {
+                          on: { input: _vm.loadAsyncData },
+                          model: {
+                            value: _vm.sortOrder,
+                            callback: function ($$v) {
+                              _vm.sortOrder = $$v
+                            },
+                            expression: "sortOrder",
+                          },
+                        },
+                        [
+                          _c("option", { attrs: { value: "asc" } }, [
+                            _vm._v("ASC"),
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "desc" } }, [
+                            _vm._v("DESC"),
+                          ]),
+                        ]
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-field",
                     {
                       attrs: {
                         label: "Search Option",
@@ -46645,14 +46719,14 @@ var render = function () {
                             paginated: "",
                             "backend-pagination": "",
                             total: _vm.total,
+                            "pagination-rounded": true,
                             "per-page": _vm.perPage,
-                            "detail-transition": "",
                             "aria-next-label": "Next page",
-                            "aria-previous-label": "Previouse page",
+                            "aria-previous-label": "Previous page",
                             "aria-page-label": "Page",
-                            "show-detail-icon": true,
                             "aria-current-label": "Current page",
-                            "default-sort-direction": "defualtSortDirection",
+                            "backend-sorting": "",
+                            "default-sort-direction": _vm.defaultSortDirection,
                           },
                           on: {
                             "page-change": _vm.onPageChange,

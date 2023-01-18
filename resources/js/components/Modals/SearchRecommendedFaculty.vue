@@ -14,7 +14,6 @@
                 <b-dropdown-item aria-role="listitem" @click="openModal">Assign Faculty</b-dropdown-item>
                 <b-dropdown-item aria-role="listitem" @click="removeFaculty">Remove Faculty</b-dropdown-item>
 
-
             </b-dropdown>
         </b-tooltip>
 
@@ -32,6 +31,20 @@
 
                 <section class="modal-card-body">
                     <div>
+                        <b-field label="Page">
+                            <b-select v-model="perPage" @input="setPerPage">
+                                <option value="5">5 per page</option>
+                                <option value="10">10 per page</option>
+                                <option value="15">15 per page</option>
+                                <option value="20">20 per page</option>
+                            </b-select>
+                            <b-select v-model="sortOrder" @input="loadAsyncData">
+                                <option value="asc">ASC</option>
+                                <option value="desc">DESC</option>
+
+                            </b-select>
+                        </b-field>
+
                         <b-field label="Search Option" label-position="on-border">
                             <b-select v-model="isLoadAll">
                                 <option value="0">Load Recommended Faculty</option>
@@ -49,20 +62,20 @@
 
                         <div class="table-container">
                             <b-table
-                                :data='data'
+                                :data="data"
                                 :loading="loading"
                                 paginated
                                 backend-pagination
-                                :total='total'
+                                :total="total"
+                                :pagination-rounded="true"
                                 :per-page="perPage"
                                 @page-change="onPageChange"
-                                detail-transition=""
                                 aria-next-label="Next page"
-                                aria-previous-label="Previouse page"
+                                aria-previous-label="Previous page"
                                 aria-page-label="Page"
-                                :show-detail-icon=true
                                 aria-current-label="Current page"
-                                default-sort-direction="defualtSortDirection"
+                                backend-sorting
+                                :default-sort-direction="defaultSortDirection"
                                 @sort="onSort">
 
                                 <b-table-column field="faculty_id" label="ID" v-slot="props">
@@ -147,10 +160,10 @@ export default {
             data: [],
             total: 0,
             loading: false,
-            sortfield: 'course_id',
+            sortfield: 'faculty_id',
             sortOrder:'desc',
             page: 1,
-            perPage: 5,
+            perPage: 10,
             defaultSortDirection:'',
 
             search: {
@@ -190,7 +203,7 @@ export default {
                 }
 
                 this.total = currentTotal;
-                data.forEach((item) => {
+                data.data.forEach((item) => {
                     this.data.push(item);
                 });
 

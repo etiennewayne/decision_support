@@ -88,12 +88,15 @@ class ScheduleController extends Controller
     }
 
     public function getRecommendedFaculty(Request $req){
+        $sort = explode('.', $req->sort_by);
+
         $isLoadAll = $req->isloadall;
         //return $isLoadAll;
         $courseid = $req->courseid;
 
         if($isLoadAll > 0){
-            $data = Faculty::where('active', 1)->get();
+            $data = Faculty::where('active', 1)
+                ->paginate($req->perpage);
         }else{
             $data = DB::table('schedules as a')
                 ->join('faculty as b', 'a.faculty_id', 'b.faculty_id')
@@ -104,7 +107,7 @@ class ScheduleController extends Controller
                 )
                 ->orderBy('count_teaching', 'desc')
                 ->groupBy('b.faculty_id')
-                ->get();
+                ->paginate($req->perpage);
         }
 
         return $data;
