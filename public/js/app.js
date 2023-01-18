@@ -9585,6 +9585,66 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -11171,6 +11231,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['propPrograms', 'propId'],
   data: function data() {
@@ -11545,6 +11607,152 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanDashboard.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanDashboard.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {};
+  },
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanNavbar.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanNavbar.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      user: {
+        role: ''
+      }
+    };
+  },
+  methods: {
+    logout: function logout() {
+      axios.post('/logout').then(function () {
+        window.location = '/';
+      });
+    },
+    initUser: function initUser() {
+      var _this = this;
+
+      axios.get('/get-user').then(function (res) {
+        _this.user = res.data; ///console.log(this.user);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.initUser();
+  },
+  computed: {
+    userRole: function userRole() {
+      if (this.user) {
+        return this.user.role.toUpperCase();
+      } else {
+        return '';
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Login.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Login.vue?vue&type=script&lang=js& ***!
@@ -11609,15 +11817,15 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post('/login', this.fields).then(function (res) {
         console.log(res.data);
-
-        if (res.data.role === 'ADMINISTRATOR') {
-          window.location = '/cpanel/dashboard';
-        }
-
-        if (res.data.role === 'FACULTY') {
-          window.location = '/faculty/dashboard';
-        } //window.location = '/dashboard';
-
+        window.location = '/cpanel/dashboard'; // if(res.data.role === 'ADMINISTRATOR'){
+        // }
+        // if(res.data.role === 'FACULTY'){
+        //     window.location = '/faculty/dashboard';
+        // }
+        // if(res.data.role === 'DEAN'){
+        //     window.location = '/dean/dashboard';
+        // }
+        //window.location = '/dashboard';
       })["catch"](function (err) {
         if (err.response.status === 422) {
           _this.errors = err.response.data.errors;
@@ -33054,6 +33262,30 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n.table > tbody > tr[data-v-0170b99b]
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanDashboard.vue?vue&type=style&index=0&id=4ddefe20&scoped=true&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanDashboard.vue?vue&type=style&index=0&id=4ddefe20&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.center-img[data-v-4ddefe20]{\n    display: flex;\n    justify-content: center;\n}\n.welcome-container[data-v-4ddefe20]{\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 100vh;\n}\n.text-container[data-v-4ddefe20]{\n    display: flex;\n    align-items: center;\n}\n.welcome-text[data-v-4ddefe20]{\n    font-size: 2em;\n    text-align: right;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Login.vue?vue&type=style&index=0&id=6bdc8b8e&scoped=true&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Login.vue?vue&type=style&index=0&id=6bdc8b8e&scoped=true&lang=css& ***!
@@ -34024,6 +34256,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_UserPage_vue_vue_type_style_index_0_id_0170b99b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanDashboard.vue?vue&type=style&index=0&id=4ddefe20&scoped=true&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanDashboard.vue?vue&type=style&index=0&id=4ddefe20&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DeanDashboard_vue_vue_type_style_index_0_id_4ddefe20_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DeanDashboard.vue?vue&type=style&index=0&id=4ddefe20&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanDashboard.vue?vue&type=style&index=0&id=4ddefe20&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DeanDashboard_vue_vue_type_style_index_0_id_4ddefe20_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DeanDashboard_vue_vue_type_style_index_0_id_4ddefe20_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 
@@ -35326,6 +35588,86 @@ component.options.__file = "resources/js/components/Cpanel/User/UserPage.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/Dean/DeanDashboard.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/Dean/DeanDashboard.vue ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DeanDashboard_vue_vue_type_template_id_4ddefe20_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DeanDashboard.vue?vue&type=template&id=4ddefe20&scoped=true& */ "./resources/js/components/Dean/DeanDashboard.vue?vue&type=template&id=4ddefe20&scoped=true&");
+/* harmony import */ var _DeanDashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DeanDashboard.vue?vue&type=script&lang=js& */ "./resources/js/components/Dean/DeanDashboard.vue?vue&type=script&lang=js&");
+/* harmony import */ var _DeanDashboard_vue_vue_type_style_index_0_id_4ddefe20_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DeanDashboard.vue?vue&type=style&index=0&id=4ddefe20&scoped=true&lang=css& */ "./resources/js/components/Dean/DeanDashboard.vue?vue&type=style&index=0&id=4ddefe20&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _DeanDashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DeanDashboard_vue_vue_type_template_id_4ddefe20_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DeanDashboard_vue_vue_type_template_id_4ddefe20_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "4ddefe20",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Dean/DeanDashboard.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Dean/DeanNavbar.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/Dean/DeanNavbar.vue ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DeanNavbar_vue_vue_type_template_id_11792138_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DeanNavbar.vue?vue&type=template&id=11792138&scoped=true& */ "./resources/js/components/Dean/DeanNavbar.vue?vue&type=template&id=11792138&scoped=true&");
+/* harmony import */ var _DeanNavbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DeanNavbar.vue?vue&type=script&lang=js& */ "./resources/js/components/Dean/DeanNavbar.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DeanNavbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DeanNavbar_vue_vue_type_template_id_11792138_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DeanNavbar_vue_vue_type_template_id_11792138_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "11792138",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Dean/DeanNavbar.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/ExampleComponent.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue ***!
@@ -35687,6 +36029,40 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/MyAppointment.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ProgramHead/ProgramHead.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/ProgramHead/ProgramHead.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+  script,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "resources/js/components/ProgramHead/ProgramHead.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -36278,6 +36654,38 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Dean/DeanDashboard.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/Dean/DeanDashboard.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DeanDashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DeanDashboard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanDashboard.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DeanDashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Dean/DeanNavbar.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/Dean/DeanNavbar.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DeanNavbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DeanNavbar.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanNavbar.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DeanNavbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Login.vue?vue&type=script&lang=js&":
 /*!********************************************************************!*\
   !*** ./resources/js/components/Login.vue?vue&type=script&lang=js& ***!
@@ -36706,6 +37114,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Dean/DeanDashboard.vue?vue&type=style&index=0&id=4ddefe20&scoped=true&lang=css&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/Dean/DeanDashboard.vue?vue&type=style&index=0&id=4ddefe20&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DeanDashboard_vue_vue_type_style_index_0_id_4ddefe20_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DeanDashboard.vue?vue&type=style&index=0&id=4ddefe20&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanDashboard.vue?vue&type=style&index=0&id=4ddefe20&scoped=true&lang=css&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Login.vue?vue&type=style&index=0&id=6bdc8b8e&scoped=true&lang=css&":
 /*!****************************************************************************************************!*\
   !*** ./resources/js/components/Login.vue?vue&type=style&index=0&id=6bdc8b8e&scoped=true&lang=css& ***!
@@ -37122,6 +37543,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserPage_vue_vue_type_template_id_0170b99b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserPage_vue_vue_type_template_id_0170b99b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UserPage.vue?vue&type=template&id=0170b99b&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Cpanel/User/UserPage.vue?vue&type=template&id=0170b99b&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Dean/DeanDashboard.vue?vue&type=template&id=4ddefe20&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/Dean/DeanDashboard.vue?vue&type=template&id=4ddefe20&scoped=true& ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeanDashboard_vue_vue_type_template_id_4ddefe20_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeanDashboard_vue_vue_type_template_id_4ddefe20_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeanDashboard_vue_vue_type_template_id_4ddefe20_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DeanDashboard.vue?vue&type=template&id=4ddefe20&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanDashboard.vue?vue&type=template&id=4ddefe20&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Dean/DeanNavbar.vue?vue&type=template&id=11792138&scoped=true&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/Dean/DeanNavbar.vue?vue&type=template&id=11792138&scoped=true& ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeanNavbar_vue_vue_type_template_id_11792138_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeanNavbar_vue_vue_type_template_id_11792138_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeanNavbar_vue_vue_type_template_id_11792138_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DeanNavbar.vue?vue&type=template&id=11792138&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanNavbar.vue?vue&type=template&id=11792138&scoped=true&");
 
 
 /***/ }),
@@ -39249,7 +39704,7 @@ var render = function () {
                           _vm._l(
                             _vm.fields.enrolment_details,
                             function (item, index) {
-                              return _c("tr", [
+                              return _c("tr", { key: index }, [
                                 _c("td", [_vm._v(_vm._s(item.schedule_id))]),
                                 _vm._v(" "),
                                 _c("td", [_vm._v(_vm._s(item.course_code))]),
@@ -40252,144 +40707,301 @@ var render = function () {
     [
       _c("b-navbar", {
         staticClass: "is-light",
-        scopedSlots: _vm._u([
-          {
-            key: "brand",
-            fn: function () {
-              return [
-                _c("b-navbar-item", [
-                  _vm._v(
-                    "\n                CONTROL PANEL (" +
-                      _vm._s(_vm.userRole) +
-                      ")\n            "
-                  ),
-                ]),
-              ]
-            },
-            proxy: true,
-          },
-          {
-            key: "start",
-            fn: function () {
-              return undefined
-            },
-            proxy: true,
-          },
-          {
-            key: "end",
-            fn: function () {
-              return [
-                _c("b-navbar-item", { attrs: { href: "/cpanel/dashboard" } }, [
-                  _vm._v("\n                Home\n            "),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "b-navbar-dropdown",
-                  { attrs: { label: "Setting" } },
-                  [
-                    _c(
-                      "b-navbar-item",
-                      { attrs: { href: "/cpanel/acad-years" } },
-                      [
-                        _vm._v(
-                          "\n                    Academic Year\n                "
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("b-navbar-item", { attrs: { href: "/cpanel/rooms" } }, [
-                      _vm._v("\n                    Rooms\n                "),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "b-navbar-item",
-                      { attrs: { href: "/cpanel/programs" } },
-                      [
-                        _vm._v(
-                          "\n                    Program\n                "
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "b-navbar-item",
-                      { attrs: { href: "/cpanel/courses" } },
-                      [
-                        _vm._v(
-                          "\n                    Courses\n                "
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "b-navbar-item",
-                      { attrs: { href: "/cpanel/enrolment" } },
-                      [
-                        _vm._v(
-                          "\n                    Enrolment\n                "
-                        ),
-                      ]
-                    ),
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "b-navbar-dropdown",
-                  { attrs: { label: "Faculty" } },
-                  [
-                    _c(
-                      "b-navbar-item",
-                      { attrs: { href: "/cpanel/faculty" } },
-                      [
-                        _vm._v(
-                          "\n                    Faculty\n                "
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "b-navbar-item",
-                      { attrs: { href: "/cpanel/faculty-load" } },
-                      [
-                        _vm._v(
-                          "\n                    Faculty Load\n                "
-                        ),
-                      ]
-                    ),
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("b-navbar-item", { attrs: { href: "/cpanel/schedules" } }, [
-                  _vm._v("\n                Schedules\n            "),
-                ]),
-                _vm._v(" "),
-                _c("b-navbar-item", { attrs: { href: "/cpanel/users" } }, [
-                  _vm._v("\n                User\n            "),
-                ]),
-                _vm._v(" "),
-                _c("b-navbar-item", { attrs: { tag: "div" } }, [
-                  _c("div", { staticClass: "buttons" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "button is-light",
-                        on: { click: _vm.logout },
-                      },
-                      [
-                        _c("i", { staticClass: "fa fa-sign-out" }),
-                        _vm._v(" "),
-                        _c("strong", [_vm._v("LOGOUT")]),
-                      ]
+        scopedSlots: _vm._u(
+          [
+            {
+              key: "brand",
+              fn: function () {
+                return [
+                  _c("b-navbar-item", [
+                    _vm._v(
+                      "\n                CONTROL PANEL (" +
+                        _vm._s(_vm.userRole) +
+                        ")\n            "
                     ),
                   ]),
-                ]),
-              ]
+                ]
+              },
+              proxy: true,
             },
-            proxy: true,
-          },
-        ]),
+            {
+              key: "start",
+              fn: function () {
+                return undefined
+              },
+              proxy: true,
+            },
+            _vm.user.role === "ADMINISTRATOR"
+              ? {
+                  key: "end",
+                  fn: function () {
+                    return [
+                      _c(
+                        "b-navbar-item",
+                        { attrs: { href: "/cpanel/dashboard" } },
+                        [_vm._v("\n                Home\n            ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-navbar-dropdown",
+                        { attrs: { label: "Setting" } },
+                        [
+                          _c(
+                            "b-navbar-item",
+                            { attrs: { href: "/cpanel/acad-years" } },
+                            [
+                              _vm._v(
+                                "\n                    Academic Year\n                "
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-navbar-item",
+                            { attrs: { href: "/cpanel/rooms" } },
+                            [
+                              _vm._v(
+                                "\n                    Rooms\n                "
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-navbar-item",
+                            { attrs: { href: "/cpanel/programs" } },
+                            [
+                              _vm._v(
+                                "\n                    Program\n                "
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-navbar-item",
+                            { attrs: { href: "/cpanel/courses" } },
+                            [
+                              _vm._v(
+                                "\n                    Courses\n                "
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-navbar-item",
+                            { attrs: { href: "/cpanel/enrolment" } },
+                            [
+                              _vm._v(
+                                "\n                    Enrolment\n                "
+                              ),
+                            ]
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-navbar-dropdown",
+                        { attrs: { label: "Faculty" } },
+                        [
+                          _c(
+                            "b-navbar-item",
+                            { attrs: { href: "/cpanel/faculty" } },
+                            [
+                              _vm._v(
+                                "\n                    Faculty\n                "
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-navbar-item",
+                            { attrs: { href: "/cpanel/faculty-load" } },
+                            [
+                              _vm._v(
+                                "\n                    Faculty Load\n                "
+                              ),
+                            ]
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-navbar-item",
+                        { attrs: { href: "/cpanel/schedules" } },
+                        [_vm._v("\n                Schedules\n            ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-navbar-item",
+                        { attrs: { href: "/cpanel/users" } },
+                        [_vm._v("\n                User\n            ")]
+                      ),
+                      _vm._v(" "),
+                      _c("b-navbar-item", { attrs: { tag: "div" } }, [
+                        _c("div", { staticClass: "buttons" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "button is-light",
+                              on: { click: _vm.logout },
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-sign-out" }),
+                              _vm._v(" "),
+                              _c("strong", [_vm._v("LOGOUT")]),
+                            ]
+                          ),
+                        ]),
+                      ]),
+                    ]
+                  },
+                  proxy: true,
+                }
+              : _vm.user.role === "DEAN"
+              ? {
+                  key: "end",
+                  fn: function () {
+                    return [
+                      _c(
+                        "b-navbar-item",
+                        { attrs: { href: "/cpanel/dashboard" } },
+                        [_vm._v("\n                Home\n            ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-navbar-dropdown",
+                        { attrs: { label: "Setting" } },
+                        [
+                          _c(
+                            "b-navbar-item",
+                            { attrs: { href: "/cpanel/courses" } },
+                            [
+                              _vm._v(
+                                "\n                    Courses\n                "
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-navbar-item",
+                            { attrs: { href: "/cpanel/enrolment" } },
+                            [
+                              _vm._v(
+                                "\n                    Enrolment\n                "
+                              ),
+                            ]
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-navbar-dropdown",
+                        { attrs: { label: "Faculty" } },
+                        [
+                          _c(
+                            "b-navbar-item",
+                            { attrs: { href: "/cpanel/faculty" } },
+                            [
+                              _vm._v(
+                                "\n                    Faculty\n                "
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-navbar-item",
+                            { attrs: { href: "/cpanel/faculty-load" } },
+                            [
+                              _vm._v(
+                                "\n                    Faculty Load\n                "
+                              ),
+                            ]
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-navbar-item",
+                        { attrs: { href: "/cpanel/schedules" } },
+                        [_vm._v("\n                Schedules\n            ")]
+                      ),
+                      _vm._v(" "),
+                      _c("b-navbar-item", { attrs: { tag: "div" } }, [
+                        _c("div", { staticClass: "buttons" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "button is-light",
+                              on: { click: _vm.logout },
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-sign-out" }),
+                              _vm._v(" "),
+                              _c("strong", [_vm._v("LOGOUT")]),
+                            ]
+                          ),
+                        ]),
+                      ]),
+                    ]
+                  },
+                  proxy: true,
+                }
+              : _vm.user.role === "PROGRAM HEAD"
+              ? {
+                  key: "end",
+                  fn: function () {
+                    return [
+                      _c(
+                        "b-navbar-item",
+                        { attrs: { href: "/cpanel/dashboard" } },
+                        [_vm._v("\n                Home\n            ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-navbar-dropdown",
+                        { attrs: { label: "Faculty" } },
+                        [
+                          _c(
+                            "b-navbar-item",
+                            { attrs: { href: "/cpanel/faculty-load" } },
+                            [
+                              _vm._v(
+                                "\n                    Faculty Load\n                "
+                              ),
+                            ]
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("b-navbar-item", { attrs: { tag: "div" } }, [
+                        _c("div", { staticClass: "buttons" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "button is-light",
+                              on: { click: _vm.logout },
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-sign-out" }),
+                              _vm._v(" "),
+                              _c("strong", [_vm._v("LOGOUT")]),
+                            ]
+                          ),
+                        ]),
+                      ]),
+                    ]
+                  },
+                  proxy: true,
+                }
+              : null,
+          ],
+          null,
+          true
+        ),
       }),
     ],
     1
@@ -43054,8 +43666,14 @@ var render = function () {
                                   _vm._v("ADMINISTRATOR"),
                                 ]),
                                 _vm._v(" "),
-                                _c("option", { attrs: { value: "STAFF" } }, [
-                                  _vm._v("STAFF"),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "PROGRAM HEAD" } },
+                                  [_vm._v("PROGRAM HEAD")]
+                                ),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "DEAN" } }, [
+                                  _vm._v("DEAN"),
                                 ]),
                               ]
                             ),
@@ -43681,6 +44299,170 @@ var render = function () {
       ]),
     ]),
   ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanDashboard.vue?vue&type=template&id=4ddefe20&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanDashboard.vue?vue&type=template&id=4ddefe20&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("section", { staticClass: "hero is-fullheight" }, [
+        _c("div", { staticClass: "welcome-container" }, [
+          _c("div", { staticClass: "text-container" }, [
+            _c("div", { staticClass: "welcome-text" }, [
+              _vm._v("\n                  CONTROL PANEL\n              "),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "center-img" }, [
+            _c("img", {
+              attrs: { src: "/img/dashboard-5050-2-550x550-1.webp" },
+            }),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanNavbar.vue?vue&type=template&id=11792138&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dean/DeanNavbar.vue?vue&type=template&id=11792138&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("b-navbar", {
+        staticClass: "is-light",
+        scopedSlots: _vm._u([
+          {
+            key: "brand",
+            fn: function () {
+              return [
+                _c("b-navbar-item", [
+                  _vm._v(
+                    "\n                CONTROL PANEL (" +
+                      _vm._s(_vm.userRole) +
+                      ")\n            "
+                  ),
+                ]),
+              ]
+            },
+            proxy: true,
+          },
+          {
+            key: "start",
+            fn: function () {
+              return undefined
+            },
+            proxy: true,
+          },
+          {
+            key: "end",
+            fn: function () {
+              return [
+                _c("b-navbar-item", { attrs: { href: "/cpanel/dashboard" } }, [
+                  _vm._v("\n                Home\n            "),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "b-navbar-dropdown",
+                  { attrs: { label: "Faculty" } },
+                  [
+                    _c(
+                      "b-navbar-item",
+                      { attrs: { href: "/cpanel/faculty" } },
+                      [
+                        _vm._v(
+                          "\n                    Faculty\n                "
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "b-navbar-item",
+                      { attrs: { href: "/cpanel/faculty-load" } },
+                      [
+                        _vm._v(
+                          "\n                    Faculty Load\n                "
+                        ),
+                      ]
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("b-navbar-item", { attrs: { href: "/cpanel/schedules" } }, [
+                  _vm._v("\n                Schedules\n            "),
+                ]),
+                _vm._v(" "),
+                _c("b-navbar-item", { attrs: { tag: "div" } }, [
+                  _c("div", { staticClass: "buttons" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "button is-light",
+                        on: { click: _vm.logout },
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-sign-out" }),
+                        _vm._v(" "),
+                        _c("strong", [_vm._v("LOGOUT")]),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ]
+            },
+            proxy: true,
+          },
+        ]),
+      }),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -72548,6 +73330,8 @@ var map = {
 	"./components/Cpanel/Schedules/SchedulesCreateEdit.vue": "./resources/js/components/Cpanel/Schedules/SchedulesCreateEdit.vue",
 	"./components/Cpanel/User/UserCreateEdit.vue": "./resources/js/components/Cpanel/User/UserCreateEdit.vue",
 	"./components/Cpanel/User/UserPage.vue": "./resources/js/components/Cpanel/User/UserPage.vue",
+	"./components/Dean/DeanDashboard.vue": "./resources/js/components/Dean/DeanDashboard.vue",
+	"./components/Dean/DeanNavbar.vue": "./resources/js/components/Dean/DeanNavbar.vue",
 	"./components/ExampleComponent.vue": "./resources/js/components/ExampleComponent.vue",
 	"./components/Login.vue": "./resources/js/components/Login.vue",
 	"./components/Modals/ModalBrowseFaculty.vue": "./resources/js/components/Modals/ModalBrowseFaculty.vue",
@@ -72557,6 +73341,7 @@ var map = {
 	"./components/Modals/ModalCourses.vue": "./resources/js/components/Modals/ModalCourses.vue",
 	"./components/Modals/SearchRecommendedFaculty.vue": "./resources/js/components/Modals/SearchRecommendedFaculty.vue",
 	"./components/MyAppointment.vue": "./resources/js/components/MyAppointment.vue",
+	"./components/ProgramHead/ProgramHead.vue": "./resources/js/components/ProgramHead/ProgramHead.vue",
 	"./components/RequestAppointment.vue": "./resources/js/components/RequestAppointment.vue",
 	"./components/ServicesComponent.vue": "./resources/js/components/ServicesComponent.vue",
 	"./components/SignupComponent.vue": "./resources/js/components/SignupComponent.vue",

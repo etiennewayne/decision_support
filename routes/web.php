@@ -120,6 +120,26 @@ Route::get('/cpanel/get-faculty-load', [App\Http\Controllers\Cpanel\FacultyLoadC
 
 
 
+
+//////DEAAN
+Route::resource('/dean/dashboard', App\Http\Controllers\Dean\DeanHomeController::class);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Route::get('/get-open-semesters', function(){
     return \App\Models\Semester::all();
 });

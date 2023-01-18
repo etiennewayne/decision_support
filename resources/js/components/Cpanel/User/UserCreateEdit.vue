@@ -127,7 +127,9 @@
                                                  :message="this.errors.role ? this.errors.role[0] : ''">
                                             <b-select v-model="fields.role" expanded>
                                                 <option value="ADMIN">ADMINISTRATOR</option>
-                                                <option value="STAFF">STAFF</option>
+                                                <option value="PROGRAM HEAD">PROGRAM HEAD</option>
+                                                <option value="DEAN">DEAN</option>
+                                                
                                             </b-select>
                                         </b-field>
                                     </div>

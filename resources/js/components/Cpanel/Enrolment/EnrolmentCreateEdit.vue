@@ -36,7 +36,7 @@
                                             <th>Day</th>
                                             <th>Action</th>
                                         </tr>
-                                        <tr v-for="(item, index) in fields.enrolment_details">
+                                        <tr v-for="(item, index) in fields.enrolment_details" :key="index">
                                             <td>{{ item.schedule_id}}</td>
                                             <td>{{ item.course_code}}</td>
                                             <td>{{ item.course_desc}}</td>
