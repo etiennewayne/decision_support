@@ -120,6 +120,18 @@
                         <div class="">
                             <div class="columns">
                                 <div class="column">
+
+                                    <b-field label="Institute" label-position="on-border"
+                                             :type="this.errors.institute_id ? 'is-danger':''"
+                                             :message="this.errors.institute_id ? this.errors.institute_id[0] : ''">
+                                        <b-select v-model="fields.institute_id" required
+                                                  @input="loadPrograms">
+                                            <option v-for="(ins, insx) in institutes"
+                                                    :key="insx"
+                                                    :value="ins.institute_id">{{ ins.institute }}</option>
+                                        </b-select>
+                                    </b-field>
+
                                     <b-field label="Course Code" label-position="on-border"
                                              :type="this.errors.course_code ? 'is-danger':''"
                                              :message="this.errors.course_code ? this.errors.course_code[0] : ''">
@@ -207,6 +219,8 @@ export default{
                 'button': true,
                 'is-loading':false,
             },
+
+            institutes: [],
 
         }
 
@@ -368,12 +382,18 @@ export default{
                 this.courseTypes = res.data;
             })
         },
+        loadInstitute(){
+            axios.get('/get-open-institutes').then(res=>{
+                this.institutes = res.data
+            })
+        },
 
 
 
     },
 
     mounted() {
+        this.loadInstitute()
         this.loadAsyncData();
         this.loadCourseTypes();
     }

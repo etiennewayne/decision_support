@@ -75,6 +75,14 @@
                     Home
                 </b-navbar-item>
 
+                <b-navbar-dropdown label="Setting">
+
+                    <b-navbar-item href="/cpanel/courses">
+                        Courses
+                    </b-navbar-item>
+
+                </b-navbar-dropdown>
+
                 <b-navbar-item href="/cpanel/course-list">
                     Course List
                 </b-navbar-item>

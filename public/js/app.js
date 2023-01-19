@@ -8151,6 +8151,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8174,7 +8186,8 @@ __webpack_require__.r(__webpack_exports__);
         'is-success': true,
         'button': true,
         'is-loading': false
-      }
+      },
+      institutes: []
     };
   },
   methods: {
@@ -8330,9 +8343,17 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/get-open-course-types').then(function (res) {
         _this6.courseTypes = res.data;
       });
+    },
+    loadInstitute: function loadInstitute() {
+      var _this7 = this;
+
+      axios.get('/get-open-institutes').then(function (res) {
+        _this7.institutes = res.data;
+      });
     }
   },
   mounted: function mounted() {
+    this.loadInstitute();
     this.loadAsyncData();
     this.loadCourseTypes();
   }
@@ -9502,6 +9523,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -33392,7 +33421,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\n    .table > tbody > tr {\n\n        transition: background-color 0.5s ease;\n    }\n\n    .table > tbody > tr:hover {\n        background-color: rgb(233, 233, 233);\n    } */\n.modal-card-head[data-v-5775a784]{\n    background-color: green;\n}\n.modal-card-title[data-v-5775a784]{\n    color: white;\n}\n\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\n    .table > tbody > tr {\n\n        transition: background-color 0.5s ease;\n    }\n\n    .table > tbody > tr:hover {\n        background-color: rgb(233, 233, 233);\n    } */\n.modal-card-head[data-v-5775a784]{\n    background-color: green;\n}\n.modal-card-title[data-v-5775a784]{\n    color: white;\n}\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39393,6 +39422,50 @@ var render = function () {
                             "b-field",
                             {
                               attrs: {
+                                label: "Institute",
+                                "label-position": "on-border",
+                                type: this.errors.institute_id
+                                  ? "is-danger"
+                                  : "",
+                                message: this.errors.institute_id
+                                  ? this.errors.institute_id[0]
+                                  : "",
+                              },
+                            },
+                            [
+                              _c(
+                                "b-select",
+                                {
+                                  attrs: { required: "" },
+                                  on: { input: _vm.loadPrograms },
+                                  model: {
+                                    value: _vm.fields.institute_id,
+                                    callback: function ($$v) {
+                                      _vm.$set(_vm.fields, "institute_id", $$v)
+                                    },
+                                    expression: "fields.institute_id",
+                                  },
+                                },
+                                _vm._l(_vm.institutes, function (ins, insx) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: insx,
+                                      domProps: { value: ins.institute_id },
+                                    },
+                                    [_vm._v(_vm._s(ins.institute))]
+                                  )
+                                }),
+                                0
+                              ),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-field",
+                            {
+                              attrs: {
                                 label: "Course Code",
                                 "label-position": "on-border",
                                 type: this.errors.course_code
@@ -41361,6 +41434,23 @@ var render = function () {
                         "b-navbar-item",
                         { attrs: { href: "/cpanel/dashboard" } },
                         [_vm._v("\n                Home\n            ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-navbar-dropdown",
+                        { attrs: { label: "Setting" } },
+                        [
+                          _c(
+                            "b-navbar-item",
+                            { attrs: { href: "/cpanel/courses" } },
+                            [
+                              _vm._v(
+                                "\n                    Courses\n                "
+                              ),
+                            ]
+                          ),
+                        ],
+                        1
                       ),
                       _vm._v(" "),
                       _c(
