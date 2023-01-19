@@ -49,7 +49,7 @@ class ScheduleController extends Controller
             $scheduleid = $req->scheduleid;
         }
 
-        $data = Schedule::with('acadyear', 'program', 'course', 'room', 'faculty')
+        $data = Schedule::with('acadyear', 'program', 'course', 'room', 'faculty', 'institute')
             ->whereHas('acadyear', function($q) use ($aycode){
                 $q->where('code', $aycode);
             })
@@ -64,6 +64,8 @@ class ScheduleController extends Controller
 
 
     public function getSchedulesForEnrolment(Request $req){
+        //return $req;
+
         $sort = explode('.', $req->sort_by);
         $ayid = $req->ayid;
         $course = $req->course;
@@ -75,7 +77,7 @@ class ScheduleController extends Controller
             $scheduleid = $req->scheduleid;
         }
 
-        $data = Schedule::with('acadyear', 'program', 'course', 'room', 'faculty')
+        $data = Schedule::with('acadyear', 'program', 'course', 'room', 'faculty', 'institute')
             ->whereHas('acadyear', function($q) use ($ayid){
                 $q->where('acadyear_id', $ayid);
             })
@@ -147,6 +149,7 @@ class ScheduleController extends Controller
         if($forceSave == 'Yes'){
             $req->validate([
                 'acadyear_id' => ['required'],
+                'institute_id' => ['required'],
                 'program_id' => ['required'],
                 'course_id' => ['required'],
                 'room_id' => ['required'],
@@ -158,9 +161,12 @@ class ScheduleController extends Controller
                 'course_id.required' => 'Course is required.',
                 'room_id.required' => 'Room is required.',
             ]);
+
         }else{
+
             $req->validate([
                 'acadyear_id' => ['required'],
+                'institute_id' => ['required'],
                 'program_id' => ['required'],
                 'course_id' => ['required'],
                 'room_id' => ['required'],
@@ -178,6 +184,7 @@ class ScheduleController extends Controller
 
         Schedule::create([
             'acadyear_id' => $ayid,
+            'institute_id' => $req->institute_id,
             'program_id' => $req->program_id,
             'course_id' => $req->course_id,
             'room_id' => $req->room_id,
@@ -195,6 +202,7 @@ class ScheduleController extends Controller
         return response()->json([
             'status' => 'saved'
         ], 200);
+        
     }
 
     public function edit($id){
@@ -239,6 +247,7 @@ class ScheduleController extends Controller
 
         $req->validate([
             'acadyear_id' => ['required'],
+            'institute_id' => ['required'],
             'program_id' => ['required'],
             'course_id' => ['required'],
             'start_time' => ['required'],
@@ -255,6 +264,7 @@ class ScheduleController extends Controller
 
         $data = Schedule::find($id);
         $data->acadyear_id = $ayid;
+        $data->institute_id = $req->institute_id;
         $data->program_id = $req->program_id;
         $data->course_id = $req->course_id;
         $data->room_id = $req->room_id;

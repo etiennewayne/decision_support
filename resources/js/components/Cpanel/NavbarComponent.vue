@@ -17,7 +17,7 @@
                     Home
                 </b-navbar-item>
                 <b-navbar-dropdown label="Setting">
-                    
+
                     <b-navbar-item href="/cpanel/acad-years">
                         Academic Year
                     </b-navbar-item>
@@ -35,10 +35,11 @@
                     <b-navbar-item href="/cpanel/enrolment">
                         Enrolment
                     </b-navbar-item>
+
                 </b-navbar-dropdown>
 
                 <b-navbar-dropdown label="Faculty">
-                    
+
                     <b-navbar-item href="/cpanel/faculty">
                         Faculty
                     </b-navbar-item>
@@ -73,22 +74,12 @@
                 <b-navbar-item href="/cpanel/dashboard">
                     Home
                 </b-navbar-item>
-                <b-navbar-dropdown label="Setting">
 
-                    <b-navbar-item href="/cpanel/courses">
-                        Courses
-                    </b-navbar-item>
-
-                    <b-navbar-item href="/cpanel/enrolment">
-                        Enrolment
-                    </b-navbar-item>
-                </b-navbar-dropdown>
+                <b-navbar-item href="/cpanel/course-list">
+                    Course List
+                </b-navbar-item>
 
                 <b-navbar-dropdown label="Faculty">
-                    
-                    <b-navbar-item href="/cpanel/faculty">
-                        Faculty
-                    </b-navbar-item>
 
                     <b-navbar-item href="/cpanel/faculty-load">
                         Faculty Load
@@ -114,6 +105,14 @@
                     Home
                 </b-navbar-item>
 
+                <b-navbar-dropdown label="Setting">
+
+                    <b-navbar-item href="/cpanel/programs">
+                        Program
+                    </b-navbar-item>
+
+                </b-navbar-dropdown>
+
                 <b-navbar-dropdown label="Faculty">
 
                     <b-navbar-item href="/cpanel/faculty-load">
@@ -121,6 +120,8 @@
                     </b-navbar-item>
 
                 </b-navbar-dropdown>
+
+
 
                 <b-navbar-item tag="div">
                     <div class="buttons">

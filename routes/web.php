@@ -124,12 +124,8 @@ Route::get('/cpanel/get-faculty-load', [App\Http\Controllers\Cpanel\FacultyLoadC
 //////DEAAN
 Route::resource('/dean/dashboard', App\Http\Controllers\Dean\DeanHomeController::class);
 
-
-
-
-
-
-
+Route::get('/cpanel/course-list', [App\Http\Controllers\Dean\CourseListController::class, 'index']);
+Route::get('/cpanel/get-course-list', [App\Http\Controllers\Dean\CourseListController::class, 'getCourseList']);
 
 
 
@@ -146,6 +142,10 @@ Route::get('/get-open-semesters', function(){
 Route::get('/get-open-course-types', function(){
     return \App\Models\CourseType::all();
 });
+
+
+Route::get('/get-open-institutes', [App\Http\Controllers\OpenInstituteController::class, 'getOpenInstitutes']);
+Route::get('/get-open-programs/{insId}', [App\Http\Controllers\OpenProgramController::class, 'getPrograms']);
 
 
 //Offices Administrator (For office management)

@@ -121,6 +121,18 @@
                                                  placeholder="Program Code" required>
                                         </b-input>
                                     </b-field>
+
+                                    <b-field label="Institute" label-position="on-border"
+                                             :type="this.errors.institute_id ? 'is-danger':''"
+                                             :message="this.errors.institute_id ? this.errors.institute_id[0] : ''">
+                                        <b-select v-model="fields.institute_id" required
+                                                  @input="loadPrograms">
+                                            <option v-for="(ins, insx) in institutes"
+                                                    :key="insx"
+                                                    :value="ins.institute_id">{{ ins.institute }}</option>
+                                        </b-select>
+                                    </b-field>
+
                                     <b-field label="Program Description" label-position="on-border"
                                              :type="this.errors.program_desc ? 'is-danger':''"
                                              :message="this.errors.program_desc ? this.errors.program_desc[0] : ''">
@@ -181,6 +193,8 @@ export default{
                 'button': true,
                 'is-loading':false,
             },
+
+            institutes: [],
 
         }
 
@@ -340,10 +354,23 @@ export default{
         },
 
 
+        loadInstitute(){
+            axios.get('/get-open-institutes').then(res=>{
+                this.institutes = res.data
+            })
+        },
+        loadPrograms(institute_id){
+            axios.get('/get-open-programs/'+ this.fields.institute_id).then(res=>{
+                this.programs = res.data
+            })
+        },
+
+
 
     },
 
     mounted() {
+        this.loadInstitute()
         this.loadAsyncData();
     }
 }

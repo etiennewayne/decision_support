@@ -18,13 +18,27 @@
                                         <option v-for="(item, index) in acadYears" :key="index" :value="item.acadyear_id">{{ item.code }}</option>
                                     </b-select>
                                 </b-field>
-                                <b-field label="Programs"
-                                    :type="this.errors.program_id ? 'is-danger':''"
-                                    :message="this.errors.program_id ? this.errors.program_id[0] : ''">
-                                    <b-select v-model="fields.program_id">
-                                        <option v-for="(item, index) in programs" :key="index" :value="item.program_id">{{ item.program_code }}</option>
-                                    </b-select>
+
+                                <b-field>
+                                    <b-field label="Institute"
+                                        :type="this.errors.institute_id ? 'is-danger':''"
+                                        :message="this.errors.institute_id ? this.errors.institute_id[0] : ''">
+                                        <b-select v-model="fields.institute_id" required
+                                            @input="loadPrograms">
+                                            <option v-for="(ins, insx) in institutes"
+                                                :key="insx"
+                                                :value="ins.institute_id">{{ ins.institute }}</option>
+                                        </b-select>
+                                    </b-field>
+                                    <b-field label="Programs"
+                                        :type="this.errors.program_id ? 'is-danger':''"
+                                        :message="this.errors.program_id ? this.errors.program_id[0] : ''">
+                                        <b-select v-model="fields.program_id">
+                                            <option v-for="(item, index) in programs" :key="index" :value="item.program_id">{{ item.program_code }}</option>
+                                        </b-select>
+                                    </b-field>
                                 </b-field>
+
                                 <b-field
                                     :type="this.errors.course_id ? 'is-danger':''"
                                     :message="this.errors.course_id ? this.errors.course_id[0] : ''">
@@ -190,6 +204,7 @@ export default {
 
             acadYears: [],
             programs: [],
+            institutes: [],
             rooms: [],
 
             conflictData: {},
@@ -201,7 +216,7 @@ export default {
     methods: {
         initData: function(){
             this.acadYears = JSON.parse(this.propAcadYears);
-            this.programs = JSON.parse(this.propPrograms);
+            //this.programs = JSON.parse(this.propPrograms);
             this.rooms = JSON.parse(this.propRooms);
 
             if(this.propData){
@@ -257,6 +272,12 @@ export default {
                     if(err.response.status === 422){
                         this.errors = err.response.data.errors;
                         console.log(this.errors);
+
+                        if(this.errors.schedule[1]){
+                            this.conflictData = JSON.parse(this.errors.schedule[1]);
+                            console.log(this.conflictData);
+                            this.modalConflict = true;
+                        }
                     }
                 })
             }else{
@@ -287,11 +308,23 @@ export default {
                     }
                 })
             }
-        }
+        },
+
+        loadInstitute(){
+            axios.get('/get-open-institutes').then(res=>{
+                this.institutes = res.data
+            })
+        },
+        loadPrograms(institute_id){
+            axios.get('/get-open-programs/'+ this.fields.institute_id).then(res=>{
+                this.programs = res.data
+            })
+        },
 
     },
 
     mounted(){
+        this.loadInstitute()
         this.initData();
     }
 }

@@ -126,10 +126,26 @@
                                                  :type="this.errors.role ? 'is-danger':''"
                                                  :message="this.errors.role ? this.errors.role[0] : ''">
                                             <b-select v-model="fields.role" expanded>
-                                                <option value="ADMIN">ADMINISTRATOR</option>
+                                                <option value="ADMINISTRATOR">ADMINISTRATOR</option>
                                                 <option value="PROGRAM HEAD">PROGRAM HEAD</option>
                                                 <option value="DEAN">DEAN</option>
                                                 
+                                            </b-select>
+                                        </b-field>
+                                    </div>
+                                </div>
+
+                                <div class="columns" v-if="this.fields.role !== 'ADMINISTRATOR'">
+                                    <div class="column">
+                                        <b-field label="Institute" label-position="on-border" expanded
+                                                 :type="this.errors.institute_id ? 'is-danger':''"
+                                                 :message="this.errors.institute_id ? this.errors.institute_id[0] : ''">
+                                            <b-select required v-model="fields.institute_id" expanded>
+                                                <option v-for="(item, index) in institutes"
+                                                    :value="item.institute_id"
+                                                    :key="index">
+                                                    {{ item.institute }}
+                                                </option>
                                             </b-select>
                                         </b-field>
                                     </div>
@@ -207,6 +223,7 @@ export default {
             global_id: 0,
 
             programs: [],
+            institutes: [],
 
         }
     },
@@ -231,9 +248,20 @@ export default {
                 this.barangays = res.data;
             })
         },
+        loadInstitute(){
+            axios.get('/get-open-institutes').then(res=>{
+                this.institutes = res.data
+                console.log(this.institutes)
+            })
+        },
 
 
         submit: function(){
+            
+            if(this.fields.role === 'ADMINISTRATOR'){
+                this.fields.institute_id = null
+            }
+
             if(this.global_id > 0){
                 //update
                 axios.put('/cpanel/users/'+this.global_id, this.fields).then(res=>{
@@ -310,12 +338,15 @@ export default {
         },
 
         initData: function(){
+            this.loadInstitute()
+
            let id = parseInt(this.propId);
             this.programs = JSON.parse(this.propPrograms);
             
             if(id > 0){
                 this.getData(id);
             }
+
         }
 
 

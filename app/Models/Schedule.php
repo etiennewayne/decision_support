@@ -39,5 +39,9 @@ class Schedule extends Model
         return $this->hasOne(Faculty::class, 'faculty_id', 'faculty_id');
     }
 
+    public function institute(){
+        return $this->hasOne(Institute::class, 'institute_id', 'institute_id');
+    }
+
 
 }

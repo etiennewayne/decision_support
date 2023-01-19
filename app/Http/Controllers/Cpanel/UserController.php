@@ -7,6 +7,9 @@ use App\Models\Program;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -54,6 +57,7 @@ class UserController extends Controller
             'fname' => ['required', 'string', 'max:100'],
             'sex' => ['required', 'string', 'max:20'],
             'email' => ['required', 'unique:users'],
+            'institute_id' => Rule::requiredIf($req->role !== 'ADMINISTRATOR'),
             'password' => ['required', 'string', 'confirmed'],
             'role' => ['required', 'string'],
             'province' => ['required', 'string'],
@@ -70,6 +74,7 @@ class UserController extends Controller
             'mname' => strtoupper($req->mname),
             'suffix' => strtoupper($req->suffix),
             'sex' => $req->sex,
+            'institute_id' => $req->institute_id,
             'email' => $req->email,
             'contact_no' => $req->contact_no,
             'role' => $req->role,
@@ -98,24 +103,30 @@ class UserController extends Controller
 
 
     public function update(Request $req, $id){
+
+      
         $validate = $req->validate([
             'username' => ['required', 'max:50', 'unique:users,username,'.$id.',user_id'],
             'lname' => ['required', 'string', 'max:100'],
             'fname' => ['required', 'string', 'max:100'],
             'sex' => ['required', 'string', 'max:20'],
-            'email' => ['required', 'unique:users,email,'.$id.',user_id'],
             'role' => ['required', 'string'],
+            'institute_id' => Rule::requiredIf($req->role !== 'ADMINISTRATOR'),
+            'email' => ['required', 'unique:users,email,'.$id.',user_id'],
             'province' => ['required', 'string'],
             'city' => ['required', 'string'],
             'barangay' => ['required', 'string'],
+        ],[
+            'institute_id.required' => 'Please select institute'
         ]);
-
+        
         $data = User::find($id);
         $data->username = $req->username;
         $data->lname = strtoupper($req->lname);
         $data->fname = strtoupper($req->fname);
         $data->mname = strtoupper($req->mname);
         $data->sex = $req->sex;
+        $data->institute_id = $req->institute_id;
         $data->contact_no = $req->contact_no;
         $data->email = $req->email;
         $data->role = $req->role;

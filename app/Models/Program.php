@@ -14,6 +14,6 @@ class Program extends Model
     protected $primaryKey = 'program_id';
 
 
-    protected $fillable = ['program_code', 'program_desc', 'active'];
+    protected $fillable = ['program_code', 'institute_id', 'program_desc', 'active'];
 
 }

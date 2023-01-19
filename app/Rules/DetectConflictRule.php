@@ -78,7 +78,8 @@ class DetectConflictRule implements Rule
                 $sun == 1 ? $q->orWhere('sun', 1): '';
             });
         }
-        $countExist->where('room_id', $room_id);
+        $countExist->where('room_id', $room_id)
+            ->where('schedule_id', '!=',$this->id);
 
         if($this->id > 0){
             //update but not this data
@@ -99,7 +100,7 @@ class DetectConflictRule implements Rule
     /**
      * Get the validation error message.
      *
-     * @return string
+     * @return array
      */
     public function message()
     {

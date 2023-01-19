@@ -79,6 +79,11 @@
                                 {{ props.row.schedule_id }}
                             </b-table-column>
 
+                            <b-table-column field="institute" label="Institute" v-slot="props">
+                                <span v-if="props.row.institute">{{ props.row.institute.institute }}</span>
+                                <span v-else></span>
+                            </b-table-column>
+
                             <b-table-column field="program_code" label="Program Code" v-slot="props">
                                 {{ props.row.program.program_code }}
                             </b-table-column>
