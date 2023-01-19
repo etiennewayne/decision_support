@@ -43980,6 +43980,26 @@ CREATE TABLE `failed_jobs` (
 
 /*Data for the table `failed_jobs` */
 
+/*Table structure for table `institutes` */
+
+DROP TABLE IF EXISTS `institutes`;
+
+CREATE TABLE `institutes` (
+  `institute_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `institute` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`institute_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `institutes` */
+
+insert  into `institutes`(`institute_id`,`institute`,`created_at`,`updated_at`) values 
+(1,'ICS',NULL,NULL),
+(2,'IAS',NULL,NULL),
+(3,'IBFS',NULL,NULL),
+(4,'ICJE',NULL,NULL);
+
 /*Table structure for table `migrations` */
 
 DROP TABLE IF EXISTS `migrations`;
@@ -44049,6 +44069,8 @@ DROP TABLE IF EXISTS `programs`;
 
 CREATE TABLE `programs` (
   `program_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `institute_id` bigint(20) unsigned NOT NULL,
+  `institute` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `program_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `program_desc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `active` tinyint(4) NOT NULL DEFAULT 1,
@@ -44060,15 +44082,15 @@ CREATE TABLE `programs` (
 
 /*Data for the table `programs` */
 
-insert  into `programs`(`program_id`,`program_code`,`program_desc`,`active`,`created_at`,`updated_at`) values 
-(1,'BSCS','BACHELOR OF SCIENCE IN COMPUTER SCIENCE',1,NULL,NULL),
-(2,'BSED-MATH','BACHELOR OF SCIENCE IN EDUCATION MAJOR IN MATH',1,NULL,NULL),
-(3,'BSED-FIL','BACHELOR OF SCIENCE IN EDUCATION MAJOR IN FILIPINO',1,NULL,NULL),
-(4,'BSED-ENGL','BACHELOR OF SCIENCE IN EDUCATION MAJOR IN ENGLISH',1,NULL,NULL),
-(5,'BS CRIM','BACHELOR OF SCIENCE IN CRIMINOLOGY',1,NULL,NULL),
-(6,'BSBA-HRM','BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN HUMAN RESOURCE MANAGEMENT',1,NULL,NULL),
-(7,'BSBA-MM','BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN MARKETING MANAGEMENT',1,NULL,NULL),
-(8,'IAS','INSTITUTE OF ARTS AND SCIENCES',1,'2023-01-08 21:57:54','2023-01-08 21:57:54');
+insert  into `programs`(`program_id`,`institute_id`,`institute`,`program_code`,`program_desc`,`active`,`created_at`,`updated_at`) values 
+(1,1,NULL,'BSCS','BACHELOR OF SCIENCE IN COMPUTER SCIENCE',1,NULL,NULL),
+(2,1,NULL,'BSED-MATH','BACHELOR OF SCIENCE IN EDUCATION MAJOR IN MATH',1,NULL,NULL),
+(3,1,NULL,'BSED-FIL','BACHELOR OF SCIENCE IN EDUCATION MAJOR IN FILIPINO',1,NULL,NULL),
+(4,1,NULL,'BSED-ENGL','BACHELOR OF SCIENCE IN EDUCATION MAJOR IN ENGLISH',1,NULL,NULL),
+(5,4,NULL,'BS CRIM','BACHELOR OF SCIENCE IN CRIMINOLOGY',1,NULL,NULL),
+(6,3,NULL,'BSBA-HRM','BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN HUMAN RESOURCE MANAGEMENT',1,NULL,NULL),
+(7,3,NULL,'BSBA-MM','BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN MARKETING MANAGEMENT',1,NULL,NULL),
+(8,0,NULL,'IAS','INSTITUTE OF ARTS AND SCIENCES',1,'2023-01-08 21:57:54','2023-01-08 21:57:54');
 
 /*Table structure for table `provinces` */
 
@@ -44237,6 +44259,7 @@ DROP TABLE IF EXISTS `schedules`;
 CREATE TABLE `schedules` (
   `schedule_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `acadyear_id` bigint(20) unsigned NOT NULL,
+  `institute_id` bigint(20) unsigned NOT NULL,
   `program_id` bigint(20) unsigned NOT NULL,
   `course_id` bigint(20) unsigned NOT NULL,
   `room_id` bigint(20) unsigned NOT NULL,
@@ -44265,21 +44288,21 @@ CREATE TABLE `schedules` (
 
 /*Data for the table `schedules` */
 
-insert  into `schedules`(`schedule_id`,`acadyear_id`,`program_id`,`course_id`,`room_id`,`start_time`,`end_time`,`faculty_id`,`mon`,`tue`,`wed`,`thu`,`fri`,`sat`,`sun`,`created_at`,`updated_at`) values 
-(1,4,1,1,1,'08:30:00','10:00:00',1,1,0,0,0,0,0,0,NULL,NULL),
-(2,4,1,1,3,'08:30:00','10:00:00',1,0,1,0,0,0,0,0,NULL,NULL),
-(3,1,1,5,2,'11:00:00','12:00:00',8,1,0,1,0,1,0,0,NULL,NULL),
-(4,4,1,1,1,'08:30:00','10:00:00',1,1,0,0,1,0,0,0,NULL,'2023-01-14 13:38:43'),
-(5,4,1,1,3,'08:30:00','10:00:00',1,0,0,0,1,0,0,0,NULL,'2023-01-14 13:02:40'),
-(6,4,1,5,3,'11:00:00','12:00:00',1,0,0,0,0,1,0,0,NULL,'2023-01-05 10:48:46'),
-(9,4,1,29,2,'08:30:00','10:00:00',1,1,0,0,1,0,0,0,'2023-01-04 22:09:00','2023-01-05 11:14:06'),
-(10,4,1,28,2,'12:00:00','14:00:00',1,1,0,0,0,0,1,0,'2023-01-04 22:10:50','2023-01-04 22:10:50'),
-(11,4,1,29,4,'03:00:00','16:00:00',1,0,0,0,0,0,0,1,'2023-01-05 07:54:41','2023-01-17 08:47:54'),
-(12,4,4,1,2,'08:30:00','10:00:00',1,1,0,0,1,0,0,0,'2023-01-05 11:35:43','2023-01-05 11:35:43'),
-(13,5,8,14,6,'13:00:00','14:00:00',0,1,0,1,0,1,0,0,'2023-01-08 22:05:52','2023-01-08 22:05:52'),
-(14,4,1,23,10,'08:30:00','10:00:00',1,0,0,1,0,0,0,0,'2023-01-14 05:02:23','2023-01-17 09:21:37'),
-(16,4,1,38,10,'08:30:00','10:00:00',0,0,1,0,1,0,0,0,'2023-01-14 05:18:07','2023-01-14 11:48:25'),
-(17,3,1,37,10,'13:00:00','14:30:00',0,1,0,1,0,0,0,0,'2023-01-14 11:47:10','2023-01-14 11:47:10');
+insert  into `schedules`(`schedule_id`,`acadyear_id`,`institute_id`,`program_id`,`course_id`,`room_id`,`start_time`,`end_time`,`faculty_id`,`mon`,`tue`,`wed`,`thu`,`fri`,`sat`,`sun`,`created_at`,`updated_at`) values 
+(1,3,0,1,1,1,'08:30:00','10:00:00',1,1,0,0,0,0,0,0,NULL,NULL),
+(2,3,0,1,1,3,'08:30:00','10:00:00',1,0,1,0,0,0,0,0,NULL,NULL),
+(3,1,0,1,5,2,'11:00:00','12:00:00',8,1,0,1,0,1,0,0,NULL,NULL),
+(4,4,1,1,1,1,'08:30:00','10:00:00',1,1,0,0,1,0,0,0,NULL,'2023-01-19 11:00:26'),
+(5,3,0,1,1,3,'08:30:00','10:00:00',1,0,0,0,1,0,0,0,NULL,'2023-01-14 13:02:40'),
+(6,3,0,1,5,3,'11:00:00','12:00:00',1,0,0,0,0,1,0,0,NULL,'2023-01-05 10:48:46'),
+(9,4,1,1,29,2,'08:30:00','10:00:00',1,1,0,0,1,0,0,0,'2023-01-04 22:09:00','2023-01-19 13:14:22'),
+(10,4,0,1,28,2,'12:00:00','14:00:00',1,1,0,0,0,0,1,0,'2023-01-04 22:10:50','2023-01-04 22:10:50'),
+(11,4,0,1,29,4,'03:00:00','16:00:00',1,0,0,0,0,0,0,1,'2023-01-05 07:54:41','2023-01-17 08:47:54'),
+(12,4,1,1,1,2,'08:30:00','10:00:00',1,0,1,0,0,1,0,0,'2023-01-05 11:35:43','2023-01-19 13:14:17'),
+(13,5,0,8,14,6,'13:00:00','14:00:00',0,1,0,1,0,1,0,0,'2023-01-08 22:05:52','2023-01-08 22:05:52'),
+(14,4,0,1,23,10,'08:30:00','10:00:00',1,0,0,1,0,0,0,0,'2023-01-14 05:02:23','2023-01-17 09:21:37'),
+(16,4,0,1,38,10,'08:30:00','10:00:00',0,0,1,0,1,0,0,0,'2023-01-14 05:18:07','2023-01-14 11:48:25'),
+(17,3,0,1,37,10,'13:00:00','14:30:00',0,1,0,1,0,0,0,0,'2023-01-14 11:47:10','2023-01-14 11:47:10');
 
 /*Table structure for table `semesters` */
 
@@ -44339,6 +44362,7 @@ CREATE TABLE `users` (
   `contact_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `role` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sex` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `institute_id` bigint(20) unsigned DEFAULT NULL,
   `province` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `barangay` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -44351,16 +44375,19 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `users_username_unique` (`username`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `users` */
 
-insert  into `users`(`user_id`,`username`,`lname`,`fname`,`mname`,`suffix`,`email`,`contact_no`,`role`,`sex`,`province`,`city`,`barangay`,`street`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values 
-(1,'admin','CALIBO','ALEXANDER','P','','angel@dev.com','09167789585','ADMINISTRATOR','MALE','1042','104215','104215025','P-BOUGAINVILLA',NULL,'$2y$10$gjJ8031vfFa9tsbY9FM8b.uAY1ewJfg6S3TTNRjGDRyBZx3IpkZWm',NULL,NULL,NULL),
-(2,'faculty','NOVA','MAE','P','','faculty@dev.com','091166554878','STAFF','MALE','1042','104215','104215025','P-BOUGAINVILLA',NULL,'$2y$10$7ocxVY28PxOTW1YHXjm5Ne.m8hNE0LkCU3U8b2TIBn6cVFjIGrUlq',NULL,NULL,'2023-01-07 14:17:16'),
-(3,'jesmacahidhid','MACAHIDHID','JESSA','TAROY','','jesmacahidhid@dev.com','09683021307','ADMIN','FEMALE','1042','104210','104210016','PUROK 6',NULL,'$2y$10$/XcVa47bzMk3Ohu6jq4Rle0uYwgJGEhDpzgMdPECkwpUsurkySYpa',NULL,'2023-01-05 10:05:33','2023-01-05 10:07:11'),
-(4,'Program Head','OBRIAL','NOVA MAE','CAMACHO','','obrial@gmail.com','09683021307','STAFF','FEMALE','1042','104210','104210022','PUROK 6',NULL,'$2y$10$gG7E1bppI7CmPFjLO0DL1uwD30Qm8tdPWFH5OommQW1yNIzWLoow.',NULL,'2023-01-05 10:33:40','2023-01-08 23:22:21'),
-(5,'instructor','MACAHIDHID','JESSA','TAROY','','jm@dev.com','09487953458','STAFF','FEMALE','0314','031415','031415015','PUROK 6',NULL,'$2y$10$u1lIWgeDwVTtzwbC8RBGVOs/vKDHg04Qi729rtYKLDvtlfiWNAwMW',NULL,'2023-01-05 11:55:57','2023-01-05 11:55:57');
+insert  into `users`(`user_id`,`username`,`lname`,`fname`,`mname`,`suffix`,`email`,`contact_no`,`role`,`sex`,`institute_id`,`province`,`city`,`barangay`,`street`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values 
+(1,'admin','CALIBO','ALEXANDER','P','','angel@dev.com','09167789585','ADMINISTRATOR','MALE',0,'1042','104215','104215025','P-BOUGAINVILLA',NULL,'$2y$10$gjJ8031vfFa9tsbY9FM8b.uAY1ewJfg6S3TTNRjGDRyBZx3IpkZWm',NULL,NULL,NULL),
+(2,'faculty','NOVA','MAE','P','','faculty@dev.com','091166554878','STAFF','MALE',0,'1042','104215','104215025','P-BOUGAINVILLA',NULL,'$2y$10$7ocxVY28PxOTW1YHXjm5Ne.m8hNE0LkCU3U8b2TIBn6cVFjIGrUlq',NULL,NULL,'2023-01-07 14:17:16'),
+(3,'jesmacahidhid','MACAHIDHID','JESSA','TAROY','','jesmacahidhid@dev.com','09683021307','ADMIN','FEMALE',0,'1042','104210','104210016','PUROK 6',NULL,'$2y$10$/XcVa47bzMk3Ohu6jq4Rle0uYwgJGEhDpzgMdPECkwpUsurkySYpa',NULL,'2023-01-05 10:05:33','2023-01-05 10:07:11'),
+(4,'Program Head','OBRIAL','NOVA MAE','CAMACHO','','obrial@gmail.com','09683021307','STAFF','FEMALE',0,'1042','104210','104210022','PUROK 6',NULL,'$2y$10$gG7E1bppI7CmPFjLO0DL1uwD30Qm8tdPWFH5OommQW1yNIzWLoow.',NULL,'2023-01-05 10:33:40','2023-01-08 23:22:21'),
+(5,'instructor','MACAHIDHID','JESSA','TAROY','','jm@dev.com','09487953458','STAFF','FEMALE',0,'0314','031415','031415015','PUROK 6',NULL,'$2y$10$u1lIWgeDwVTtzwbC8RBGVOs/vKDHg04Qi729rtYKLDvtlfiWNAwMW',NULL,'2023-01-05 11:55:57','2023-01-05 11:55:57'),
+(6,'deanics','DEAN','DEAN','','','dean@gmail.com','123123','DEAN','MALE',1,'1013','101317','101317020','AWD',NULL,'$2y$10$GYtM0HM23LlMuCpHTnIbx.Ppgd.XaxZiXDMSy2OqIHDsqix7oYPp6',NULL,'2023-01-18 11:30:17','2023-01-19 10:42:38'),
+(7,'programhead','PROGRAMHEAD','PROGRAMHEAD','','','programhead@dev.com','123','PROGRAM HEAD','MALE',1,'0314','031416','031416010','',NULL,'$2y$10$1fK3vF8jrvBXsjmd16.hp.fNkDcfzFG6ioV9S/fCSF6dx5HX.51Tq',NULL,'2023-01-18 11:47:34','2023-01-19 10:42:00'),
+(8,'ias','IAS','IAS','','','ias@dev.com','123','PROGRAM HEAD','MALE',2,'0712','071214','071214015','',NULL,'$2y$10$I.g1QCncmAspIxkYmePxBOfgaSwtOWa3d1Tl1ZCD9DJ/sZhhh9wPS',NULL,'2023-01-19 09:57:00','2023-01-19 10:04:15');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
