@@ -13,7 +13,8 @@
                             <div class="column">
                                 <b-field label="Academic Year">
                                     <b-select v-model="fields.ay">
-                                        <option v-for="(item, index) in acadYears" :key="index" :value="item.acadyear_id">{{ item.code }} ({{ item.acadyear_desc }})</option>
+                                        <option v-for="(item, index) in acadYears" :key="index" 
+                                            :value="item.acadyear_id">{{ item.code }} ({{ item.acadyear_desc }})</option>
                                     </b-select>
                                 </b-field>
                             </div>
@@ -47,6 +48,7 @@
                     <div class="has-text-weight-bold">INSTRUCTOR: {{ data[0].lname }}, {{ data[0].fname }} {{ data[0].mname }}</div>
                     <div class="has-text-weight-bold">SCHOOL YEAR: {{ data[0].acadyear_desc }}</div>
                 </div>
+                
 
                 <div style="margin: 15px 0;">
                     <div class="has-text-weight-bold">COURSES: </div>
@@ -145,8 +147,6 @@ export default{
         printMe(){
             window.print()
         }
-
-
     },
 
     mounted() {

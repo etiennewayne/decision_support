@@ -5,16 +5,16 @@
                  :message="this.errors.faculty_id ? this.errors.faculty_id[0] : ''">
 
             <b-input :value="valueFullname" expanded
-                     icon="account" placeholder="Select Faculty" required readonly>
+                icon="account" placeholder="Select Faculty" required readonly>
             </b-input>
 
             <p class="control">
-                <b-button class="button is-primary" @click="openModal">...</b-button>
+                <b-button class="button is-primary" @click="openModal" icon-left="magnify"></b-button>
             </p>
         </b-field>
 
 
-        <b-modal v-model="this.isModalActive" has-modal-card
+        <b-modal v-model="isModalActive" has-modal-card
                  trap-focus scroll="keep" aria-role="dialog" aria-modal>
             <div class="modal-card card-width">
                 <header class="modal-card-head">
@@ -113,6 +113,7 @@ export default {
             defaultSortDirection:'',
 
             isModalActive: false,
+
             errors:{},
 
             faculty: {

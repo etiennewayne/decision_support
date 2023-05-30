@@ -48,7 +48,6 @@
                         Faculty Load
                     </b-navbar-item>
 
-
                 </b-navbar-dropdown>
 
                 <b-navbar-item href="/cpanel/schedules">
@@ -58,6 +57,14 @@
                 <b-navbar-item href="/cpanel/users">
                     User
                 </b-navbar-item>
+
+                <b-navbar-dropdown label="Report">
+                    <b-navbar-item href="/cpanel/report-faculty-load">
+                        All Faculty Load
+                    </b-navbar-item>
+                </b-navbar-dropdown>
+
+                
 
                 <b-navbar-item tag="div">
                     <div class="buttons">
@@ -140,6 +147,26 @@
                     </div>
                 </b-navbar-item>
             </template>
+
+
+            <template #end v-else-if="user.role ==='STAFF'">
+                <b-navbar-item href="/cpanel/dashboard">
+                    Home
+                </b-navbar-item>
+
+                <!-- <b-navbar-item href="/cpanel/schedules">
+                    Schedules
+                </b-navbar-item> -->
+                <b-navbar-item tag="div">
+                    <div class="buttons">
+
+                        <a class="button is-light" @click="logout">
+                            <i class="fa fa-sign-out"></i>&nbsp;<strong>LOGOUT</strong>
+                        </a>
+                    </div>
+                </b-navbar-item>
+            </template>
+
 
         </b-navbar>
 

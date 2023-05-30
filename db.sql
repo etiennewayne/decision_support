@@ -43837,6 +43837,29 @@ insert  into `courses`(`course_id`,`institute_id`,`course_code`,`course_desc`,`c
 (40,0,'MICROB LAB','MICROBIOLOGY AND PARASITOLOGY','LEC',3,'2023-01-08 21:13:09','2023-01-08 21:13:09'),
 (41,0,'GEE SOSLIT','SOSYEDAD AT LITERATURA','LEC',3,'2023-01-08 21:15:16','2023-01-08 21:15:16');
 
+/*Table structure for table `courses_taught` */
+
+DROP TABLE IF EXISTS `courses_taught`;
+
+CREATE TABLE `courses_taught` (
+  `course_taught_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `faculty_id` bigint(20) unsigned NOT NULL,
+  `course_code` varchar(255) DEFAULT NULL,
+  `course_desc` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`course_taught_id`),
+  KEY `faculty_id` (`faculty_id`),
+  CONSTRAINT `courses_taught_ibfk_1` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`faculty_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `courses_taught` */
+
+insert  into `courses_taught`(`course_taught_id`,`faculty_id`,`course_code`,`course_desc`,`created_at`,`updated_at`) values 
+(6,57,'ESC 102','PROGRAMMING 102',NULL,'2023-05-30 12:31:04'),
+(7,57,'ESC 103','PROGRAMMING 103',NULL,'2023-05-30 12:31:04'),
+(10,57,'ESC 104','PROGRAMMING 4','2023-05-30 12:31:04','2023-05-30 12:31:04');
+
 /*Table structure for table `curriculums` */
 
 DROP TABLE IF EXISTS `curriculums`;
@@ -43909,7 +43932,7 @@ CREATE TABLE `faculty` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`faculty_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `faculty` */
 
@@ -43961,7 +43984,9 @@ insert  into `faculty`(`faculty_id`,`lname`,`fname`,`mname`,`sex`,`active`,`crea
 (46,'BANAAG','LIEZA YAZMIN','O.','FEMALE',1,'2023-01-08 21:42:31','2023-01-08 21:42:31'),
 (47,'ASO','EDEMIE','A.','FEMALE',1,'2023-01-08 21:43:04','2023-01-08 21:43:04'),
 (48,'APAO','MA. ALLEN','G.','FEMALE',1,'2023-01-08 21:43:45','2023-01-08 21:43:45'),
-(49,'ABAYAN','REYSCIELLE','C.','FEMALE',1,'2023-01-08 21:44:28','2023-01-08 21:44:28');
+(49,'ABAYAN','REYSCIELLE','C.','FEMALE',1,'2023-01-08 21:44:28','2023-01-08 21:44:28'),
+(56,'ABELLA','LEDA','','FEMALE',1,'2023-05-30 11:26:37','2023-05-30 11:26:37'),
+(57,'ABELLA','LEDA','','FEMALE',1,'2023-05-30 11:26:48','2023-05-30 11:26:48');
 
 /*Table structure for table `failed_jobs` */
 
@@ -44302,7 +44327,7 @@ insert  into `schedules`(`schedule_id`,`acadyear_id`,`institute_id`,`program_id`
 (12,4,1,1,1,2,'08:30:00','10:00:00',1,0,1,0,0,1,0,0,'2023-01-05 11:35:43','2023-01-19 13:14:17'),
 (13,5,0,8,14,6,'13:00:00','14:00:00',0,1,0,1,0,1,0,0,'2023-01-08 22:05:52','2023-01-08 22:05:52'),
 (14,4,0,1,23,10,'08:30:00','10:00:00',1,0,0,1,0,0,0,0,'2023-01-14 05:02:23','2023-01-17 09:21:37'),
-(16,4,0,1,38,10,'08:30:00','10:00:00',0,0,1,0,1,0,0,0,'2023-01-14 05:18:07','2023-01-14 11:48:25'),
+(16,4,0,1,38,10,'08:30:00','10:00:00',2,0,1,0,1,0,0,0,'2023-01-14 05:18:07','2023-05-30 17:50:11'),
 (17,3,0,1,37,10,'13:00:00','14:30:00',0,1,0,1,0,0,0,0,'2023-01-14 11:47:10','2023-01-14 11:47:10');
 
 /*Table structure for table `semesters` */

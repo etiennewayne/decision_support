@@ -17,8 +17,11 @@ class Faculty extends Model
 
 
     public function schedules(){
-        $this->hasMany(Schedule::class, 'faculty_id', 'faculty_id');
+        return $this->hasMany(Schedule::class, 'faculty_id', 'faculty_id');
     }
 
+    public function courses_taught(){
+        return $this->hasMany(CourseTaught::class, 'faculty_id', 'faculty_id');
+    }
 
 }

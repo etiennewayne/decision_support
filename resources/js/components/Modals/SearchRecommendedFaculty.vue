@@ -19,7 +19,7 @@
 
 
 
-        <b-modal v-model="this.modalAssignFaculty" has-modal-card
+        <b-modal v-model="modalAssignFaculty" has-modal-card
                  trap-focus scroll="keep" aria-role="dialog" aria-modal>
             <div class="modal-card card-width">
                 <header class="modal-card-head">

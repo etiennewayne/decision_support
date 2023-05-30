@@ -5,7 +5,7 @@
         </b-field>
 
 
-        <b-modal v-model="this.isModalActive" has-modal-card
+        <b-modal v-model="isModalActive" has-modal-card
                  trap-focus scroll="keep" aria-role="dialog" aria-modal>
             <div class="modal-card" style="width: 760px;">
                 <header class="modal-card-head">

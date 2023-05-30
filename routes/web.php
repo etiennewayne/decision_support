@@ -109,14 +109,25 @@ Route::get('/cpanel/get-students', [App\Http\Controllers\Cpanel\EnrolmentControl
 Route::post('/cpanel/save-faculty', [App\Http\Controllers\Cpanel\ScheduleController::class, 'saveFaculty']);
 Route::post('/cpanel/remove-faculty/{id}', [App\Http\Controllers\Cpanel\ScheduleController::class, 'removeFaculty']);
 
+Route::middleware(['auth'])->group(function(){
 
-Route::resource('/cpanel/faculty', App\Http\Controllers\Cpanel\FacultyController::class);
-Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getFaculty']);
-//Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getFaculty']);
+    Route::resource('/cpanel/faculty', App\Http\Controllers\Cpanel\FacultyController::class);
+    Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getFaculty']);
+    //Route::get('/cpanel/get-faculty', [App\Http\Controllers\Cpanel\FacultyController::class, 'getFaculty']);
+
+    Route::resource('/cpanel/faculty-load', App\Http\Controllers\Cpanel\FacultyLoadController::class);
+    Route::get('/cpanel/get-faculty-load', [App\Http\Controllers\Cpanel\FacultyLoadController::class, 'getFacultyLoad']);
+
+    Route::resource('/cpanel/course-taught', App\Http\Controllers\Cpanel\CourseTaughtController::class);
 
 
-Route::resource('/cpanel/faculty-load', App\Http\Controllers\Cpanel\FacultyLoadController::class);
-Route::get('/cpanel/get-faculty-load', [App\Http\Controllers\Cpanel\FacultyLoadController::class, 'getFacultyLoad']);
+    Route::resource('/cpanel/report-faculty-load', App\Http\Controllers\Cpanel\ReportFacultyLoadController::class);
+    Route::get('/cpanel/get-all-faculty-load', [App\Http\Controllers\Cpanel\ReportFacultyLoadController::class, 'getAllFacultyLoad']);
+
+    
+
+});
+
 
 
 

@@ -25,8 +25,8 @@
                                 <div class="level-item">
                                     <b-field label="Search">
                                         <b-input type="text"
-                                                 v-model="search.lname" placeholder="Search Lastname"
-                                                 @keyup.native.enter="loadAsyncData"/>
+                                            v-model="search.lname" placeholder="Search Lastname"
+                                            @keyup.native.enter="loadAsyncData"/>
                                         <p class="control">
                                             <b-tooltip label="Search" type="is-success">
                                                 <b-button type="is-primary" icon-right="account-filter" @click="loadAsyncData"/>
@@ -38,7 +38,8 @@
                         </div>
 
                         <div class="buttons mt-3 is-right">
-                            <b-button @click="openModal" icon-left="plus" class=" is-small is-success">NEW</b-button>
+                            <b-button @click="openModal" icon-left="plus" 
+                                class=" is-small is-success">NEW</b-button>
                         </div>
 
                         <b-table
@@ -57,6 +58,7 @@
                             aria-current-label="Current page"
                             backend-sorting
                             :default-sort-direction="defaultSortDirection"
+                            detailed
                             @sort="onSort">
 
                             <b-table-column field="faculty_id" label="ID" v-slot="props">
@@ -86,6 +88,17 @@
                                     </b-tooltip>
                                 </div>
                             </b-table-column>
+
+                            <template #detail="props">
+                                <tr>
+                                    <th>Course Code</th>
+                                    <th>Course Description</th>
+                                </tr>
+                                <tr v-for="i in props.row.courses_taught" :key="`taught${i.course_taught_id}`">
+                                    <td >{{ i.course_code }}</td>
+                                    <td >{{ i.course_desc }}</td>
+                                </tr>
+                            </template>
                         </b-table>
 
                     </div>
@@ -142,7 +155,7 @@
                                         </b-input>
                                     </b-field>
 
-                                    <b-field label="Course Unit" label-position="on-border"
+                                    <b-field label="Sex" label-position="on-border"
                                             :type="this.errors.sex ? 'is-danger':''"
                                             :message="this.errors.sex ? this.errors.sex[0] : ''">
                                         <b-select v-model="fields.sex"
@@ -156,6 +169,37 @@
                                     <b-field label="Active">
                                         <b-checkbox v-model="fields.active"></b-checkbox>
                                     </b-field>
+
+                                    <hr>
+
+                                    <div class="subtitile">Courses Taught</div>
+                                    <div v-for="(item, index) in fields.courses_taught" :key="index"
+                                        class="m-2">
+                                        <b-field grouped>
+                                            <b-field label="Course Description" label-position="on-border">
+                                                <b-input type="text" v-model="item.course_code" 
+                                                    placeholder="Course Code"></b-input>
+                                            </b-field>
+
+                                            <b-field expanded label="Course Description" label-position="on-border"> 
+                                                <b-input type="text" v-model="item.course_desc"
+                                                    placeholder="Course Description"
+                                                    expanded></b-input>
+
+                                                    <p class="control">
+                                                        <b-button @click="removeCourseTaught(index, item.course_taught_id)"
+                                                            type="is-danger" icon-left="delete"></b-button>
+                                                    </p>
+                                            </b-field>
+                                        </b-field>
+                                    </div>
+
+                                    <div class="buttons">
+                                        <b-button type="is-info" class="is-small"
+                                            label="Add Course"
+                                            @click="addCourse"></b-button>
+                                    </div>
+
 
                                 </div>
                             </div>
@@ -207,8 +251,10 @@ export default{
                 fname: null,
                 mname: null,
                 sex: null,
-                active: true
+                active: true,
+                courses_taught: [],
             },
+
             errors: {},
 
             courseTypes: [],
@@ -331,6 +377,32 @@ export default{
         },
 
 
+        addCourse(){
+            //alert('test')
+            this.fields.courses_taught.push({
+                course_taught_id: 0,
+                course_code: '',
+                course_desc: ''
+            });
+        },
+
+        removeCourseTaught(index, data_id){
+            this.$buefy.dialog.confirm({
+                title: 'DELETE?',
+                message: 'Are you sure you want to remove this?',
+                onConfirm: ()=>{
+                    if(data_id > 0){
+                        axios.delete('/cpanel/course-taught/' + data_id).then(res=>{
+                            this.fields.courses_taught.splice(index, 1);
+                        })
+                    }else{
+                        this.fields.courses_taught.splice(index, 1);
+                    }
+                }
+            });
+        },
+
+
         //alert box ask for deletion
         confirmDelete(delete_id) {
             this.$buefy.dialog.confirm({
@@ -354,13 +426,13 @@ export default{
         },
 
         clearFields(){
-            this.fields = {
-                lname: null,
-                fname: null,
-                mname: null,
-                sex: null,
-                active: true
-            };
+            this.fields.lname = ''
+            this.fields.fname = ''
+            this.fields.mname = ''
+            this.fields.sex = ''
+            this.fields.active = true
+
+            this.fields.courses_taught = []
         },
 
 

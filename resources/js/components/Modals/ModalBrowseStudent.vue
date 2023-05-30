@@ -14,7 +14,7 @@
         </b-field>
 
 
-        <b-modal v-model="this.isModalActive" has-modal-card
+        <b-modal v-model="isModalActive" has-modal-card
                  trap-focus scroll="keep">
 
             <div class="modal-card" style="width: 800px;">
