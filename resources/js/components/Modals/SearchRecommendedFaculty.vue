@@ -90,9 +90,9 @@
                                     {{props.row.sex}}
                                 </b-table-column>
 
-                                <b-table-column field="count_teaching" label="No. of Teaching" centered v-slot="props">
+                                <!-- <b-table-column field="count_teaching" label="No. of Teaching" centered v-slot="props">
                                     {{props.row.count_teaching}}
-                                </b-table-column>
+                                </b-table-column> -->
 
                                 <b-table-column field="" label="Action" v-slot="props">
                                     <div class="buttons">

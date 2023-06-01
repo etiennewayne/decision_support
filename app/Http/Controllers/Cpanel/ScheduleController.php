@@ -15,6 +15,7 @@ use App\Models\Program;
 use App\Models\Schedule;
 use App\Models\Room;
 use App\Models\User;
+use App\Models\Course;
 
 use App\Rules\DetectConflictRule;
 
@@ -98,21 +99,30 @@ class ScheduleController extends Controller
         //return $isLoadAll;
         $courseid = $req->courseid;
 
+        $course_desc = Course::find($courseid);
+        //return $course_desc;
+
+
         if($isLoadAll > 0){
             $data = Faculty::where('active', 1)
                 ->where('lname', 'like', $req-> lname . '%')
                 ->paginate($req->perpage);
         }else{
-            $data = DB::table('schedules as a')
-                ->join('faculty as b', 'a.faculty_id', 'b.faculty_id')
-                ->where('a.course_id', $courseid)
-                ->select('a.schedule_id', 'b.lname', 'b.fname', 'b.faculty_id', 'b.mname',
-                    DB::raw('(count(b.faculty_id)) as count_teaching'),
-                    'b.sex'
+            $data = DB::table('faculty as a')
+                ->leftJoin('schedules as b', 'a.faculty_id', 'b.faculty_id')
+                ->leftJoin('courses as c', 'b.course_id', 'c.course_id')
+                ->leftJoin('courses_taught as d', 'a.faculty_id', 'd.faculty_id')
+                ->where('c.course_code', 'like', '%'. $course_desc->course_code . '%')
+                ->orWhere('c.course_desc', 'like', '%' . $course_desc->course_desc . '%')
+                ->orWhereRaw('MATCH(d.course_desc) AGAINST(? IN BOOLEAN MODE)',[$course_desc->course_desc])
+                //->orWhereRaw('d.course_desc', 'like', '%' . $course_desc->course_desc . '%')
+                ->select('b.schedule_id', 'a.lname', 'a.fname', 'a.faculty_id', 'a.mname',
+                    DB::raw('(count(a.faculty_id)) as count_teaching'),
+                    'a.sex'
                 )
-                ->where('b.lname', 'like', $req->lname . '%')
+                ->where('a.lname', 'like', $req->lname . '%')
                 ->orderBy('count_teaching', 'desc')
-                ->groupBy('b.faculty_id')
+                ->groupBy('a.faculty_id')
                 ->paginate($req->perpage);
         }
 

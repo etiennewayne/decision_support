@@ -48732,28 +48732,6 @@ var render = function () {
                           }),
                           _vm._v(" "),
                           _c("b-table-column", {
-                            attrs: {
-                              field: "count_teaching",
-                              label: "No. of Teaching",
-                              centered: "",
-                            },
-                            scopedSlots: _vm._u([
-                              {
-                                key: "default",
-                                fn: function (props) {
-                                  return [
-                                    _vm._v(
-                                      "\n                                " +
-                                        _vm._s(props.row.count_teaching) +
-                                        "\n                            "
-                                    ),
-                                  ]
-                                },
-                              },
-                            ]),
-                          }),
-                          _vm._v(" "),
-                          _c("b-table-column", {
                             attrs: { field: "", label: "Action" },
                             scopedSlots: _vm._u([
                               {
