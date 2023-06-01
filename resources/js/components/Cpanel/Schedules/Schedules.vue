@@ -170,7 +170,7 @@ export default{
             sortField: 'program_id',
             sortOrder: 'desc',
             page: 1,
-            perPage: 10,
+            perPage: 20,
             defaultSortDirection: 'asc',
 
             global_id : 0,

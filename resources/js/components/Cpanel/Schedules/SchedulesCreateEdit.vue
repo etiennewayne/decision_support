@@ -224,6 +224,7 @@ export default {
                 this.global_id = rawData.schedule_id;
                 this.fields.acadyear_id = rawData.acadyear_id;
 
+                this.fields.institute_id = rawData.institute_id;
                 this.fields.program_id = rawData.program_id;
                 this.fields.course_id = rawData.course_id;
                 this.fields.start_time = new Date('2022-08-08 ' + rawData.start_time);

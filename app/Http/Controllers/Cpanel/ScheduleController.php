@@ -57,6 +57,7 @@ class ScheduleController extends Controller
                 $q->where('course_code', 'like', $course . '%')
                     ->orWhere('course_desc', 'like', $course . '%');
             })
+            ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);
 
         return $data;
@@ -329,9 +330,8 @@ class ScheduleController extends Controller
 
     public function saveFaculty(Request $req){
         //return $req;
-
         $acadyear = AcademicYear::where('active', 1)->first(); //get current acadyear
-
+        
         //get //all data of a schedule
         $data = Schedule::with(['course'])
             ->find($req->schedule_id);

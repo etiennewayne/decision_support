@@ -10855,7 +10855,7 @@ __webpack_require__.r(__webpack_exports__);
       sortField: 'program_id',
       sortOrder: 'desc',
       page: 1,
-      perPage: 10,
+      perPage: 20,
       defaultSortDirection: 'asc',
       global_id: 0,
       search: {
@@ -11260,6 +11260,7 @@ __webpack_require__.r(__webpack_exports__);
         var rawData = JSON.parse(this.propData);
         this.global_id = rawData.schedule_id;
         this.fields.acadyear_id = rawData.acadyear_id;
+        this.fields.institute_id = rawData.institute_id;
         this.fields.program_id = rawData.program_id;
         this.fields.course_id = rawData.course_id;
         this.fields.start_time = new Date('2022-08-08 ' + rawData.start_time);
