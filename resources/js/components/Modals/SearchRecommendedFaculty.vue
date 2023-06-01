@@ -53,8 +53,8 @@
 
                         </b-field>
                         <b-field label="Search" label-position="on-border" >
-                            <b-input type="text" v-model="search.course_code" placeholder="Search Course Code..." expanded auto-focus></b-input>
-                            <b-input type="text" v-model="search.course_desc" placeholder="Search Course Description..." expanded auto-focus></b-input>
+                            <b-input type="text" v-model="search.lname" placeholder="Search Last Name..." expanded auto-focus></b-input>
+                            <b-input type="text" v-model="search.fname" placeholder="Search First Name..." expanded auto-focus></b-input>
                             <p class="control">
                                 <b-button class="is-primary" icon-pack="fa" icon-left="search" @click="loadAsyncData"></b-button>
                             </p>
@@ -167,8 +167,8 @@ export default {
             defaultSortDirection:'',
 
             search: {
-                course_code: '',
-                course_desc: '',
+                lname: '',
+                fname: '',
             },
             modalAssignFaculty: false,
 
@@ -190,7 +190,8 @@ export default {
                 `perpage=${this.perPage}`,
                 `page=${this.page}`,
                 `courseid=${this.propCourseId}`,
-                `coursedesc=${this.search.course_desc}`,
+                `fname=${this.search.fname}`,
+                `lname=${this.search.lname}`,
                 `isloadall=${this.isLoadAll}`,
             ].join('&');
 

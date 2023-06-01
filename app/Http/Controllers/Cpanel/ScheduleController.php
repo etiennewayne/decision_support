@@ -93,12 +93,14 @@ class ScheduleController extends Controller
     public function getRecommendedFaculty(Request $req){
         $sort = explode('.', $req->sort_by);
 
+
         $isLoadAll = $req->isloadall;
         //return $isLoadAll;
         $courseid = $req->courseid;
 
         if($isLoadAll > 0){
             $data = Faculty::where('active', 1)
+                ->where('lname', 'like', $req-> lname . '%')
                 ->paginate($req->perpage);
         }else{
             $data = DB::table('schedules as a')
@@ -108,6 +110,7 @@ class ScheduleController extends Controller
                     DB::raw('(count(b.faculty_id)) as count_teaching'),
                     'b.sex'
                 )
+                ->where('b.lname', 'like', $req->lname . '%')
                 ->orderBy('count_teaching', 'desc')
                 ->groupBy('b.faculty_id')
                 ->paginate($req->perpage);

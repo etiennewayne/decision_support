@@ -13574,8 +13574,8 @@ __webpack_require__.r(__webpack_exports__);
       perPage: 10,
       defaultSortDirection: '',
       search: {
-        course_code: '',
-        course_desc: ''
+        lname: '',
+        fname: ''
       },
       modalAssignFaculty: false,
       isLoadAll: 0,
@@ -13588,7 +13588,7 @@ __webpack_require__.r(__webpack_exports__);
     loadAsyncData: function loadAsyncData() {
       var _this = this;
 
-      var params = ["sort_by=".concat(this.sortfield, ".").concat(this.sortOrder), "perpage=".concat(this.perPage), "page=".concat(this.page), "courseid=".concat(this.propCourseId), "coursedesc=".concat(this.search.course_desc), "isloadall=".concat(this.isLoadAll)].join('&');
+      var params = ["sort_by=".concat(this.sortfield, ".").concat(this.sortOrder), "perpage=".concat(this.perPage), "page=".concat(this.page), "courseid=".concat(this.propCourseId), "fname=".concat(this.search.fname), "lname=".concat(this.search.lname), "isloadall=".concat(this.isLoadAll)].join('&');
       this.loading = true;
       axios.get("/cpanel/get-recommended-faculty?".concat(params)).then(function (_ref) {
         var data = _ref.data;
@@ -48600,32 +48600,32 @@ var render = function () {
                       _c("b-input", {
                         attrs: {
                           type: "text",
-                          placeholder: "Search Course Code...",
+                          placeholder: "Search Last Name...",
                           expanded: "",
                           "auto-focus": "",
                         },
                         model: {
-                          value: _vm.search.course_code,
+                          value: _vm.search.lname,
                           callback: function ($$v) {
-                            _vm.$set(_vm.search, "course_code", $$v)
+                            _vm.$set(_vm.search, "lname", $$v)
                           },
-                          expression: "search.course_code",
+                          expression: "search.lname",
                         },
                       }),
                       _vm._v(" "),
                       _c("b-input", {
                         attrs: {
                           type: "text",
-                          placeholder: "Search Course Description...",
+                          placeholder: "Search First Name...",
                           expanded: "",
                           "auto-focus": "",
                         },
                         model: {
-                          value: _vm.search.course_desc,
+                          value: _vm.search.fname,
                           callback: function ($$v) {
-                            _vm.$set(_vm.search, "course_desc", $$v)
+                            _vm.$set(_vm.search, "fname", $$v)
                           },
-                          expression: "search.course_desc",
+                          expression: "search.fname",
                         },
                       }),
                       _vm._v(" "),
