@@ -42,9 +42,9 @@
                             </div>
                         </div>
 
-                        <div class="buttons mt-3 is-right">
+                        <!-- <div class="buttons mt-3 is-right">
                             <b-button tag="a" href="/cpanel/users/create" icon-left="plus" class="is-success is-small">NEW</b-button>
-                        </div>
+                        </div> -->
 
                         <b-table
                             :data="data"
@@ -76,7 +76,9 @@
                             </b-table-column>
 
                             <b-table-column field="faculty_name" label="Faculty Assign" v-slot="props">
-                                {{ props.row.faculty.lname }}, {{ props.row.faculty.fname }} {{ props.row.faculty.mname }}
+                                <span v-if="props.row.faculty">
+                                    {{ props.row.faculty.lname }}, {{ props.row.faculty.fname }} {{ props.row.faculty.mname }}
+                                </span>
                             </b-table-column>
 
                             <b-table-column field="room" label="Room" v-slot="props">

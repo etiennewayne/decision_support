@@ -12099,6 +12099,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -41403,7 +41405,7 @@ var render = function () {
                                         "b-field",
                                         {
                                           attrs: {
-                                            label: "Course Description",
+                                            label: "Course Code",
                                             "label-position": "on-border",
                                           },
                                         },
@@ -46031,26 +46033,6 @@ var render = function () {
               ]),
               _vm._v(" "),
               _c(
-                "div",
-                { staticClass: "buttons mt-3 is-right" },
-                [
-                  _c(
-                    "b-button",
-                    {
-                      staticClass: "is-success is-small",
-                      attrs: {
-                        tag: "a",
-                        href: "/cpanel/users/create",
-                        "icon-left": "plus",
-                      },
-                    },
-                    [_vm._v("NEW")]
-                  ),
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
                 "b-table",
                 {
                   attrs: {
@@ -46134,15 +46116,19 @@ var render = function () {
                         key: "default",
                         fn: function (props) {
                           return [
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(props.row.faculty.lname) +
-                                ", " +
-                                _vm._s(props.row.faculty.fname) +
-                                " " +
-                                _vm._s(props.row.faculty.mname) +
-                                "\n                        "
-                            ),
+                            props.row.faculty
+                              ? _c("span", [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(props.row.faculty.lname) +
+                                      ", " +
+                                      _vm._s(props.row.faculty.fname) +
+                                      " " +
+                                      _vm._s(props.row.faculty.mname) +
+                                      "\n                            "
+                                  ),
+                                ])
+                              : _vm._e(),
                           ]
                         },
                       },

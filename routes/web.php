@@ -132,7 +132,7 @@ Route::middleware(['auth'])->group(function(){
 
 
 
-//////DEAAN
+//////DEAN
 Route::resource('/dean/dashboard', App\Http\Controllers\Dean\DeanHomeController::class);
 
 Route::get('/cpanel/course-list', [App\Http\Controllers\Dean\CourseListController::class, 'index']);

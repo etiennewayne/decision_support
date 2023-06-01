@@ -176,7 +176,7 @@
                                     <div v-for="(item, index) in fields.courses_taught" :key="index"
                                         class="m-2">
                                         <b-field grouped>
-                                            <b-field label="Course Description" label-position="on-border">
+                                            <b-field label="Course Code" label-position="on-border">
                                                 <b-input type="text" v-model="item.course_code" 
                                                     placeholder="Course Code"></b-input>
                                             </b-field>
