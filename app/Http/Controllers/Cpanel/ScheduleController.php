@@ -332,6 +332,7 @@ class ScheduleController extends Controller
         //return $req;
         $acadyear = AcademicYear::where('active', 1)->first(); //get current acadyear
         
+
         //get //all data of a schedule
         $data = Schedule::with(['course'])
             ->find($req->schedule_id);

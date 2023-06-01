@@ -38,11 +38,11 @@ class FacultyPreparationRule implements Rule
             ->select('course_code')
             ->groupBy('course_code')
             //->distinct()
-            ->count();
+            ->get();
 
-        //$count = $countCourse->count();
+        $count = $countCourse->count();
 
-        if($countCourse  > 3){
+        if($count  > 3){
             return false;
             //fire error
         }else{
